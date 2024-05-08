@@ -20,6 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'photo_profile'
     ];
 
     /**
@@ -43,5 +44,22 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function friends()
+    {
+        return $this->hasMany(Friend::class, 'user_id');
+    }
+
+    // Define a relationship with the PostTag model
+    public function postTags()
+    {
+        return $this->hasMany(PostTag::class, 'friend_id');
+    }
+
+    // Define a relationship with the Post model
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
     }
 }
