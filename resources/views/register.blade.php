@@ -22,28 +22,41 @@
             <div class="col rightpanel">
                 <div class="container formnya p-5">
                     <h2>Create Account</h2>
-                    <form action="" method="post">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
+                    <form action="{{route('register_store')}}" method="post">
+                        @csrf
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
                                     <label for="firstname">First Name</label>
-                                    <input type="text" class="form-control" id="first_name" placeholder="Your First Name">
+                                    <input type="text" class="form-control" id="first_name" name="firstname" placeholder="Your First Name">
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
                                     <label for="lastname">Last Name</label>
-                                    <input type="text" class="form-control" id="last_name" placeholder="Your Last Name">
+                                    <input type="text" class="form-control" id="last_name" name="lastname" placeholder="Your Last Name">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter Your Email">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter Your Email">
                         </div>
                         <div class="form-group">
-                            <label for="password">Email</label>
-                            <input type="password" class="form-control" id="password" placeholder="Enter Your Password">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter Your Password">
                         </div>
                         <div class="form-group">
                             <div class="form-check">
@@ -71,4 +84,85 @@
         </div>
     </div>
 </body>
+
+<script type="module">
+    console.log('test');
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-analytics.js";
+    import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyBxtqymOnQBquDrCV4CHJxE0LFbzUvn25k",
+        authDomain: "povit-webprog.firebaseapp.com",
+        databaseURL: "https://povit-webprog-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "povit-webprog",
+        storageBucket: "povit-webprog.appspot.com",
+        messagingSenderId: "91749867818",
+        appId: "1:91749867818:web:a4d49c6857d1019d827e53",
+        measurementId: "G-317Q6LQ25E"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider();
+
+
+    document.querySelector('.signupButton').addEventListener('click', function(e) {
+        e.preventDefault(); // Prevent the form from submitting normally
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Registration successful
+            const user = userCredential.user;
+            console.log(user);
+
+            // Now, perform login
+            signInWithEmailAndPassword(auth, email, password)
+            .then((loginUserCredential) => {
+                // Login successful
+                const loginUser = loginUserCredential.user;
+                console.log(loginUser);
+
+                // Redirect to homepage or handle success as needed
+                window.location.href = '/home';
+            })
+            .catch((error) => {
+                // Handle login error
+                console.error('Login Error:', error);
+            });
+        })
+        .catch((error) => {
+            // Handle registration error
+            console.error('Registration Error:', error);
+        });
+    });
+
+
+
+    document.querySelector('.signupGoogle').addEventListener('click',function(e) {
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+        });
+    });
+
+
+</script>
 </html>
