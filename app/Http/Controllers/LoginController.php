@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
+
+    public function loginview(){
+        return view('login');
+    }
+    
     public function login(Request $request)
     {
         // Validate the request data

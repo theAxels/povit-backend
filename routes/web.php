@@ -17,5 +17,7 @@ Route::get('/register', [AuthController::class, 'index'])->name('register_page')
 
 Route::post('/register', [AuthController::class, 'register'])->name('register_store');
 
-Route::get('/login',[LoginController::class, 'login'])->name('login_page');
+Route::get('/login', [LoginController::class, 'loginview'])-> name('login');
+
+Route::get('/login',[LoginController::class, 'login']);
 
