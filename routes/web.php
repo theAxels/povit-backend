@@ -20,4 +20,3 @@ Route::post('/register', [AuthController::class, 'register'])->name('register_st
 Route::get('/login', [LoginController::class, 'loginview'])-> name('login_page');
 
 Route::post('/login',[LoginController::class, 'login'])->name('login_store');
-
