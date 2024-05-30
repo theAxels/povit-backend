@@ -28,10 +28,12 @@
                         </div>
                     @endif
 
-                    @if (session('error'))
-                        <div class="alert alert-danger">
-                            {{ session('error') }}
-                        </div>
+                    @if ( $errors->any() )
+                        @foreach ($errors->all() as $item)
+                            <div class="alert alert-danger">
+                                {{ $item }}
+                            </div>
+                        @endforeach
                     @endif
 
                     <form action="{{route('register_store')}}" method="post">
@@ -85,96 +87,6 @@
     </div>
 </body>
 
-<script type="module">
-    console.log('test');
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-analytics.js";
-    import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
 
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-        apiKey: "AIzaSyBxtqymOnQBquDrCV4CHJxE0LFbzUvn25k",
-        authDomain: "povit-webprog.firebaseapp.com",
-        databaseURL: "https://povit-webprog-default-rtdb.asia-southeast1.firebasedatabase.app",
-        projectId: "povit-webprog",
-        storageBucket: "povit-webprog.appspot.com",
-        messagingSenderId: "91749867818",
-        appId: "1:91749867818:web:a4d49c6857d1019d827e53",
-        measurementId: "G-317Q6LQ25E"
-    };
-
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const auth = getAuth();
-    const provider = new GoogleAuthProvider();
-
-
-
-    document.querySelector('.signupButton').addEventListener('click', function(e) {
-        e.preventDefault(); // Prevent the form from submitting normally
-
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-
-        createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Registration successful
-            const user = userCredential.user;
-            console.log(user);
-
-            // Now, perform login
-            signInWithEmailAndPassword(auth, email, password)
-            .then((loginUserCredential) => {
-                // Login successful
-                const loginUser = loginUserCredential.user;
-                console.log(loginUser);
-
-                // Redirect to homepage or handle success as needed
-                window.location.href = '/home';
-            })
-            .catch((error) => {
-                // Handle login error
-                console.error('Login Error:', error);
-            });
-        })
-        .catch((error) => {
-            // Handle registration error
-            console.error('Registration Error:', error);
-        });
-    });
-
-
-
-    document.querySelector('.signupGoogle').addEventListener('click',function(e) {
-    signInWithPopup(auth, provider)
-        .then((result) => {
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            const credential = GoogleAuthProvider.credentialFromResult(result);
-            const token = credential.accessToken;
-            // The signed-in user info.
-            const user = result.user;
-            // IdP data available using getAdditionalUserInfo(result)
-            // ...
-        }).catch((error) => {
-            // Handle Errors here.
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // The email of the user's account used.
-            const email = error.customData.email;
-            // The AuthCredential type that was used.
-            const credential = GoogleAuthProvider.credentialFromError(error);
-            // ...
-        });
-    });
-
-
-
-</script>
 
 </html>
