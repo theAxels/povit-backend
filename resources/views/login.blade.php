@@ -69,9 +69,49 @@
                     <button data-mdb-ripple-init type="submit" class="btn btn-primary btn-floating mx-1 mt-3 text-dark" style="background-color: #EFBDEE; border-color: #EDEDED; width: 100%; font-size: 16px; border-radius: 50px;">SIGN UP</button>
                 </div>  -->
 
-                <button type="submit" class="loginButton mt-3">SIGN UP</button>
+                <a href="{{ route('register_page') }}" class="loginButton mt-3">Sign Up</a>
             </div>
         </div>
     </div>
 </body>
+<script>
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-analytics.js";
+    import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider();
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyBxtqymOnQBquDrCV4CHJxE0LFbzUvn25k",
+        authDomain: "povit-webprog.firebaseapp.com",
+        databaseURL: "https://povit-webprog-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "povit-webprog",
+        storageBucket: "povit-webprog.appspot.com",
+        messagingSenderId: "91749867818",
+        appId: "1:91749867818:web:a4d49c6857d1019d827e53",
+        measurementId: "G-317Q6LQ25E"
+    };
+
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        // ...
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+    });
+</script>
 </html>
