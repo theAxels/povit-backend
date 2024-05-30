@@ -19,5 +19,5 @@ Route::post('/register', [AuthController::class, 'register'])->name('register_st
 
 Route::get('/login', [LoginController::class, 'loginview'])-> name('login');
 
-Route::get('/login',[LoginController::class, 'login']);
+Route::post('/login',[LoginController::class, 'login']);
 
