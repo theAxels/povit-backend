@@ -17,7 +17,7 @@
             <div class="col leftpanel">
                 <h2>Welcome Back</h2>
                 <p>To keep connected with us please login with your personal info</p>
-                <a href="{{ route('login') }}" class="loginButton">Login</a>
+                <a href="{{ route('login_page') }}" class="loginButton">Login</a>
             </div>
             <div class="col rightpanel">
                 <div class="container formnya p-5">

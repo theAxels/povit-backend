@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Kreait\Firebase\Contract\Auth as FirebaseAuth;
+use Kreait\Firebase\Exception\InvalidArgumentException;
 
 class AuthController extends Controller
 {
@@ -17,7 +18,7 @@ class AuthController extends Controller
         $this->auth = $auth;
     }
 
-    public function index(){
+    public function registerview(){
         return view('register');
     }
 
@@ -41,5 +42,25 @@ class AuthController extends Controller
 
         // Return success response
         return response()->json(['success' => true, 'message' => 'User registered successfully']);
+    }
+    public function checkLogin(Request $request)
+    {
+        $idToken = $request->input('idToken');
+
+        try {
+            $verifiedIdToken = $this->auth->verifyIdToken($idToken);
+            $uid = $verifiedIdToken->claims()->get('sub');
+            $user = $this->auth->getUser($uid);
+
+            return response()->json([
+                'status' => 'success',
+                'user' => $user,
+            ], 200);
+        } catch (InvalidArgumentException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'The token could not be parsed: ' . $e->getMessage(),
+            ], 400);
+        }
     }
 }
