@@ -17,33 +17,48 @@
             <div class="col leftpanel">
                 <h2>Welcome Back</h2>
                 <p>To keep connected with us please login with your personal info</p>
-                <a href="{{ route('login') }}" class="loginButton">Login</a>
+                <a href="{{ route('login_page') }}" class="loginButton">Login</a>
             </div>
             <div class="col rightpanel">
                 <div class="container formnya p-5">
                     <h2>Create Account</h2>
-                    <form action="" method="post">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    @if ( $errors->any() )
+                        @foreach ($errors->all() as $item)
+                            <div class="alert alert-danger">
+                                {{ $item }}
+                            </div>
+                        @endforeach
+                    @endif
+
+                    <form action="{{route('register_store')}}" method="post">
+                        @csrf
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
                                     <label for="firstname">First Name</label>
-                                    <input type="text" class="form-control" id="first_name" placeholder="Your First Name">
+                                    <input type="text" class="form-control" id="first_name" name="firstname" placeholder="Your First Name">
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
                                     <label for="lastname">Last Name</label>
-                                    <input type="text" class="form-control" id="last_name" placeholder="Your Last Name">
+                                    <input type="text" class="form-control" id="last_name" name="lastname" placeholder="Your Last Name">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter Your Email">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter Your Email">
                         </div>
                         <div class="form-group">
-                            <label for="password">Email</label>
-                            <input type="password" class="form-control" id="password" placeholder="Enter Your Password">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter Your Password">
                         </div>
                         <div class="form-group">
                             <div class="form-check">
@@ -71,4 +86,7 @@
         </div>
     </div>
 </body>
+
+
+
 </html>

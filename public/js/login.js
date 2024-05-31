@@ -1,11 +1,53 @@
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-analytics.js";
+    import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBxtqymOnQBquDrCV4CHJxE0LFbzUvn25k",
+        authDomain: "povit-webprog.firebaseapp.com",
+        databaseURL: "https://povit-webprog-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "povit-webprog",
+        storageBucket: "povit-webprog.appspot.com",
+        messagingSenderId: "91749867818",
+        appId: "1:91749867818:web:a4d49c6857d1019d827e53",
+        measurementId: "G-317Q6LQ25E"
+    };
+    const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('form');
     const email = document.getElementById('email');
     const password = document.getElementById('password');
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
         validateInputs();
+
+        try {
+        const userCredential = await signInWithEmailAndPassword(auth, email.value.trim(), password.value.trim());
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+
+        // Handle successful login (redirect, etc.)
+        } catch (error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        if (errorCode === 'auth/wrong-password') {
+            setError(password, 'Invalid email or password.');
+        } else if (errorCode === 'auth/user-not-found') {
+            setError(email, 'User not found. Please create an account.');
+        } else {
+            setError(email, 'Login failed. Please try again.');
+            console.error(errorMessage);  // Log detailed error for debugging
+        }
+        }
     });
 
     const setError = (element, message) => {
