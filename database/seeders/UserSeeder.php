@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => bcrypt('admin123'),
             'profile_pics' => "default.png"
+            
         ]);
     }
 }
