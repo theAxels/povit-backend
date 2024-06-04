@@ -7,14 +7,12 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Kreait\Firebase\Contract\Auth as FirebaseAuth;
-use Kreait\Firebase\Exception\InvalidArgumentException;
 
 class AuthController extends Controller
 {
     protected $auth;
 
-    public function __construct(FirebaseAuth $auth)
+    public function __construct(Auth $auth)
     {
         $this->auth = $auth;
     }
@@ -31,7 +29,7 @@ class AuthController extends Controller
             'lastname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
-            
+
         ]);
         // dd($request);
         // Create a new user
