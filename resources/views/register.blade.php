@@ -60,7 +60,7 @@
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Enter Your Password">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter Your Password">
                             <i class="fa-solid fa-eye" id="show-password"></i>
                             <div class="error"></div>
                         </div>
