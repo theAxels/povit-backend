@@ -10,7 +10,7 @@ use App\Http\Middleware\isNotLogin;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('components.sidebar');
+    return view('components.template');
 })->name('home');
 
 Route::get('/check_login', function(){
