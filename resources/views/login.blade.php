@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://kit.fontawesome.com/f273824998.js" crossorigin="anonymous"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
@@ -44,8 +45,8 @@
 
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password"
-                                placeholder="Enter Your Password" name=password>
+                            <input type="password" class="form-control" id="password" placeholder="Enter Your Password">
+                            <i class="fa-solid fa-eye" id="show-password"></i>
                             <div class="error"></div>
                         </div>
 
@@ -53,7 +54,7 @@
                             <div class="col-6 d-flex align-items-center">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="tnc">
-                                    <label class="form-check-label" style="font-size: 16px;" for="tnc">Remember
+                                    <label class="form-check-label" style="font-size: 16px; color: black" for="tnc">Remember
                                         me</label>
                                 </div>
                             </div>
@@ -62,7 +63,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="signupButton">LOG IN</button>
+                        <button type="submit" class="signupButton" style="height: 5vh">LOG IN</button>
                     </form>
                     <div class="line-divider">
                         <div class="text">Or Log In With</div>
@@ -94,14 +95,23 @@
                 <span style="display: flex; margin-top: 5%; font-size: 22px; margin-right: 2%;">Let’s get you all set up
                     so you can start creating your selfie experience</span>
 
-                <!-- <div class="sign-up d-flex justify-content-center">
-                    <button data-mdb-ripple-init type="submit" class="btn btn-primary btn-floating mx-1 mt-3 text-dark" style="background-color: #EFBDEE; border-color: #EDEDED; width: 100%; font-size: 16px; border-radius: 50px;">SIGN UP</button>
-                </div>  -->
-
-                <a href="{{ route('register_page') }}" class="loginButton mt-3">Sign Up</a>
+                <a href="{{ route('register_page') }}" class="loginButton mt-3" style="justify-content: center; align-content: center">Sign Up</a>
             </div>
         </div>
     </div>
 </body>
 
+<script>
+    const showPassword = document.getElementById("show-password");
+    const passwordField = document.getElementById("password");
+
+    showPassword.addEventListener("click", function(){
+        this.classList.toggle("fa-eye-slash");
+        const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+        passwordField.setAttribute("type", type);
+    })
+    
+</script>
+
 </html>
+
