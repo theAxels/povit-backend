@@ -49,7 +49,7 @@ class User extends Authenticatable
 
     public function friends()
     {
-        return $this->hasMany(Friend::class, 'user_id');
+        return $this->hasManyThrough(User::class, Friend::class, 'user_id', 'id', 'id', 'friend_id');
     }
 
     // Define a relationship with the PostTag model
