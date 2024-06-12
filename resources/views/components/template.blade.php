@@ -180,6 +180,13 @@ a.sidebar-link:hover {
     font-size: 1.5rem;
 }
 
+.user-img{
+    width: 40px;
+    border-radius: 50%; 
+    margin-bottom: 2%;
+    /* margin: auto; */
+}
+
 </style>
 
 </head>
@@ -202,8 +209,10 @@ a.sidebar-link:hover {
                     <a href="#" class="sidebar-link flex-column d-flex justify-content-center">
                         <div class="d-flex">
                             <!-- ini yang diubah untuk gambar yang dipassing -->
-                            <i class="lni lni-user"></i>
-                            <!-- <img src="image.png" alt="Profile" class="lni lni-user"> -->
+                            {{-- <i class="lni lni-user"></i>  --}}
+
+                
+                            <img src="storage/profile_pics/anna.jpg" class="user-img">
                             <span>Profile</span>
                         </div>
 
