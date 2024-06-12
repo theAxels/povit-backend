@@ -2,20 +2,21 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\registerController;
+use App\Http\Controllers\MainController;
 use App\Http\Middleware\isAdmin;
 use App\Http\Middleware\isLogin;
 use App\Http\Middleware\isNotLogin;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('components.template');
-})->name('home');
+// Route::get('/', function () {
+//     return view('components.template');
+// })->name('home');
 
-Route::get('/check_login', function(){
-    return ' ehe dia login';
-})->name('check_login')->middleware(isLogin::class);
+// Route::get('/check_login', function(){
+//     return ' ehe dia login';
+// })->name('check_login')->middleware(isLogin::class);
+
+Route::get('/', [MainController::class, 'index'])->name('home')->middleware(isLogin::class);
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware(isLogin::class);
 
