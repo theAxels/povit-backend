@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sidebar With Bootstrap</title>
+    <title>@yield('title')</title>
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -182,6 +182,8 @@ a.sidebar-link:hover {
 
 </style>
 
+@yield('extra-css')
+
 </head>
 
 <body>
@@ -284,8 +286,9 @@ a.sidebar-link:hover {
             </div>
         </aside>
 
-        <div class="main p-3 w-100">
-
+        <div class="main d-flex p-3 w-100">
+            <div class="d-flex" style="flex: 0 0 70%">@yield('dashboard')</div>
+            <div class="d-flex  " style="flex: 0 0 30%">@yield('closeFriend')</div>
         </div>
     </div>
 
@@ -300,6 +303,8 @@ a.sidebar-link:hover {
         document.querySelector("#sidebar").classList.toggle("expand");
         });
     </script>
+
+    @yield('extra-js')
 
 </body>
 
