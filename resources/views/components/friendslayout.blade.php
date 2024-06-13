@@ -38,20 +38,38 @@
         .text {
         font-weight: bold;
         color: black;
-        margin-left : 7px;
-        margin-bottom : 10px;
+        /* margin-left : 7px;
+        margin-bottom : 10px; */
+        /* max-width: 50%; */
+        width:40%;
+
         }
 
         .text1 {
         font-weight: bold;
+        font-size: 12px;
         color: white;
         margin-left : 7px;
         margin-bottom : 10px;
+        /* overflow: hidden; */
         }
 
-        .friendSection {
-            max-height: 200px; /* Tentukan tinggi maksimum */
-            overflow-y: auto; /* Buat area scrollable jika konten lebih dari tinggi maksimum */
+        .friendSection{
+            width: 350px;
+            margin-top: 10px;
+            /* display: none; */
+            /* overflow: hidden; */
+            /* background-color: #EFBDEE; */
+        }
+
+        .scroll{
+            width: 400px;
+            height: 200px;
+            overflow: hidden;
+            overflow-y: auto;
+        }
+        .scroll::-webkit-scrollbar{
+            display: none;
         }
 
 
@@ -59,7 +77,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="w-100 d-flex justify-content-end" style="margin-top: 2cm;">
+        <div class="w-100 d-flex justify-content-end" style="margin-top: 5%">
             <div class="kotak" style="border: 2px solid #EFBDEE; padding: 17px; width:30%;
             border-radius: 40px;">
                 <div class="row">
@@ -81,113 +99,104 @@
                             </div>
                         </div>
                         <div class="friendSection">
-                            <!-- Profile Image Section -->
-                            <div class="d-flex" style="margin-top: 15px;">
-                                <div class="circle">
-                                    <img src="https://via.placeholder.com/50" alt="Profile Image">
-                                </div>
-                                <div class="text" style="margin-top: 13px; margin-left: 25px">
-                                    <h6>andreaaa aa</h6>
-                                </div>
-                                <div class="comment">
-                                    <i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px;
-                                    margin-top : 10px; margin-left: 120px"></i>
-                                    {{-- <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px;"></i> --}}
-                                </div>
-                                <div class="silang" style="margin-top: 11px; margin-left: 10px">
-                                    <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px;"></i>
-                                </div>
-                            </div>
+                            <div class="scroll">
 
-                            <!-- Profile Image Section -->
-                            <div class="d-flex" style="margin-top: 15px;">
-                                <div class="circle">
-                                    <img src="https://via.placeholder.com/50" alt="Profile Image">
+                                <!-- Profile Image Section -->
+                                <div class="d-flex" style="margin-top: 15px;">
+                                    <div class="circle">
+                                        <img src="https://via.placeholder.com/50" alt="Profile Image">
+                                    </div>
+                                    <div class="text d-flex align-items-center mt-0" style="margin-top: 13px; margin-left: 5%">
+                                        <h6 class="m-0">andreaaaaaaaaaeaaa_</h6>
+                                    </div>
+                                    <div class="ms-auto d-flex align-items-center" style="margin-right: 15%">
+                                        <i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;"></i>
+                                        <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px; margin-left: 5px;"></i>
+                                    </div>
                                 </div>
-                                <div class="text" style="margin-top: 13px; margin-left: 25px">
-                                    <h6>andreaaa aa</h6>
+                                <!-- Profile Image Section -->
+                                <div class="d-flex" style="margin-top: 15px;">
+                                    <div class="circle">
+                                        <img src="https://via.placeholder.com/50" alt="Profile Image">
+                                    </div>
+                                    <div class="text d-flex align-items-center mt-0" style="margin-top: 13px; margin-left: 5%">
+                                        <h6 class="m-0">p0etry_</h6>
+                                    </div>
+                                    <div class="ms-auto d-flex align-items-center" style="margin-right: 15%">
+                                        <i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;"></i>
+                                        <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px; margin-left: 5px;"></i>
+                                    </div>
                                 </div>
-                                <div class="comment">
-                                    <i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px;
-                                    margin-top : 10px; margin-left: 120px"></i>
-                                    {{-- <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px;"></i> --}}
+                                <!-- Profile Image Section -->
+                                <div class="d-flex" style="margin-top: 15px;">
+                                    <div class="circle">
+                                        <img src="https://via.placeholder.com/50" alt="Profile Image">
+                                    </div>
+                                    <div class="text d-flex align-items-center mt-0" style="margin-top: 13px; margin-left: 5%">
+                                        <h6 class="m-0">ricathuang12</h6>
+                                    </div>
+                                    <div class="ms-auto d-flex align-items-center" style="margin-right: 15%">
+                                        <i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;"></i>
+                                        <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px; margin-left: 5px;"></i>
+                                    </div>
                                 </div>
-                                <div class="silang" style="margin-top: 11px; margin-left: 10px">
-                                    <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px;"></i>
+                                <!-- Profile Image Section -->
+                                <div class="d-flex" style="margin-top: 15px;">
+                                    <div class="circle">
+                                        <img src="https://via.placeholder.com/50" alt="Profile Image">
+                                    </div>
+                                    <div class="text d-flex align-items-center" style="margin-top: 13px; margin-left: 5%">
+                                        <h6>gidneon</h6>
+                                    </div>
+                                    <div class="ms-auto d-flex align-items-center" style="margin-right: 15%">
+                                        <i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;"></i>
+                                        <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px; margin-left: 5px;"></i>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- Profile Image Section -->
-                            <div class="d-flex" style="margin-top: 15px;">
-                                <div class="circle">
-                                    <img src="https://via.placeholder.com/50" alt="Profile Image">
-                                </div>
-                                <div class="text" style="margin-top: 13px; margin-left: 25px">
-                                    <h6>andreaaa aa</h6>
-                                </div>
-                                <div class="comment">
-                                    <i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px;
-                                    margin-top : 10px; margin-left: 120px"></i>
-                                    {{-- <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px;"></i> --}}
-                                </div>
-                                <div class="silang" style="margin-top: 11px; margin-left: 10px">
-                                    <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px;"></i>
+                                <!-- Profile Image Section -->
+                                <div class="d-flex" style="margin-top: 15px;">
+                                    <div class="circle">
+                                        <img src="https://via.placeholder.com/50" alt="Profile Image">
+                                    </div>
+                                    <div class="text d-flex align-items-center" style="margin-top: 13px; margin-left: 5%">
+                                        <h6>angkiantok</h6>
+                                    </div>
+                                    <div class="ms-auto d-flex align-items-center" style="margin-right: 15%">
+                                        <i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;"></i>
+                                        <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px; margin-left: 5px;"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
+                        {{-- MULAI MASUK FRIEND REQUEST  --}}
+
                         <div class="text mt-4">
                             <h6>Friend Requests</h6>
                         </div>
-                        <!-- Profile Image Section -->
-                        <div class="d-flex" style="margin-top: 15px;">
-                            <div class="circle">
-                                <img src="https://via.placeholder.com/50" alt="Profile Image">
-                            </div>
-                            <div class="text" style="margin-top: 13px; margin-left: 25px">
-                                <h6>andreaaa aa</h6>
-                            </div>
-                            <div class="kotak-kecil">
-                                <div class="text1 mb-5">
-                                    ACC
+
+                        <div class="friendSection">
+                            <div class="scroll">
+                                <!-- Profile Image Section -->
+                                <div class="d-flex align-items-center" style="margin-top: 15px;">
+                                    <div style="width: 80px; height: auto;" class="circle">
+                                        <img src="https://via.placeholder.com/50" alt="Profile Image">
+                                    </div>
+                                    <div class="text d-flex align-items-center" style="margin-left: 25px;">
+                                        <h6>andreaaa</h6>
+                                    </div>
+                                    <div class="ms-auto d-flex align-items-center" style="margin-right: 15%; margin-bottom:4% ">
+                                        <div class="kotak-kecil d-flex align-items-center justify-content-center">
+                                            <div class="text1 m-0">
+                                                ACC
+                                            </div>
+                                        </div>
+                                        <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px; margin-left: 10px;
+                                        margin-top : 5%"></i>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="silang" style="margin-top: 11px; margin-left: 10px">
-                                <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px;"></i>
-                            </div>
-                        </div>
-                        <!-- Profile Image Section -->
-                        <div class="d-flex" style="margin-top: 15px;">
-                            <div class="circle">
-                                <img src="https://via.placeholder.com/50" alt="Profile Image">
-                            </div>
-                            <div class="text" style="margin-top: 13px; margin-left: 25px">
-                                <h6>andreaaa aa</h6>
-                            </div>
-                            <div class="kotak-kecil">
-                                <div class="text1 mb-5">
-                                    ACC
-                                </div>
-                            </div>
-                            <div class="silang" style="margin-top: 11px; margin-left: 10px">
-                                <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px;"></i>
-                            </div>
-                        </div>
-                        <!-- Profile Image Section -->
-                        <div class="d-flex" style="margin-top: 15px;">
-                            <div class="circle">
-                                <img src="https://via.placeholder.com/50" alt="Profile Image">
-                            </div>
-                            <div class="text" style="margin-top: 13px; margin-left: 25px">
-                                <h6>andreaaa aa</h6>
-                            </div>
-                            <div class="kotak-kecil">
-                                <div class="text1 mb-5">
-                                    ACC
-                                </div>
-                            </div>
-                            <div class="silang" style="margin-top: 11px; margin-left: 10px">
-                                <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px;"></i>
-                            </div>
-                        </div>
+
+                           </div>
                     </div>
                 </div>
             </div>
