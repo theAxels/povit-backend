@@ -288,7 +288,7 @@ a.sidebar-link:hover {
 
         <div class="main d-flex p-3 w-100">
             <div class="d-flex" style="flex: 0 0 70%">@yield('dashboard')</div>
-            <div class="d-flex  " style="flex: 0 0 30%">@yield('closeFriend')</div>
+            <div class="d-flex" style="flex: 0 0 30%">@yield('closeFriend')</div>
         </div>
     </div>
 
