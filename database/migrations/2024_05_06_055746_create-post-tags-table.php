@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('post_tag', function (Blueprint $table) {
+        Schema::create('post_tags', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('post_id');
-            $table->unsignedBigInteger('user_id'); 
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('friend_id');
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
             $table->foreign(['user_id', 'friend_id'])->references(['user_id', 'friend_id'])->on('friends')->onDelete('cascade');
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('post_tag');
+        Schema::dropIfExists('post_tags');
     }
 };
