@@ -31,3 +31,8 @@ Route::post('/login',[AuthController::class, 'login'])->name('login_store')->mid
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware(isLogin::class);
 
 Route::resource('admin', AdminController::class)->middleware([isLogin::class, isAdmin::class]);
+
+Route::get('/friends', function(){
+ return view("components.friendslayout");
+});
+
