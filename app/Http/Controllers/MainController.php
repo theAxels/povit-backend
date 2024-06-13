@@ -17,6 +17,11 @@ class MainController extends Controller
         $friendsPosts = Post::whereIn('friend_id', $user->friends->pluck('id'))->get();
         return view('main.main', ['images' => $friendsPosts]);
 
+        // Get Friend List Done
+        $user = Auth::user();
+        $friends = $user->friends;
+        return view('main.main', ['friends' => $friends]);
+
 
 
 
@@ -31,9 +36,6 @@ class MainController extends Controller
         // abis itu ambil image nya
 
         // Take the friend which user id is the user's id
-
-
-
     }
 
 
