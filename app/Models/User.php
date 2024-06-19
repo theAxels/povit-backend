@@ -76,5 +76,16 @@ class User extends Authenticatable
         ->toArray();
 
         return User::whereIn('id', $youMightKnowIds)->get();
+      
+    // create a function to get the user's friends
+    public function getFriends()
+    {
+        return $this->friends->pluck('friend_id');
+    }
+
+    // create a function to get the user's posts
+    public function getPosts()
+    {
+        return $this->posts->pluck('id');
     }
 }

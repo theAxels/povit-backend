@@ -11,9 +11,7 @@ class MainController extends Controller
 {
     public function index()
     {
-
         $user = Auth::user();
-
         // $friendsPosts = Post::whereIn('friend_id', $user->friends->pluck('id'))->get();
         // dd($friendsPosts);
         // return view('main.main', ['images' => $friendsPosts]);
@@ -29,16 +27,21 @@ class MainController extends Controller
             'youMightKnow' => $youMightKnow,
         ]);
 
+        $friendsPosts = Post::whereIn('user_id', $user->friends->pluck('friend_id'))->get();
 
-        // 'user_id',
-        // 'pict',
-        // 'caption',
-        // 'location',
-        // 'is_closed_friend',
+        // dd($friendsPosts);
+        return view('main.main', ['images' => $friendsPosts]);
+
+        // Get Friend List Done
+        // $user = Auth::user();
+        // $friends = $user->friends;
+        // return view('main.main', ['friends' => $friends]);
+
+
 
         // tiap user yang ada user id bisa ngepost image,
         // kalau mau ngambil data temen temen nya, berarti harus ambil user id punya semua temen nya
-        // abis itu ambil image nya
+        // abis itu ambil image nya temen temennya
 
         // Take the friend which user id is the user's id
     }
