@@ -18,8 +18,11 @@ class MainController extends Controller
         // dd($friendsPosts);
         return view('main.main', ['images' => $friendsPosts]);
 
-        // get the user's friends
-        // $friends = $user->getFriends();
+        // Get Friend List Done
+        // $user = Auth::user();
+        // $friends = $user->friends;
+        // return view('main.main', ['friends' => $friends]);
+
 
 
 
@@ -29,9 +32,6 @@ class MainController extends Controller
         // abis itu ambil image nya temen temennya
 
         // Take the friend which user id is the user's id
-
-
-
     }
 
 
