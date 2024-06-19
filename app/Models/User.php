@@ -64,6 +64,19 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
+    public function youMightKnow()
+    {
+        $friendIds = $this->friends()->pluck('friend_id')->toArray();
+        $youMightKnowIds = User::whereHas('friends', function ($query) use ($friendIds) {
+            $query->whereIn('user_id', $friendIds);
+        })
+        ->whereNotIn('id', $friendIds)
+        ->where('id', '<>', $this->id)
+        ->pluck('id')
+        ->toArray();
+
+        return User::whereIn('id', $youMightKnowIds)->get();
+      
     // create a function to get the user's friends
     public function getFriends()
     {

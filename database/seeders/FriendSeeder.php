@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Friend;
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class FriendSeeder extends Seeder

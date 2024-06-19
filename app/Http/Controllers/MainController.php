@@ -12,6 +12,20 @@ class MainController extends Controller
     public function index()
     {
         $user = Auth::user();
+        // $friendsPosts = Post::whereIn('friend_id', $user->friends->pluck('id'))->get();
+        // dd($friendsPosts);
+        // return view('main.main', ['images' => $friendsPosts]);
+
+        // Get Friend List DONE
+        $user = Auth::user();
+        $friends = $user->friends;
+        
+        // You Might Know DONE
+        $youMightKnow = $user->youMightKnow();
+        return view('main.main', [
+            'friends' => $friends,
+            'youMightKnow' => $youMightKnow,
+        ]);
 
         $friendsPosts = Post::whereIn('user_id', $user->friends->pluck('friend_id'))->get();
 
@@ -22,8 +36,6 @@ class MainController extends Controller
         // $user = Auth::user();
         // $friends = $user->friends;
         // return view('main.main', ['friends' => $friends]);
-
-
 
 
 
