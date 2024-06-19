@@ -11,3 +11,14 @@
             @endforeach
         </ul>
     @endif
+
+    <h1>You Might Know</h1>
+    @if ($youMightKnow->isEmpty())
+        <p>No suggestions available.</p>
+    @else
+        <ul>
+            @foreach ($youMightKnow as $suggestedFriend)
+                <li>{{ $suggestedFriend->name }} ({{ $suggestedFriend->email }})</li>
+            @endforeach
+        </ul>
+    @endif

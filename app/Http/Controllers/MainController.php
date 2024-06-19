@@ -14,16 +14,20 @@ class MainController extends Controller
 
         $user = Auth::user();
 
-        $friendsPosts = Post::whereIn('friend_id', $user->friends->pluck('id'))->get();
-        dd($friendsPosts);
-        return view('main.main', ['images' => $friendsPosts]);
+        // $friendsPosts = Post::whereIn('friend_id', $user->friends->pluck('id'))->get();
+        // dd($friendsPosts);
+        // return view('main.main', ['images' => $friendsPosts]);
 
-        // Get Friend List Done
+        // Get Friend List DONE
         $user = Auth::user();
         $friends = $user->friends;
-        return view('main.main', ['friends' => $friends]);
-
-
+        
+        // You Might Know DONE
+        $youMightKnow = $user->youMightKnow();
+        return view('main.main', [
+            'friends' => $friends,
+            'youMightKnow' => $youMightKnow,
+        ]);
 
 
         // 'user_id',
