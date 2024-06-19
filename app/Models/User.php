@@ -63,4 +63,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
+
+    // create a function to get the user's friends
+    public function getFriends()
+    {
+        return $this->friends->pluck('friend_id');
+    }
+
+    // create a function to get the user's posts
+    public function getPosts()
+    {
+        return $this->posts->pluck('id');
+    }
 }

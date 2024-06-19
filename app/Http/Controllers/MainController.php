@@ -11,25 +11,22 @@ class MainController extends Controller
 {
     public function index()
     {
-
         $user = Auth::user();
 
-        $friendsPosts = Post::whereIn('friend_id', $user->friends->pluck('id'))->get();
-        dd($friendsPosts);
+        $friendsPosts = Post::whereIn('user_id', $user->friends->pluck('friend_id'))->get();
+
+        // dd($friendsPosts);
         return view('main.main', ['images' => $friendsPosts]);
 
+        // get the user's friends
+        // $friends = $user->getFriends();
 
 
 
-        // 'user_id',
-        // 'pict',
-        // 'caption',
-        // 'location',
-        // 'is_closed_friend',
 
         // tiap user yang ada user id bisa ngepost image,
         // kalau mau ngambil data temen temen nya, berarti harus ambil user id punya semua temen nya
-        // abis itu ambil image nya
+        // abis itu ambil image nya temen temennya
 
         // Take the friend which user id is the user's id
 
