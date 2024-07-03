@@ -5,6 +5,27 @@
 @section('dashboard')
 
 <div class="container">
+    <h1>Friends List</h1>
+    @if ($friends->isEmpty())
+        <p>You have no friends.</p>
+    @else
+        <ul>
+            @foreach ($friends as $friend)
+                <li>{{ $friend->name }}</li>
+            @endforeach
+        </ul>
+    @endif
+
+    <h1>You Might Know</h1>
+    @if ($youMightKnow->isEmpty())
+        <p>No suggestions available.</p>
+    @else
+        <ul>
+            @foreach ($youMightKnow as $suggestedFriend)
+                <li>{{ $suggestedFriend->name }} ({{ $suggestedFriend->email }})</li>
+            @endforeach
+        </ul>
+    @endif
         <div>
             @foreach ($images as $post)
                 <div class="post">
@@ -62,24 +83,3 @@
         });
     }
 </script>
-    {{-- <h1>Friends List</h1>
-    @if ($friends->isEmpty())
-        <p>You have no friends.</p>
-    @else
-        <ul>
-            @foreach ($friends as $friend)
-                <li>{{ $friend->name }}</li>
-            @endforeach
-        </ul>
-    @endif
-
-    <h1>You Might Know</h1>
-    @if ($youMightKnow->isEmpty())
-        <p>No suggestions available.</p>
-    @else
-        <ul>
-            @foreach ($youMightKnow as $suggestedFriend)
-                <li>{{ $suggestedFriend->name }} ({{ $suggestedFriend->email }})</li>
-            @endforeach
-        </ul>
-    @endif --}}
