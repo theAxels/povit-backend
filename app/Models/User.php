@@ -79,4 +79,16 @@ class User extends Authenticatable
         return $this->hasManyThrough(User::class, Friend::class, 'user_id', 'id', 'id', 'friend_id')
             ->where('friends.friend_id', '<>', $this->id);
     }
+    
+    // create a function to get the user's friends
+    public function getFriends()
+    {
+        return $this->friends->pluck('friend_id');
+    }
+
+    // create a function to get the user's posts
+    public function getPosts()
+    {
+        return $this->posts->pluck('id');
+    }
 }

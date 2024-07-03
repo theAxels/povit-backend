@@ -15,24 +15,31 @@ class PostSeeder extends Seeder
     {
         Post::create([
             'user_id' => 2,
-            'pict' => 'user_post/post1.jpeg',
+            'pict' => 'post1.jpeg',
             'caption' => 'Hello, this is my first post',
             'location' => 'Jakarta',
             'is_closed_friend' => false,
         ]);
         Post::create([
             'user_id' => 2,
-            'pict' => 'user_post/post2.jpg',
+            'pict' => 'post2.jpg',
             'caption' => 'this is not my first post',
             'location' => 'Bekasi',
             'is_closed_friend' => false,
         ]);
         Post::create([
             'user_id' => 3,
-            'pict' => 'user_post/post3.jeg',
+            'pict' => 'post3.jpg',
             'caption' => 'Minji cakep bet cuy',
             'location' => 'South Korea',
             'is_closed_friend' => false,
+        ]);
+        Post::create([
+            'user_id' => 3,
+            'pict' => 'post1.jpeg',
+            'caption' => 'Bukan punya gw',
+            'location' => 'South Korea',
+            'is_closed_friend' => true,
         ]);
 
 
