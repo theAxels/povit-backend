@@ -18,6 +18,8 @@ Route::get('/', function () {
 
 Route::get('/', [MainController::class, 'index'])->name('home')->middleware(isLogin::class);
 
+Route::post('/', [MainController::class, 'store'])->name('post_image')->middleware(isLogin::class);
+
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware(isLogin::class);
 
 Route::get('/register', [AuthController::class, 'registerview'])->name('register_page')->middleware(isNotLogin::class);
@@ -28,7 +30,6 @@ Route::get('/login', [AuthController::class, 'loginview'])-> name('login_page')-
 
 Route::post('/login',[AuthController::class, 'login'])->name('login_store')->middleware(isNotLogin::class);
 
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware(isLogin::class);
 
 Route::resource('admin', AdminController::class)->middleware([isLogin::class, isAdmin::class]);
 
