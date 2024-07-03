@@ -49,7 +49,7 @@ class User extends Authenticatable
 
     public function friends()
     {
-        return $this->hasManyThrough(User::class, Friend::class, 'user_id', 'id', 'id', 'friend_id');
+        return $this->belongsToMany(User::class, 'friends', 'user_id', 'friend_id');
     }
 
     // Define a relationship with the PostTag model
@@ -66,15 +66,17 @@ class User extends Authenticatable
 
     public function youMightKnow()
     {
-        $friendIds = $this->friends()->pluck('friend_id')->toArray();
-        $youMightKnowIds = User::whereHas('friends', function ($query) use ($friendIds) {
-            $query->whereIn('user_id', $friendIds);
-        })
-        ->whereNotIn('id', $friendIds)
-        ->where('id', '<>', $this->id)
-        ->pluck('id')
-        ->toArray();
+        // $friendIds = $this->friends()->pluck('friend_id')->toArray();
+        // $youMightKnowIds = User::whereHas('friends', function ($query) use ($friendIds) {
+        //     $query->whereIn('user_id', $friendIds);
+        // })
+        // ->whereNotIn('id', $friendIds)
+        // ->where('id', '<>', $this->id)
+        // ->pluck('id')
+        // ->toArray();
 
-        return User::whereIn('id', $youMightKnowIds)->get();
+        // return User::whereIn('id', $youMightKnowIds)->get();
+        return $this->hasManyThrough(User::class, Friend::class, 'user_id', 'id', 'id', 'friend_id')
+            ->where('friends.friend_id', '<>', $this->id);
     }
 }

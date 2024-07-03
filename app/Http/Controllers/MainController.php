@@ -20,10 +20,10 @@ class MainController extends Controller
 
         // Get Friend List DONE
         $user = Auth::user();
-        $friends = $user->friends;
+        $friends = $user->friends()->get();
         
         // You Might Know DONE
-        $youMightKnow = $user->youMightKnow();
+        $youMightKnow = $user->youMightKnow()->get();
         return view('main.main', [
             'friends' => $friends,
             'youMightKnow' => $youMightKnow,
