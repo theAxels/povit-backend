@@ -52,6 +52,11 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'friends', 'user_id', 'friend_id');
     }
 
+    public function closefriends()
+    {
+        return $this->belongsToMany(User::class, 'close_friends', 'user_id', 'friend_id');
+    }
+
     // Define a relationship with the PostTag model
     public function postTags()
     {
