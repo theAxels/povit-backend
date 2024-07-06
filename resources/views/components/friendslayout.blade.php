@@ -172,7 +172,7 @@
                         {{-- MULAI MASUK FRIEND REQUEST  --}}
 
                         <div class="text mt-4">
-                            <h6>Friend Requests</h6>
+                            <h6>Friend Request's</h6>
                         </div>
 
                         <div class="friendSection">
