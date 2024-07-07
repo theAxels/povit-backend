@@ -9,19 +9,21 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://kit.fontawesome.com/f273824998.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container kontainer">
         <div class="formarea">
-            <div class="col leftpanel">
-                <h2>Welcome Back</h2>
-                <p>To keep connected with us please login with your personal info</p>
-                <a href="{{ route('login_page') }}" class="loginButton">Login</a>
+            <div class="col leftpanel text-center">
+                <h1 style="font-weight: bold; justify-content: center; font-size: 30px;">Welcome Back</h1>
+                <span style="display: flex; margin-top: 5%; font-size: 22px; margin-right: 2%;">To keep connected with us please login with your personal info</span>
+                {{-- <p>To keep connected with us please login with your personal info</p> --}}
+                <a href="{{ route('login_page') }}" class="loginButton mt-3" style="justify-content: center; align-content: center">Login</a>
             </div>
             <div class="col rightpanel">
                 <div class="container formnya p-5">
-                    <h2>Create Account</h2>
+                    <h1 style="font-weight: bold; font-size: 30px; margin-bottom: 8%;">Create Account</h1>
                     @if (session('success'))
                         <div class="alert alert-success">
                             {{ session('success') }}
@@ -59,14 +61,17 @@
                         <div class="form-group">
                             <label for="password">Password</label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="Enter Your Password">
+                            <i class="fa-solid fa-eye" id="show-password"></i>
+                            <div class="error"></div>
                         </div>
+
                         <div class="form-group">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="tnc">
                                 <label class="form-check-label" for="tnc">I agree to all <a class="tnc" href="">terms & conditions</a></label>
                             </div>
                         </div>
-                        <button type="submit" class="signupButton">SIGN UP</button>
+                        <button type="submit" class="signupButton" style="height: 5vh;">SIGN UP</button>
                     </form>
                     <div class="line-divider">
                         <div class="text">Or Sign Up With</div>
@@ -87,6 +92,16 @@
     </div>
 </body>
 
+<script>
+    const showPassword = document.getElementById("show-password");
+    const passwordField = document.getElementById("password");
 
+    showPassword.addEventListener("click", function(){
+        this.classList.toggle("fa-eye-slash");
+        const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+        passwordField.setAttribute("type", type);
+    })
+    
+</script>
 
 </html>

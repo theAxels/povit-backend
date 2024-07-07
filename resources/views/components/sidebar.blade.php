@@ -47,6 +47,7 @@
         <div class="profile text-center">
             <div class="profile-pic">
                 <img src="path_to_your_image.png" alt="Profile Picture">
+                
             </div>
             <h5>Profile</h5>
             <div class="mb-3">

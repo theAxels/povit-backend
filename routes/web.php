@@ -34,9 +34,13 @@ Route::post('/login',[AuthController::class, 'login'])->name('login_store')->mid
 
 Route::resource('admin', AdminController::class)->middleware([isLogin::class, isAdmin::class]);
 
+
+#update profile
+Route::post('/updateProfile', [AuthController::class, 'updateProfile'])->name('update.profile');
+Route::post('/update-username', [AuthController::class, 'updateUsername'])->name('update.username');
+Route::post('/update-profile-desc', [AuthController::class, 'updateProfileDesc'])->name('update.profile.desc');
+
+
 Route::get('/friends', function(){
  return view("components.friendslayout");
 });
-
-Route::get('/close-friends', [CloseFriendController::class, 'index'])->name('closeFriends')->middleware(isLogin::class);
-

@@ -79,6 +79,7 @@ form{
 }
 
 .form-group{
+    position: relative;
     margin-bottom: 3%;
 }
 
@@ -158,4 +159,14 @@ input{
     color: red;
     font-size: 14px;
     margin-top: 5px;
+}
+
+.fa-eye {
+    position: absolute;
+    right: 10px; 
+    top: 60%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: lightgrey;
+    z-index: 10;
 }

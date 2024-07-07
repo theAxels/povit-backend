@@ -17,9 +17,9 @@ class MainController extends Controller
         // return view('main.main', ['images' => $friendsPosts]);
 
         // Get Friend List DONE
-        $user = Auth::user();
-        $friends = $user->friends;
 
+        $friends = $user->friends;
+      
         $friendsPosts = Post::whereIn('user_id', $user->friends->pluck('id'))->get();
         // dd($friendsPosts);
 
