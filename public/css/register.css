@@ -125,3 +125,14 @@ input{
     font-size: 16px;
     color: #555;
 }
+
+.fa-eye {
+    position: absolute;
+    right: 10px; 
+    top: 52%;
+    transform: translateY(-50%);
+    margin-right: 22.5%;
+    cursor: pointer;
+    color: lightgrey;
+    z-index: 10;
+}
