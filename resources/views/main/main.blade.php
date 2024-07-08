@@ -54,6 +54,9 @@
                 <div class="col-md-6">
                     <div id="results">Your captured image will appear here...</div>
                 </div>
+                <div class="col-md-6" id="buttonSave">
+                    
+                </div>
                 <div class="col-md-12 text-center">
                     <br/>
                     <button class="btn btn-success">Submit</button>
@@ -78,8 +81,27 @@
     function take_snapshot() {
         Webcam.snap(function(data_uri) {
             $(".image-tag").val(data_uri);
-            console.log(data_uri);
+            var timestamp = new Date().toISOString().replace(/[-T:\.Z]/g, "");
+            var downloadLink = `<a href="${data_uri}" download="captured_image_${timestamp}.jpg">Save to Gallery</a>`;
+            var button = document.createElement('button');
+            button.innerHTML = downloadLink;
+            document.getElementById("buttonSave").appendChild(button);
             document.getElementById('results').innerHTML = '<img src="' + data_uri + '"/>';
         });
     }
+
+    // function save_to_gallery() {
+    //     var data_uri = $(".image-tag").val();
+    //     if (data_uri) {
+    //         var timestamp = new Date().toISOString().replace(/[-T:\.Z]/g, "");
+    //         var link = document.createElement('a');
+    //         link.href = data_uri;
+    //         link.download = 'captured_image_' + timestamp + '.jpg';
+    //         document.body.appendChild(link);
+    //         link.click();
+    //         document.body.removeChild(link);
+    //     } else {
+    //         alert("Please capture an image first.");
+    //     }
+    // }
 </script>
