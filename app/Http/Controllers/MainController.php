@@ -27,7 +27,6 @@ class MainController extends Controller
         // You Might Know DONE
         $youMightKnow = $user->youMightKnow();
 
-        // dd($user);
         // dd($friendsPosts);
         return view('dashboard', ['user'=> $user, 'images' => $friendsPosts, 'friends' => $friends, 'youMightKnow' => $youMightKnow]);
         // tiap user yang ada user id bisa ngepost image,
