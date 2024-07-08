@@ -44,3 +44,8 @@ Route::post('/update-profile-desc', [AuthController::class, 'updateProfileDesc']
 Route::get('/friends', function(){
  return view("components.friendslayout");
 });
+
+Route::get('/close-friends', [CloseFriendController::class, 'index'])->name('closeFriends')->middleware(isLogin::class);
+Route::post('/users/{friendId}/follow', [MainController::class, 'follow'])->name('follow');
+Route::delete('/users/{friendId}/unfollow', [MainController::class, 'unfollow'])->name('unfollow');
+
