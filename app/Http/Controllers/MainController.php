@@ -20,6 +20,7 @@ class MainController extends Controller
 
         // Get Friend List DONE
         $friends = $user->friends;
+      
         $friendsPosts = Post::whereIn('user_id', $user->friends->pluck('id'))->get();
         // dd($friendsPosts);
 
