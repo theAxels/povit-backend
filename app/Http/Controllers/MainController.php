@@ -17,7 +17,6 @@ class MainController extends Controller
         // return view('main.main', ['images' => $friendsPosts]);
 
         // Get Friend List DONE
-
         $friends = $user->friends;
       
         $friendsPosts = Post::whereIn('user_id', $user->friends->pluck('id'))->get();
@@ -25,14 +24,14 @@ class MainController extends Controller
 
         // You Might Know DONE
         $youMightKnow = $user->youMightKnow;
-        return view('main.main', [
-            'friends' => $friends,
-            'youMightKnow' => $youMightKnow,
-        ]);
+        // return view('main.main', [
+        //     'friends' => $friends,
+        //     'youMightKnow' => $youMightKnow,
+        // ]);
 
 
         // dd($friendsPosts);
-        return view('main.main', ['images' => $friendsPosts, 'friends' => $friends, 'recommend' => $youMightKnow]);
+        return view('main.main', ['images' => $friendsPosts, 'friends' => $friends, 'youMightKnow' => $youMightKnow]);
         // tiap user yang ada user id bisa ngepost image,
         // kalau mau ngambil data temen temen nya, berarti harus ambil user id punya semua temen nya
         // abis itu ambil image nya temen temennya
@@ -49,9 +48,6 @@ class MainController extends Controller
             'is_closed_friend' => 'required'
         ]);
 
-        // $imageName = time().'.'.$request->pict->extension();
-        // $request->pict->move(public_path('images'), $imageName);
-
         $photo_file = $request->file('pict');
         $extension = $photo_file->extension();
         $imageName = date('dmyHis') . uniqid() . '.' . $extension;
@@ -67,6 +63,4 @@ class MainController extends Controller
 
         return redirect()->route('main');
     }
-
-
 }
