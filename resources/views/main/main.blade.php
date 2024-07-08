@@ -5,6 +5,24 @@
 @section('dashboard')
 
 <div class="container">
+    @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
     <h1>Friends List</h1>
     @if ($friends->isEmpty())
         <p>You have no friends.</p>
@@ -12,6 +30,11 @@
         <ul>
             @foreach ($friends as $friend)
                 <li>{{ $friend->name }}</li>
+                <form method="POST" action="{{ route('unfollow', ['friendId' => $friend->id]) }}">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit">Unfollow</button>
+                </form>
             @endforeach
         </ul>
     @endif
@@ -22,7 +45,12 @@
     @else
         <ul>
             @foreach ($youMightKnow as $suggestedFriend)
-                <li>{{ $suggestedFriend->name }} ({{ $suggestedFriend->email }})</li>
+                <li>{{ $suggestedFriend->name }} ({{ $suggestedFriend->email }})
+                    <form method="POST" action="{{ route('follow', ['friendId' => $suggestedFriend->id]) }}">
+                        @csrf
+                        <button type="submit">Follow</button>
+                    </form>
+                </li>
             @endforeach
         </ul>
     @endif
