@@ -10,211 +10,208 @@
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-        ::after,
-        ::before {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-        a {
-            text-decoration: none;
-        }
+::after,
+::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        li {
-            list-style: none;
-        }
+a {
+    text-decoration: none;
+}
 
-        h1 {
-            font-weight: 600;
-            font-size: 1.5rem;
-        }
+li {
+    list-style: none;
+}
 
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
+h1 {
+    font-weight: 600;
+    font-size: 1.5rem;
+}
 
-        .wrapper {
-            display: flex;
-        }
+body {
+    font-family: 'Poppins', sans-serif;
+}
 
-        .main {
-            min-height: 100vh;
-            width: 100%;
-            overflow: hidden;
-            transition: all 0.35s ease-in-out;
-            background-color: #fafbfe;
-            position: relative;
-            z-index: 1;
-        }
+.wrapper {
+    display: flex;
+}
 
-        #sidebar {
-            width: 70px;
-            min-width: 70px;
-            z-index: 1000;
-            transition: all .25s ease-in-out;
-            background-color: #F3E8F3;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            z-index: 1000;
-            position: fixed;
-        }
+.main {
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    transition: all 0.35s ease-in-out;
+    background-color: #fafbfe;
+}
 
-        #sidebar.expand {
-            width: 260px;
-            min-width: 260px;
-        }
+#sidebar {
+    width: 70px;
+    min-width: 70px;
+    z-index: 1000;
+    transition: all .25s ease-in-out;
+    background-color: #F3E8F3;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
 
-        .profileDetail {
-            background-color: #fafbfe;
-            border-radius: 10px;
-            padding: 5px;
-            display: block;
-        }
+#sidebar.expand {
+    width: 260px;
+    min-width: 260px;
+}
 
-        .toggle-btn {
-            background-color: transparent;
-            cursor: pointer;
-            border: 0;
-            padding: 1rem 1.5rem 1rem 1.75rem;
-        }
+.profileDetail{
+    background-color: #fafbfe;
+    border-radius: 10px;
+    padding: 5px;
+    display: block;
+}
 
-        .toggle-btn i {
-            font-size: 1.5rem;
-            color: #000000;
-        }
+.toggle-btn {
+    background-color: transparent;
+    cursor: pointer;
+    border: 0;
+    padding: 1rem 1.5rem 1rem 1.75rem;
+}
 
-        .sidebar-logo {
-            margin: auto 0;
-        }
+.toggle-btn i {
+    font-size: 1.5rem;
+    color: #000000;
+}
 
-        .sidebar-logo a {
-            color: #000000;
-            font-size: 1.15rem;
-            font-weight: 600;
-        }
+.sidebar-logo {
+    margin: auto 0;
+}
 
-        #sidebar:not(.expand) .sidebar-logo,
-        #sidebar:not(.expand) a.sidebar-link span,
-        #sidebar:not(.expand) .profileDetail {
-            visibility: hidden;
-        }
+.sidebar-logo a {
+    color: #000000;
+    font-size: 1.15rem;
+    font-weight: 600;
+}
 
-        .sidebar-nav {
-            padding: 2rem 0;
-            flex: 1 1 auto;
-        }
+#sidebar:not(.expand) .sidebar-logo,
+#sidebar:not(.expand) a.sidebar-link span,
+#sidebar:not(.expand) .profileDetail{
+    visibility: hidden;
+}
 
-        a.sidebar-link {
-            padding: .625rem 1.625rem;
-            color: #000000;
-            display: block;
-            font-size: 0.9rem;
-            white-space: nowrap;
-            border-left: 3px solid transparent;
-        }
+.sidebar-nav {
+    padding: 2rem 0;
+    flex: 1 1 auto;
+}
 
-        .sidebar-link i {
-            font-size: 1.75rem;
-            margin-right: .75rem;
-        }
+a.sidebar-link {
+    padding: .625rem 1.625rem;
+    color: #000000;
+    display: block;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    border-left: 3px solid transparent;
+}
 
-        a.sidebar-link:hover {
-            background-color: rgba(255, 255, 255, .075);
-            border-left: 3px solid #3b7ddd;
-        }
+.sidebar-link i {
+    font-size: 1.5rem;
+    margin-right: .75rem;
+}
 
-        .sidebar-item {
-            position: relative;
-        }
+a.sidebar-link:hover {
+    background-color: rgba(255, 255, 255, .075);
+    border-left: 3px solid #3b7ddd;
+}
 
-        #sidebar:not(.expand) .sidebar-item .sidebar-dropdown {
-            position: absolute;
-            top: 0;
-            left: 70px;
-            background-color: #0e2238;
-            padding: 0;
-            min-width: 15rem;
-            display: none;
-        }
+.sidebar-item {
+    position: relative;
+}
 
-        #sidebar:not(.expand) .sidebar-item:hover .has-dropdown+.sidebar-dropdown {
-            display: block;
-            max-height: 15em;
-            width: 100%;
-            opacity: 1;
-        }
+#sidebar:not(.expand) .sidebar-item .sidebar-dropdown {
+    position: absolute;
+    top: 0;
+    left: 70px;
+    background-color: #0e2238;
+    padding: 0;
+    min-width: 15rem;
+    display: none;
+}
 
-        #sidebar.expand .sidebar-link[data-bs-toggle="collapse"]::after {
-            border: solid;
-            border-width: 0 .075rem .075rem 0;
-            content: "";
-            display: inline-block;
-            padding: 2px;
-            position: absolute;
-            right: 1.5rem;
-            top: 1.4rem;
-            transform: rotate(-135deg);
-            transition: all .2s ease-out;
-        }
+#sidebar:not(.expand) .sidebar-item:hover .has-dropdown+.sidebar-dropdown {
+    display: block;
+    max-height: 15em;
+    width: 100%;
+    opacity: 1;
+}
 
-        #sidebar.expand .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
-            transform: rotate(45deg);
-            transition: all .2s ease-out;
-        }
+#sidebar.expand .sidebar-link[data-bs-toggle="collapse"]::after {
+    border: solid;
+    border-width: 0 .075rem .075rem 0;
+    content: "";
+    display: inline-block;
+    padding: 2px;
+    position: absolute;
+    right: 1.5rem;
+    top: 1.4rem;
+    transform: rotate(-135deg);
+    transition: all .2s ease-out;
+}
 
-        .btn-light.btn-sm {
-            background-color: #D9D9D9;
-            border: 15px;
-        }
+#sidebar.expand .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
+    transform: rotate(45deg);
+    transition: all .2s ease-out;
+}
 
-        .btn.edit {
-            margin-left: auto;
-        }
+.btn-light.btn-sm {
+    background-color: #D9D9D9;
+    border: 15px;
+}
 
-        .sidebar-footer {
-            margin-bottom: 10vh;
-        }
+.btn.edit{
+    margin-left: auto;
+}
 
-        .menu-logo i {
-            font-size: 1.5rem;
-        }
+.sidebar-footer{
+    margin-bottom: 10vh;
+}
 
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            /* Pastikan overlay berada di bawah sidebar tetapi di atas konten utama */
-        }
-    </style>
+.menu-logo i{
+    font-size: 1.5rem;
+}
 
-    @yield('extra-css')
+.user-img{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%; 
+    margin-bottom: 2%;
+    /* margin: auto; */
+}
+
+</style>
+
+@yield('extra-css')
+
 
 </head>
 
 <body>
-    <div class="wrapper">
-        <aside id="sidebar">
-            <div class="d-flex">
-                <button class="toggle-btn menu-logo" type="button">
-                    <i class="material-symbols-outlined mr-10">
-                        menu
-                    </i>
-                </button>
-                <div class="sidebar-logo">
-                    <a href="#">POV.it</a>
+        <div class="wrapper">
+            <aside id="sidebar">
+                <div class="d-flex">
+                    <button class="toggle-btn menu-logo" type="button">
+                        <i class="material-symbols-outlined mr-10">
+                            menu
+                        </i>
+                    </button>
+                    <div class="sidebar-logo">
+                        <a href="#">POV.it</a>
+                    </div>
                 </div>
+
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
@@ -253,12 +250,14 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
+
                     <a href="#" class="sidebar-link d-flex align-items-center">
                         <i class="material-symbols-outlined">
-                            home
+                            logout
                         </i>
-                        <span>Home</span>
+                        <span>Logout</span>
                     </a>
+
                 </li>
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link d-flex align-items-center">
@@ -295,13 +294,16 @@
             </div>
         </aside>
 
+
         <!-- Overlay -->
         <div id="overlay" class="overlay" style="display: none;"></div>
 
         <div class="main d-flex p-3 w-100">
             <div class="d-flex flex-column" style="flex: 0 0 70%">@yield('dashboard')</div>
             <div class="d-flex" style="flex: 0 0 30%">@yield('closeFriend')</div>
+
         </div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
@@ -354,6 +356,21 @@
             });
         });
     </script>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+            crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+        <script>
+            const hamBurger = document.querySelector(".toggle-btn");
+
+            hamBurger.addEventListener("click", function () {
+            document.querySelector("#sidebar").classList.toggle("expand");
+            });
+        </script>
+    <script src="js/profileUpdate.js"></script>
+
 
     @yield('extra-js')
 

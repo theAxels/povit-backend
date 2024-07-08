@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CloseFriendController;
 use App\Http\Controllers\MainController;
 use App\Http\Middleware\isAdmin;
 use App\Http\Middleware\isLogin;
@@ -33,7 +34,18 @@ Route::post('/login',[AuthController::class, 'login'])->name('login_store')->mid
 
 Route::resource('admin', AdminController::class)->middleware([isLogin::class, isAdmin::class]);
 
+
+#update profile
+Route::post('/updateProfile', [AuthController::class, 'updateProfile'])->name('update.profile');
+Route::post('/update-username', [AuthController::class, 'updateUsername'])->name('update.username');
+Route::post('/update-profile-desc', [AuthController::class, 'updateProfileDesc'])->name('update.profile.desc');
+
+
 Route::get('/friends', function(){
  return view("components.friendslayout");
 });
+
+Route::get('/close-friends', [CloseFriendController::class, 'index'])->name('closeFriends')->middleware(isLogin::class);
+Route::post('/users/{friendId}/follow', [MainController::class, 'follow'])->name('follow');
+Route::delete('/users/{friendId}/unfollow', [MainController::class, 'unfollow'])->name('unfollow');
 

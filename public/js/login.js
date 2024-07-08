@@ -4,8 +4,6 @@
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
 
-
-
     const firebaseConfig = {
         apiKey: "AIzaSyBxtqymOnQBquDrCV4CHJxE0LFbzUvn25k",
         authDomain: "povit-webprog.firebaseapp.com",
@@ -17,13 +15,13 @@
         measurementId: "G-317Q6LQ25E"
     };
     const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+    const auth = getAuth(app);
 
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('form');
     const email = document.getElementById('email');
     const password = document.getElementById('password');
-
+  
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         validateInputs();
