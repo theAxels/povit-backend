@@ -25,20 +25,11 @@ class MainController extends Controller
         // dd($friendsPosts);
 
         // You Might Know DONE
-<<<<<<< HEAD
-        $youMightKnow = $user->youMightKnow;
+        $youMightKnow = $user->youMightKnow();
 
         // dd($user);
         // dd($friendsPosts);
-        return view('main.main', ['user'=> $user, 'images' => $friendsPosts, 'friends' => $friends, 'youMightKnow' => $youMightKnow]);
-=======
-
-        $youMightKnow = $user->youMightKnow();
-
-
-        return view('dashboard', ['images' => $friendsPosts, 'friends' => $friends, 'youMightKnow' => $youMightKnow]);
-
->>>>>>> d19f8efd134d165cde9943a124dad2f5c09cdcf6
+        return view('dashboard', ['user'=> $user, 'images' => $friendsPosts, 'friends' => $friends, 'youMightKnow' => $youMightKnow]);
         // tiap user yang ada user id bisa ngepost image,
         // kalau mau ngambil data temen temen nya, berarti harus ambil user id punya semua temen nya
         // abis itu ambil image nya temen temennya
