@@ -73,7 +73,7 @@
             <a class="nav-link" href="#"><i class="bi bi-chat"></i>Chat</a>
             <a class="nav-link" href="#"><i class="bi bi-star"></i>Close Friend</a>
             <a class="nav-link" href="#"><i class="bi bi-clock-history"></i>History</a>
-            <a class="nav-link" href="#"><i class="bi bi-box-arrow-right"></i>Log out</a>
+            <a class="nav-link" href="/logout"><i class="bi bi-box-arrow-right"></i>Log out</a>
         </nav>
     </div>
 

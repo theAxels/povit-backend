@@ -5,6 +5,7 @@
 @section('dashboard')
 
 <div class="container">
+    {{-- @extends('components.friendslayout') --}}
     @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
@@ -24,6 +25,7 @@
         @endif
 
     <h1>Friends List</h1>
+
     @if ($friends->isEmpty())
         <p>You have no friends.</p>
     @else
@@ -38,7 +40,6 @@
             @endforeach
         </ul>
     @endif
-
     <h1>You Might Know</h1>
     @if ($youMightKnow->isEmpty())
         <p>No suggestions available.</p>
@@ -55,7 +56,7 @@
         </ul>
     @endif
         <div>
-            @foreach ($images as $post)
+            {{-- @foreach ($images as $post)
                 <div class="post">
                     <h2>{{ $post->caption }}</h2>
                     @if ($post->pict)
@@ -65,7 +66,7 @@
                     <p>Location: {{ $post->location }}</p>
                     <p>Posted at: {{ $post->created_at }}</p>
                 </div>
-            @endforeach
+            @endforeach --}}
             {{-- tes data udah keluar --}}
         </div>
         <h1 class="text-center">Laravel webcam capture image and save from camera - ItSolutionStuff.com</h1>
@@ -83,7 +84,7 @@
                     <div id="results">Your captured image will appear here...</div>
                 </div>
                 <div class="col-md-6" id="buttonSave">
-                    
+
                 </div>
                 <div class="col-md-12 text-center">
                     <br/>
@@ -92,6 +93,7 @@
             </div>
         </form>
     </div>
+    {{-- @extends('components.friendslayout'); --}}
 @endsection
 
 <script>
