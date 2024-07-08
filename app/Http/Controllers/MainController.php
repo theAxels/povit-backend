@@ -20,7 +20,7 @@ class MainController extends Controller
 
         // Get Friend List DONE
         $friends = $user->friends;
-      
+
         $friendsPosts = Post::whereIn('user_id', $user->friends->pluck('id'))->get();
         // dd($friendsPosts);
 
@@ -28,13 +28,6 @@ class MainController extends Controller
 
         $youMightKnow = $user->youMightKnow();
 
-        // return view('main.main', [
-        //     'friends' => $friends,
-        //     'youMightKnow' => $youMightKnow,
-        // ]);
-
-
-        // dd($friendsPosts);
 
         return view('dashboard', ['images' => $friendsPosts, 'friends' => $friends, 'youMightKnow' => $youMightKnow]);
 
@@ -54,14 +47,14 @@ class MainController extends Controller
                 'location' => 'required',
                 'is_closed_friend' => 'required',
             ]);
-    
+
             $photo_file = $request->file('pict');
             $extension = $photo_file->extension();
             $imageName = date('dmyHis') . uniqid() . '.' . $extension;
             $photo_file->move(public_path('user_post'), $imageName);
-    
+
             DB::beginTransaction();
-    
+
             $post = Post::create([
                 'user_id' => $user->id,
                 'pict' => $imageName,
@@ -69,9 +62,9 @@ class MainController extends Controller
                 'location' => $request->location,
                 'is_closed_friend' => $request->is_closed_friend,
             ]);
-    
+
             DB::commit();
-    
+
             return redirect()->route('main');
         } catch (\Exception $e) {
             DB::rollback();
@@ -79,14 +72,14 @@ class MainController extends Controller
         }
     }
 
-    public function follow($friendId){   
+    public function follow($friendId){
         try {
             $user = auth()->user();
             $friend = User::find($friendId);
             if (!$friend) {
                 throw new \Exception('User not found.');
             }
-    
+
             $user->friends()->attach($friendId);
             return redirect()->route('home')->with('success', 'Successfully followed ' . $friend->name . '.');
         } catch (\Exception $e) {
