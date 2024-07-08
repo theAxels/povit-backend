@@ -6,9 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
+
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
@@ -192,6 +195,7 @@ a.sidebar-link:hover {
 
 @yield('extra-css')
 
+
 </head>
 
 <body>
@@ -207,113 +211,152 @@ a.sidebar-link:hover {
                         <a href="#">POV.it</a>
                     </div>
                 </div>
-                <ul class="sidebar-nav">
-                    <li class="sidebar-item">
-                        <a href="#" class="sidebar-link flex-column d-flex justify-content-center">
-                            <div class="d-flex">
-                                <!-- ini yang diubah untuk gambar yang dipassing -->
-                                {{-- <i class="lni lni-user"></i>  --}}
-                                <img src="{{Storage::url(auth()->user()->profile_pics)}}" class="user-img" id="image_preview">
-                                <span>Profile</span>
+
+            </div>
+            <ul class="sidebar-nav">
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link flex-column d-flex justify-content-center">
+                        <div class="d-flex">
+                            <i class="lni lni-user"></i>
+                            <span>Profile</span>
+                        </div>
+                        <div class="profileDetail w-100">
+                            <div class="mb-3 mt-1 ">
+                                <button class="btn btn-light btn-sm">Edit Picture</button>
                             </div>
-
-                            <!-- hidden detail navbar -->
-                            <div class="profileDetail w-100">
-                                <div class="mb-3 mt-1 ">
-                                   
-                                    <form action="{{ route('update.profile') }}" method="POST" enctype="multipart/form-data" id="profileForm" >
-                                        @csrf
-                                        <input type="file" name="profile_pics" id="profile_pics" class="form-control d-none"> 
-                                        <button type="button" class="btn btn-light btn-sm edit-profile-pic">Edit Picture</button>
-                                        <button type="submit" class="d-none" id="hiddenSubmitButton"></button>
-                                    </form>
-                                </div>
-
-
-                                <div class="mb-3">
-                                    <span class="form-label" style="font-size: 14px">Username</span>
-                                    <form action="{{ route('update.username') }}" method="POST" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="d-flex">
-                                            <input type="text" class="form-control" id="username_input" name="username" value="{{auth()->user()->name}}" disabled>
-                                            <button type="button" class="btn" id="edit-username-btn">
-                                                <i class="material-symbols-outlined">
-                                                    edit_square
-                                                </i>
-                                            </button>
-                                            <button type="submit" class="d-none" id="submitChangeUsr"></button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="mb-1">
-                                    <span class="form-label" style="font-size: 14px">Profile Description</span>
-                                    <form action="{{ route('update.profile.desc') }}" method="POST" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="d-flex ">
-                                            <input type="text" class="form-control" id="desc_input" name="profile_desc" value="{{ auth()->user()->profile_desc }}" disabled>
-                                            <button type="button" class="btn" id="edit-desc-btn">
-                                                <i class="material-symbols-outlined">
-                                                    edit_square
-                                                </i>
-                                            </button>
-                                             <button type="submit" class="d-none" id="submitChangeDesc"></button>
-                                        </div>
-                                    </form>
+                            <div class="mb-3">
+                                <span class="form-label">Username</span>
+                                <div class="d-flex">
+                                    <span>@yield('username')</span>
+                                    <button class="btn">
+                                        <i class="material-symbols-outlined">
+                                            edit_square
+                                        </i>
+                                    </button>
                                 </div>
                             </div>
-                        </a>
+                            <div class="mb-1">
+                                <span class="form-label">Profile Description</span>
+                                <div class="d-flex">
+                                    <span>@yield('description')</span>
+                                    <button class="btn">
+                                        <i class="material-symbols-outlined">
+                                            edit_square
+                                        </i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-item">
 
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="#" class="sidebar-link d-flex align-items-center">
-                            <i class="material-symbols-outlined">
-                                home
-                            </i>
-                            <span>Home</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item">
-                        <a href="#" class="sidebar-link d-flex align-items-center">
-                            <i class="material-symbols-outlined">
-                                chat
-                            </i>
-                            <span>Chat</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="#" class="sidebar-link d-flex align-items-center">
-                            <i class="material-symbols-outlined">
-                                star
-                            </i>
-                            <span>Close Friend</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="#" class="sidebar-link d-flex align-items-center">
-                            <i class="material-symbols-outlined">
-                                photo_library
-                            </i>
-                            <span>History</span>
-                        </a>
-                    </li>
-                </ul>
-                <div class="sidebar-footer">
                     <a href="#" class="sidebar-link d-flex align-items-center">
                         <i class="material-symbols-outlined">
                             logout
                         </i>
                         <span>Logout</span>
                     </a>
-                </div>
-            </aside>
 
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link d-flex align-items-center">
+                        <i class="material-symbols-outlined">
+                            chat
+                        </i>
+                        <span>Chat</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link d-flex align-items-center">
+                        <i class="material-symbols-outlined">
+                            star
+                        </i>
+                        <span>Close Friend</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link d-flex align-items-center">
+                        <i class="material-symbols-outlined">
+                            photo_library
+                        </i>
+                        <span>History</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="#" class="sidebar-link d-flex align-items-center">
+                    <i class="material-symbols-outlined">
+                        logout
+                    </i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+
+        <!-- Overlay -->
+        <div id="overlay" class="overlay" style="display: none;"></div>
 
         <div class="main d-flex p-3 w-100">
-            <div class="d-flex" style="flex: 0 0 70%">@yield('dashboard')</div>
+            <div class="d-flex flex-column" style="flex: 0 0 70%">@yield('dashboard')</div>
             <div class="d-flex" style="flex: 0 0 30%">@yield('closeFriend')</div>
 
         </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamBurger = document.querySelector(".toggle-btn");
+            const overlay = document.querySelector("#overlay");
+            const sidebar = document.querySelector("#sidebar");
+
+            // Fungsi untuk meng-expand atau menutup sidebar
+            const toggleSidebar = () => {
+                sidebar.classList.toggle("expand");
+                overlay.style.display = sidebar.classList.contains("expand") ? "block" : "none";
+            };
+
+            // Fungsi untuk menutup sidebar
+            const closeSidebar = () => {
+                sidebar.classList.remove("expand");
+                overlay.style.display = "none";
+            };
+
+            // Ketika hamburger di-klik
+            hamBurger.addEventListener("click", (e) => {
+                e.stopPropagation(); // Mencegah event bubbling
+                toggleSidebar();
+            });
+
+            // Ketika sidebar di-klik, meng-expand jika tidak expand
+            sidebar.addEventListener("click", (e) => {
+                if (!sidebar.classList.contains("expand")) {
+                    e.stopPropagation(); // Mencegah event bubbling
+                    toggleSidebar();
+                }
+            });
+
+            // Ketika overlay di-klik, menutup sidebar
+            overlay.addEventListener("click", (e) => {
+                e.stopPropagation(); // Mencegah event bubbling
+                closeSidebar();
+            });
+
+            // Ketika klik di luar sidebar dan hamburger saat expand, menutup sidebar
+            document.addEventListener("click", (e) => {
+                if (sidebar.classList.contains("expand") && !sidebar.contains(e.target) && !hamBurger.contains(e.target)) {
+                    closeSidebar();
+                }
+            });
+        });
+    </script>
+
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
@@ -327,6 +370,7 @@ a.sidebar-link:hover {
             });
         </script>
     <script src="js/profileUpdate.js"></script>
+
 
     @yield('extra-js')
 

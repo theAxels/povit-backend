@@ -1,0 +1,71 @@
+.center-box {
+    width: 60%;
+    height: 600px;
+    background-color: #d3d3d3;
+    border-radius: 25px;
+    border: black 2px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.circle-btn {
+    width: 80px;
+    height: 80px;
+    background-color: white;
+    border-radius: 50%;
+    border: 10px solid pink;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.image-icon {
+    position: absolute;
+    bottom: 25px;
+    left: 10%;
+    font-size: 30px;
+    color: #5F6368;
+}
+
+.history-text {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.material-symbols-outlined {
+    font-size: 400%;
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24;
+}
+
+a {
+    color: #5F6368;
+}
+
+.carousel-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Adjust the height as needed */
+    background-color: #f8f9fa; /* Optional: Add a background color for better visibility */
+}
+
+.carousel-item h2 {
+    font-size: 1.5rem; /* Adjusted for better visibility */
+    color: #000;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: #000; /* Change arrow color */
+    background-size: 100%, 100%; /* Adjust background size for better visibility */
+    border-radius: 50%; /* Optional: Add a border radius for better aesthetics */
+}
