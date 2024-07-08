@@ -10,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
@@ -38,7 +39,7 @@ body {
 }
 
 .wrapper {
-    display: flex;
+    /* display: flex; */
 }
 
 .main {
@@ -183,10 +184,16 @@ a.sidebar-link:hover {
 .user-img{
     width: 45px;
     height: 45px;
-    border-radius: 50%; 
+    border-radius: 50%;
     margin-bottom: 2%;
     /* margin: auto; */
 }
+
+#staticBackdrop {
+  z-index: 9999;
+}
+
+
 
 </style>
 
@@ -213,17 +220,17 @@ a.sidebar-link:hover {
                             <div class="d-flex">
                                 <!-- ini yang diubah untuk gambar yang dipassing -->
                                 {{-- <i class="lni lni-user"></i>  --}}
-                                <img src="{{Storage::url(auth()->user()->profile_pics)}}" class="user-img" id="image_preview">
+                                <img src="{{asset('profile_pics/'.$user->profile_pics)}}" class="user-img" id="image_preview">
                                 <span>Profile</span>
                             </div>
 
                             <!-- hidden detail navbar -->
                             <div class="profileDetail w-100">
                                 <div class="mb-3 mt-1 ">
-                                   
+
                                     <form action="{{ route('update.profile') }}" method="POST" enctype="multipart/form-data" id="profileForm" >
                                         @csrf
-                                        <input type="file" name="profile_pics" id="profile_pics" class="form-control d-none"> 
+                                        <input type="file" name="profile_pics" id="profile_pics" class="form-control d-none">
                                         <button type="button" class="btn btn-light btn-sm edit-profile-pic">Edit Picture</button>
                                         <button type="submit" class="d-none" id="hiddenSubmitButton"></button>
                                     </form>
@@ -281,14 +288,17 @@ a.sidebar-link:hover {
                             <span>Chat</span>
                         </a>
                     </li>
+
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link d-flex align-items-center">
-                            <i class="material-symbols-outlined">
-                                star
-                            </i>
-                            <span>Close Friend</span>
+                        <a href="#" class="sidebar-link d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                          <i class="material-symbols-outlined">
+                            star
+                          </i>
+                          <span>Close Friend</span>
                         </a>
+
                     </li>
+
                     <li class="sidebar-item">
                         <a href="#" class="sidebar-link d-flex align-items-center">
                             <i class="material-symbols-outlined">
@@ -298,6 +308,9 @@ a.sidebar-link:hover {
                         </a>
                     </li>
                 </ul>
+
+                @include('main.closefriend')
+
                 <div class="sidebar-footer">
                     <a href="#" class="sidebar-link d-flex align-items-center">
                         <i class="material-symbols-outlined">

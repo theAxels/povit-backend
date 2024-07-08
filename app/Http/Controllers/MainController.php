@@ -19,20 +19,16 @@ class MainController extends Controller
         // Get Friend List DONE
 
         $friends = $user->friends;
-      
+
         $friendsPosts = Post::whereIn('user_id', $user->friends->pluck('id'))->get();
         // dd($friendsPosts);
 
         // You Might Know DONE
         $youMightKnow = $user->youMightKnow;
-        return view('main.main', [
-            'friends' => $friends,
-            'youMightKnow' => $youMightKnow,
-        ]);
 
-
+        // dd($user);
         // dd($friendsPosts);
-        return view('main.main', ['images' => $friendsPosts, 'friends' => $friends, 'recommend' => $youMightKnow]);
+        return view('main.main', ['user'=> $user, 'images' => $friendsPosts, 'friends' => $friends, 'youMightKnow' => $youMightKnow]);
         // tiap user yang ada user id bisa ngepost image,
         // kalau mau ngambil data temen temen nya, berarti harus ambil user id punya semua temen nya
         // abis itu ambil image nya temen temennya

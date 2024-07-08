@@ -44,3 +44,7 @@ Route::post('/update-profile-desc', [AuthController::class, 'updateProfileDesc']
 Route::get('/friends', function(){
  return view("components.friendslayout");
 });
+
+Route::get('/close', function(){
+    return view("main.closefriend");
+})->name('close');
