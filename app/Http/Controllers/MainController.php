@@ -26,7 +26,7 @@ class MainController extends Controller
                                 ->where('is_closed_friend', true)
                                 ->get();
         $friendsPosts = $openFriendsPosts->merge($closedFriendsPosts);
-        return view('main.main', ['images' => $friendsPosts, 'friends' => $friends, 'youMightKnow' => $youMightKnow]);
+        return view('dashboard', ['posts' => $friendsPosts, 'friends' => $friends, 'youMightKnow' => $youMightKnow]);
     }
 
     public function store(Request $request){
@@ -55,7 +55,6 @@ class MainController extends Controller
             ]);
 
             DB::commit();
-
             return redirect()->route('main');
         } catch (\Exception $e) {
             DB::rollback();
