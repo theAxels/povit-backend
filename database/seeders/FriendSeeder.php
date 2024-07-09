@@ -32,5 +32,14 @@ class FriendSeeder extends Seeder
             'user_id' => 3,
             'friend_id' => 2,
         ]);
+        Friend::create([
+            'user_id' => 3,
+            'friend_id' => 5,
+        ]);
+        Friend::create([
+            'user_id' => 5,
+            'friend_id' => 3,
+        ]);
+
     }
 }

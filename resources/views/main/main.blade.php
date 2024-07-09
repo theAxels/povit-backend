@@ -120,6 +120,8 @@
         });
     }
 
+    
+
     // function save_to_gallery() {
     //     var data_uri = $(".image-tag").val();
     //     if (data_uri) {
