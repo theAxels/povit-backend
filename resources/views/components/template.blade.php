@@ -299,7 +299,26 @@
         <div id="overlay" class="overlay" style="display: none;"></div>
 
         <div class="main d-flex p-3 w-100">
-            <div class="d-flex flex-column" style="flex: 0 0 70%">@yield('dashboard')</div>
+            <div class="d-flex flex-column" style="flex: 0 0 70%">
+                @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+
+                @if(session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                @yield('dashboard')
+            </div>
             <div class="d-flex" style="flex: 0 0 30%">@yield('closeFriend')</div>
         </div>
     </div>

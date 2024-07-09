@@ -25,5 +25,13 @@ class CloseFriendSeeder extends Seeder
             'user_id' => 3,
             'friend_id' => 2,
         ]);
+        CloseFriend::create([
+            'user_id' => 4,
+            'friend_id' => 2,
+        ]);
+        CloseFriend::create([
+            'user_id' => 5,
+            'friend_id' => 2,
+        ]);
     }
 }

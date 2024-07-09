@@ -41,9 +41,19 @@ class PostSeeder extends Seeder
             'location' => 'South Korea',
             'is_closed_friend' => true,
         ]);
-
-
-
-
+        Post::create([
+            'user_id' => 4,
+            'pict' => 'post1.jpeg',
+            'caption' => 'Close friendnya sarah',
+            'location' => 'Bekasih',
+            'is_closed_friend' => true,
+        ]);
+        Post::create([
+            'user_id' => 5,
+            'pict' => 'post2.jpg',
+            'caption' => 'close friend postnya gid',
+            'location' => 'Bandungs',
+            'is_closed_friend' => true,
+        ]);
     }
 }
