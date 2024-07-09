@@ -93,7 +93,6 @@
             </div>
         </form>
     </div>
-    {{-- @extends('components.friendslayout'); --}}
 @endsection
 
 <script>
@@ -104,7 +103,6 @@
             image_format: 'jpeg',
             jpeg_quality: 90
         });
-
         Webcam.attach('#my_camera');
     });
 
