@@ -8,38 +8,16 @@
 
 @section('dashboard')
     <div class="camera w-100 d-flex flex-column justify-content-center p-3 align-items-center" style="margin-left: 70px;">
-        <div class="center-box">
+        <div class="center-box" id="kamera">
             <div id="my_camera" class="my_camera"></div>
             <input type="button" class="circle-btn" onClick="take_snapshot()""></input>
-            <input type="hidden" name="image" class="image-tag">
             <a class="" href="#">
                 <span class="material-symbols-outlined image-icon" style="color: #FFFFFF; font-size: 4rem;">
                     image
                 </span>
             </a>
-            {{-- <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false">
-                <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    <img src="..." class="d-block w-100" alt="kotak">
-                  </div>
-                  <div class="carousel-item">
-                    <img src="..." class="d-block w-100" alt="bulet">
-                  </div>
-                  <div class="carousel-item">
-                    <img src="..." class="d-block w-100" alt="segitigas">
-                  </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
-            </div> --}}
         </div>
-        <div class="history-text">
+        <div class="history-text" id="historyArrow">
             <a href="#">
                 <p class="mb-0">History</p>
                 <span class="material-symbols-outlined">
@@ -47,7 +25,41 @@
                 </span>
             </a>
         </div>
-        {{-- <div id="results">Your captured image will appear here...</div> --}}
+        <form id="hasil" class="h-100 w-100 flex-column justify-content-center align-items-center" style="display: none;" method="POST" action="{{ route('post_image') }}">
+            @csrf
+            <div class="text-center py-1">
+                <h6>Sent to</h6>
+            </div>
+            <div class="center-box d-flex flex-column justify-content-center align-items-center" id="results">
+                <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false" style="bottom: 15%;">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <input type="text" name="caption" placeholder="Add a message ...">
+                            {{-- <img src="..." class="d-block w-100" alt="kotak"> --}}
+                        </div>
+                        <div class="carousel-item">
+                            <input type="text" name="location" placeholder="Add a location ...">
+                            {{-- <img src="..." class="d-block w-100" alt="bulet"> --}}
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                <button type="submit" class="circle-btn d-flex justify-content-center align-items-center">
+                    <span class="material-symbols-outlined" style="font-size: 280%">
+                        send
+                    </span>
+                </button>
+            </div>
+            <input type="hidden" name="image" class="image-tag">
+            
+        </form>
     </div>
 @endsection
 @section('closeFriend')
@@ -162,7 +174,10 @@
         Webcam.snap(function(data_uri) {
             $(".image-tag").val(data_uri);
             console.log(data_uri);
-            document.getElementById('results').innerHTML = '<img src="' + data_uri + '"/>';
+            document.getElementById('kamera').style.display = 'none';
+            document.getElementById('historyArrow').style.display = 'none';
+            document.getElementById('results').innerHTML += '<img class="my_camera" src="' + data_uri + '"/>';
+            document.getElementById('hasil').style.display = 'flex';
         });
     }
 </script>
