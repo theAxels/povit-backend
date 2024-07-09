@@ -14,28 +14,19 @@ class MainController extends Controller
     public function index()
     {
         $user = Auth::user();
-        // $friendsPosts = Post::whereIn('friend_id', $user->friends->pluck('id'))->get();
-        // dd($friendsPosts);
-        // return view('main.main', ['images' => $friendsPosts]);
-
-        // Get Friend List DONE
         $friends = $user->friends;
-
-        $friendsPosts = Post::whereIn('user_id', $user->friends->pluck('id'))->get();
-        // dd($friendsPosts);
-
-        // You Might Know DONE
-
         $youMightKnow = $user->youMightKnow();
-
-
-        return view('dashboard', ['images' => $friendsPosts, 'friends' => $friends, 'youMightKnow' => $youMightKnow]);
-
-        // tiap user yang ada user id bisa ngepost image,
-        // kalau mau ngambil data temen temen nya, berarti harus ambil user id punya semua temen nya
-        // abis itu ambil image nya temen temennya
-
-        // Take the friend which user id is the user's id
+        // $friendsPosts = Post::whereIn('user_id', $user->friends->pluck('id'))->get();
+        $friendsIds = $user->friends->pluck('id')->toArray();
+        $openFriendsPosts = Post::whereIn('user_id', $friendsIds)
+                                ->where('is_closed_friend', false)
+                                ->get();
+        $isCloseFriendOfIds = $user->isCloseFriendOf->pluck('id')->toArray();
+        $closedFriendsPosts = Post::whereIn('user_id', $isCloseFriendOfIds)
+                                ->where('is_closed_friend', true)
+                                ->get();
+        $friendsPosts = $openFriendsPosts->merge($closedFriendsPosts);
+        return view('main.main', ['images' => $friendsPosts, 'friends' => $friends, 'youMightKnow' => $youMightKnow]);
     }
 
     public function store(Request $request){
@@ -79,7 +70,6 @@ class MainController extends Controller
             if (!$friend) {
                 throw new \Exception('User not found.');
             }
-
             $user->friends()->attach($friendId);
             return redirect()->route('home')->with('success', 'Successfully followed ' . $friend->name . '.');
         } catch (\Exception $e) {
