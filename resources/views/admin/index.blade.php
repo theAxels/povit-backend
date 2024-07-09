@@ -4,6 +4,9 @@
 
 @section('content')
     <a href="{{ route('logout') }}" class="btn btn-primary">Log Out</a>
+    <div class="text-end mb-5">
+        <a href="" class="btn btn-primary"></a>
+    </div>
 
     <form action="" method="get">
         <input type="search" name="search" value="{{session('key')}}" placeholder="Search..." class="form-control my-3">
