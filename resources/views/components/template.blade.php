@@ -282,7 +282,7 @@
                 </li>
             </ul>
             <div class="sidebar-footer">
-                <a href="#" class="sidebar-link d-flex align-items-center">
+                <a href="{{ route('logout') }}" class="sidebar-link d-flex align-items-center">
                     <i class="material-symbols-outlined">
                         logout
                     </i>
