@@ -7,7 +7,7 @@
 @endsection
 
 @section('dashboard')
-    <div class="camera w-100 d-flex flex-column justify-content-center p-3 align-items-center" style="margin-left: 70px;">
+    <div class="camera w-100 d-flex flex-column justify-content-center p-1 align-items-center" style="margin-left: 70px;">
         <div class="center-box" id="kamera">
             <div id="my_camera" class="my_camera"></div>
             <input type="button" class="circle-btn" onClick="take_snapshot()""></input>
@@ -26,50 +26,67 @@
         </div>
         <form id="hasil" class="h-100 w-100 flex-column justify-content-center align-items-center" style="display: none;" method="POST" action="{{ route('post_image') }}" enctype="multipart/form-data">
             @csrf
-            <div class="text-center py-1">
-                <h6>Sent to</h6>
-            </div>
-            <div class="center-box d-flex flex-column justify-content-center align-items-center" id="results" style="border: 2px solid #000000;">
-                <img class="my_camera" id="previewGambar">              
-            </div>
-            <input type="file" class="d-none" name="pict" id="pictInput" accept="image/*">
-            <div class="d-flex flex-row justify-content-center align-items-center w-100 mt-2">
-                <div id="carouselExampleControlsNoTouching" class="carousel slide justify-content-center" data-bs-touch="false" style="bottom: 24%; z-index: 11; padding: 0; margin: 0;">
+            <div class="d-flex flex-row align-items-center justify-content-between py-1 position-relative w-100 mb-4">
+                <div style="flex: 1; text-align: center;">
+                    <h5>Sent to</h5>
+                </div>
+                <button type="button" title="Save Images" style="border: none; background: none; outline: none; position: absolute; right: 18%;" id="downloadCaptured">
+                </button>
+            </div>            
+            <div class="center-box d-flex flex-column align-items-center" id="results" style="border: 2px solid #000000;">
+                <button type="button" style="border: none; background: none; outline: none; position: absolute; left: 10px; top: 10px;" onclick="showCamera()">
+                    <i class="fa-solid fa-circle-xmark" style="color: #000000; font-size: 20px;"></i>
+                </button>
+                <div id="carouselExample" class="carousel slide position-absolute w-70" style="bottom: 20px;">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <input type="text" name="caption" class="form-control" placeholder="Add a message ...">
+                            <div class="form-group">
+                                <input type="text" name="caption" class="form-control caption-input" placeholder="Add a message ...">
+                            </div>
                         </div>
                         <div class="carousel-item">
-                            <div class="input-group">
-                                <input type="text" name="location" class="form-control" id="locationInput" placeholder="Add a location ...">
-                                <button type="button" class="btn btn-primary" onclick="getCurrentLocation()">Get Current Location</button>
+                            <div class="form-group d-flex flex-row justify-content-center">
+                                <input type="text" name="location" class="form-control  location-input" id="locationInput" placeholder="Add a location ...">
+                                <button type="button" class="location-button" onclick="getCurrentLocation()" style="border: none; outline: none;">
+                                    <span class="material-symbols-outlined">my_location</span>
+                                </button>
+                            </div>
+                            <div class="d-block w-100">
                             </div>
                         </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>  
+                         
             </div>
-            <div class="d-flex flex-row justify-content-between align-items-center mt-2 w-100 p-4">
-                <input type="radio" id="group-radio" name="is_closed_friend" class="radio-btn" value="false" checked>
-                <label for="group-radio" class="circleButton d-flex justify-content-center align-items-center">
-                    <span class="material-symbols-outlined">group</span>
-                </label>
-                <div class="d-flex flex-column align-items-center">
-                    <button type="submit" class="send-btn d-flex justify-content-center align-items-center">
-                        <span class="material-symbols-outlined" style="font-size: 280%">send</span>
-                    </button>
+            <input type="file" class="d-none" name="pict" id="pictInput" accept="image/*">
+            <div class="d-flex flex-row justify-content-evenly align-items-center mt-4 w-100">
+                <div id="all" class="d-flex flex-column justify-content-center align-items-center">
+                    <input type="radio" id="group-radio" name="is_closed_friend" class="radio-btn" value="false" checked>
+                    <label for="group-radio" class="circleButton d-flex justify-content-center align-items-center">
+                        <span class="material-symbols-outlined">group</span>
+                    </label>
+                    <h6 class="mt-1">All</h6>
                 </div>
-                <input type="radio" id="star-radio" name="is_closed_friend" class="radio-btn" value="true">
-                <label for="star-radio" class="circleButton d-flex justify-content-center align-items-center">
-                    <span class="material-symbols-outlined">star</span>
-                </label>
+                <div class="d-flex justify-content-center align-items-center">
+                    <button type="submit" title="Create Post" class="send-btn d-flex justify-content-center align-items-center">
+                        <span class="material-symbols-outlined" style="font-size: 280%">send</span>
+                    </button> 
+                </div> 
+                <div id="cf" class="d-flex flex-column justify-content-center align-items-center">
+                    <input type="radio" id="star-radio" name="is_closed_friend" class="radio-btn" value="true">
+                    <label for="star-radio" class="circleButton d-flex justify-content-center align-items-center">
+                        <span class="material-symbols-outlined">star</span>
+                    </label>
+                    <h6 class="mt-1">Close Friends</h6>
+                </div>
             </div>
         </form>
     </div>
@@ -186,6 +203,14 @@
         Webcam.reset();
         document.getElementById('kamera').style.display = 'none';
         document.getElementById('historyArrow').style.display = 'none';
+        document.getElementById('downloadCaptured').innerHTML = '';
+    }
+
+    function showCamera() {
+        document.getElementById('kamera').style.display = 'block';
+        document.getElementById('historyArrow').style.display = 'block';
+        Webcam.attach('#my_camera');
+        document.getElementById('hasil').style.display = 'none';
     }
 
     function dataURItoBlob(dataURI) {
@@ -208,8 +233,14 @@
             var dataTransfer = new DataTransfer();
             dataTransfer.items.add(file);
             fileInput.files = dataTransfer.files;
+            var now = new Date();
+            var timestamp = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}`;
+            var downloadLink = `<a href="${data_uri}" download="povit_${timestamp}.jpg" style="color: black;">
+                    <span class="material-symbols-outlined" style="font-size: 250%">download</span>
+                </a>`;
+            document.getElementById('downloadCaptured').innerHTML = downloadLink;
             hideCamera();
-            document.getElementById('previewGambar').src = data_uri;
+            document.getElementById('results').style.backgroundImage = `url(${data_uri})`;
             document.getElementById('hasil').style.display = 'flex';
         });
     }
@@ -220,7 +251,7 @@
             const reader = new FileReader();
             reader.onload = function(e) {
                 hideCamera();
-                document.getElementById('previewGambar').src = e.target.result;
+                document.getElementById('results').style.backgroundImage = `url(${e.target.result})`;
                 const dataTransfer = new DataTransfer();
                 dataTransfer.items.add(file);
                 const fileInput = document.getElementById('pictInput');
