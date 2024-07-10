@@ -31,17 +31,19 @@ class MainController extends Controller
 
     public function store(Request $request){
         try {
+            // dd($request);
             $user = Auth::user();
             $request->validate([
-                'pict' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'caption' => 'required',
-                'location' => 'required',
+                'pict' => 'required|image',
                 'is_closed_friend' => 'required',
             ]);
 
+            if (!$request->hasFile('pict')) {
+                throw new \Exception('No file uploaded');
+            }
+
             $photo_file = $request->file('pict');
-            $extension = $photo_file->extension();
-            $imageName = date('dmyHis') . uniqid() . '.' . $extension;
+            $imageName = date('dmyHis') . uniqid() . '.' . $photo_file->getClientOriginalExtension();
             $photo_file->move(public_path('user_post'), $imageName);
 
             DB::beginTransaction();
@@ -51,11 +53,11 @@ class MainController extends Controller
                 'pict' => $imageName,
                 'caption' => $request->caption,
                 'location' => $request->location,
-                'is_closed_friend' => $request->is_closed_friend,
+                'is_closed_friend' => $request->is_closed_friend === 'true',
             ]);
 
             DB::commit();
-            return redirect()->route('main');
+            return redirect()->route('home')->with('success', 'Successfully add new post');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', 'Failed to create post: ' . $e->getMessage());

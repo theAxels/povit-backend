@@ -1,6 +1,6 @@
 .center-box {
-    width: 80%;
-    height: 80%;
+    width: 70%;
+    height: 70%;
     /* aspect-ratio: 1; */
     border-radius: 25px;
     display: flex;
@@ -10,13 +10,14 @@
     overflow: hidden;
     /* margin: auto; */
     /* margin-top: 50px; */
+    z-index: 10;
 }
 
 .my_camera{
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    border-radius: 15px;
+    object-fit: fill;
+    /* border-radius: 15px; */
 }
 
 .circle-btn {
@@ -29,6 +30,17 @@
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 11;
+}
+
+.send-btn {
+    width: 80px;
+    height: 80px;
+    background-color: white;
+    border-radius: 50%;
+    border: 10px solid pink;
+    /* position: absolute; */
+    z-index: 11;
 }
 
 .image-icon {
@@ -37,6 +49,39 @@
     left: 10%;
     font-size: 30px;
     color: #5F6368;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.radio-btn {
+    display: none;
+}
+
+.circleButton {
+    border: none;
+    background: none;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.circleButton span {
+    font-size: 2.8rem;
+}
+
+.radio-btn:checked + .circleButton {
+    background-color: #D1D5DB;
+}
+
+.image-icon input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
 }
 
 .history-text {
@@ -71,10 +116,10 @@ a {
 
 .carousel-item {
     display: flex;
+    width: 80%;
     justify-content: center;
     align-items: center;
-    height: 100%; /* Adjust the height as needed */
-    background-color: #f8f9fa; /* Optional: Add a background color for better visibility */
+    height: 100%;
 }
 
 .carousel-item h2 {
