@@ -9,12 +9,14 @@
 @section('dashboard')
     <div class="camera w-100 d-flex flex-column justify-content-center p-1 align-items-center" style="margin-left: 70px;">
         <div class="center-box" id="kamera">
-            <div id="my_camera" class="my_camera"></div>
-            <input type="button" class="circle-btn" onClick="take_snapshot()""></input>
-            <span class="material-symbols-outlined image-icon" style="color: #FFFFFF; font-size: 4rem;">
-                image
-                <input type="file" id="fileInput" accept="image/*">
-            </span>
+            <div id="my_camera"></div>
+            <div class="control-bar p-3">
+                <span class="material-symbols-outlined image-icon" style="font-size: 3rem;">
+                    image
+                    <input type="file" id="fileInput" accept="image/*">
+                </span>
+                <input type="button" class="circle-btn" onClick="take_snapshot()"></input>
+            </div>
         </div>
         <div class="history-text" id="historyArrow">
             <a href="#">
@@ -28,7 +30,7 @@
             @csrf
             <div class="d-flex flex-row align-items-center justify-content-between py-1 position-relative w-100 mb-4">
                 <div style="flex: 1; text-align: center;">
-                    <h5>Sent to</h5>
+                    <h5>Sent to...</h5>
                 </div>
                 <button type="button" title="Save Images" style="border: none; background: none; outline: none; position: absolute; right: 18%;" id="downloadCaptured">
                 </button>
@@ -190,20 +192,24 @@
 <script src="https://kit.fontawesome.com/d84972a54e.js" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function() {
+        const squareSize = 500;
         Webcam.set({
-            width: $('.my_camera').width(),
-            height: $('.my_camera').height(),
+            width: squareSize,
+            height: squareSize,
             image_format: 'jpeg',
             jpeg_quality: 90
         });
-        Webcam.attach('#my_camera');
+        Webcam.attach('#my_camera', function(err) {
+            if (err) {
+                showToast('danger', err);
+            }
+        });
     });
 
     function hideCamera() {
         Webcam.reset();
         document.getElementById('kamera').style.display = 'none';
         document.getElementById('historyArrow').style.display = 'none';
-        document.getElementById('downloadCaptured').innerHTML = '';
     }
 
     function showCamera() {
@@ -226,7 +232,6 @@
 
     function take_snapshot() {
         Webcam.snap(function(data_uri) {
-            $(".image-tag").val(data_uri);
             var imageBlob = dataURItoBlob(data_uri);
             var file = new File([imageBlob], 'webcam.jpg', { type: 'image/jpeg' });
             var fileInput = document.getElementById('pictInput');
@@ -251,6 +256,7 @@
             const reader = new FileReader();
             reader.onload = function(e) {
                 hideCamera();
+                document.getElementById('downloadCaptured').innerHTML = '';
                 document.getElementById('results').style.backgroundImage = `url(${e.target.result})`;
                 const dataTransfer = new DataTransfer();
                 dataTransfer.items.add(file);
@@ -266,14 +272,15 @@
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
         } else {
-            console.log("Geolocation is not supported by this browser.");
+            // console.log("Geolocation is not supported by this browser.");
+            showToast('danger', "Geolocation is not supported by this browser.");
         }
     }
 
     function successCallback(position) {
         var latitude = position.coords.latitude;
         var longitude = position.coords.longitude;
-        console.log("Latitude: " + latitude + ", Longitude: " + longitude);
+        // console.log("Latitude: " + latitude + ", Longitude: " + longitude);
         
         var geocodingUrl = `https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}&api_key=668e49fc91936080425126fsz367958`;
 
@@ -282,33 +289,43 @@
             .then(data => {
                 if (data.display_name) {
                     var placeName = data.display_name;
-                    console.log("Place Name: " + placeName);
-                    
                     document.getElementById('locationInput').value = placeName;
                 } else {
-                    console.log("No display name found in the results.");
+                    showToast('danger', "No display name found in the results.");
                 }
             })
             .catch(error => {
-                console.error("Error fetching geocoding data:", error);
+                showToast('danger', "Error fetching geocoding data:");
             });
     }
 
     function errorCallback(error) {
         switch(error.code) {
             case error.PERMISSION_DENIED:
-                console.log("User denied the request for Geolocation.");
+                showToast('danger', "User denied the request for Geolocation.");
                 break;
             case error.POSITION_UNAVAILABLE:
-                console.log("Location information is unavailable.");
+                showToast('danger', "Location information is unavailable.");
                 break;
             case error.TIMEOUT:
-                console.log("The request to get user location timed out.");
+                showToast('danger', "The request to get user location timed out.");
                 break;
             case error.UNKNOWN_ERROR:
-                console.log("An unknown error occurred.");
+                showToast('danger', "An unknown error occurred.");
                 break;
         }
     }
+
+    function showToast(type, message) {
+        var toast = $('<div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000" data-autohide="true"></div>');
+        toast.addClass('text-bg-' + type);
+        toast.append('<div class="toast-body">' + message + '</div>');
+        $('.toast-container').append(toast);
+        toast.toast('show');
+    }
+
+    $('.toast').on('hidden.bs.toast', function () {
+        $(this).remove();
+    });
 </script>
 @endsection
