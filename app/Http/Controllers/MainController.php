@@ -17,6 +17,7 @@ class MainController extends Controller
         $friends = $user->friends;
         $youMightKnow = $user->youMightKnow();
         // $friendsPosts = Post::whereIn('user_id', $user->friends->pluck('id'))->get();
+        $userPosts = $user->posts;
         $friendsIds = $user->friends->pluck('id')->toArray();
         $openFriendsPosts = Post::whereIn('user_id', $friendsIds)
                                 ->where('is_closed_friend', false)
@@ -26,7 +27,8 @@ class MainController extends Controller
                                 ->where('is_closed_friend', true)
                                 ->get();
         $friendsPosts = $openFriendsPosts->merge($closedFriendsPosts);
-        return view('dashboard', ['posts' => $friendsPosts, 'friends' => $friends, 'youMightKnow' => $youMightKnow]);
+        $homePosts = $userPosts->merge($friendsPosts)->sortByDesc('created_at');
+        return view('dashboard', ['posts' => $homePosts, 'friends' => $friends, 'youMightKnow' => $youMightKnow]);
     }
 
     public function store(Request $request){

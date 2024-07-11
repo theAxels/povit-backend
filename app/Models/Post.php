@@ -18,9 +18,9 @@ class Post extends Model
     ];
 
     // Define a relationship with the User model
-    public function user()
+    public function sender()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     // Define a relationship with the PostTag model
