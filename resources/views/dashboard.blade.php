@@ -192,10 +192,9 @@
 <script src="https://kit.fontawesome.com/d84972a54e.js" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function() {
-        const squareSize = 500;
         Webcam.set({
-            width: squareSize,
-            height: squareSize,
+            width: 500,
+            height: 375,
             image_format: 'jpeg',
             jpeg_quality: 90
         });
