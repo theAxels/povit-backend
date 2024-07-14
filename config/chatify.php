@@ -58,14 +58,10 @@ return [
     | User Avatar
     |-------------------------------------
     */
-    'avatar' => [
-        'storage' => [
-            'disk' => 'public', // assuming 'public' is still your configured disk in filesystems.php
-            'folder' => 'user_profile', // Directly in the 'public' directory
-            'path' => 'user_profile', // Correct path relative to your public directory
-        ],
+    'user_avatar' => [
+        'folder' => 'users-avatar',
+        'default' => 'avatar.png',
     ],
-
 
     /*
     |-------------------------------------
