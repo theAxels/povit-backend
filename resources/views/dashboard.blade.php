@@ -10,7 +10,7 @@
     <div class="camera w-100 d-flex flex-column justify-content-center p-3 align-items-center" style="margin-left: 70px;">
         <div class="center-box" id="kamera">
             <div id="my_camera" class="my_camera"></div>
-            <input type="button" class="circle-btn" onClick="take_snapshot()""></input>
+            <input type="button" class="circle-btn" onClick="take_snapshot()"></input>
             <a class="" href="#">
                 <span class="material-symbols-outlined image-icon" style="color: #FFFFFF; font-size: 4rem;">
                     image
@@ -58,7 +58,7 @@
                 </button>
             </div>
             <input type="hidden" name="image" class="image-tag">
-            
+
         </form>
     </div>
 @endsection
@@ -80,7 +80,7 @@
                 <div class="d-flex justify-content-center align-items-center mb-3 w-100 p-2" style="background-color: #EFBDEE; height: 37px; width: 100%; border-radius: 40px;">
                     <i class="fa-solid fa-magnifying-glass me-2"></i>
                     <h6 class="m-0">Search Contact</h6>
-                </div>                
+                </div>
 
                 <!-- Friends List Section -->
                 <div class="friendSection mt-3 w-100">
