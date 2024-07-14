@@ -170,17 +170,3 @@ input{
     color: lightgrey;
     z-index: 10;
 }
-
-.toast-container {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    z-index: 1000;
-}
-
-.toast {
-    position: relative;
-    max-width: 350px;
-    margin: 10px;
-    opacity: 1;
-}
