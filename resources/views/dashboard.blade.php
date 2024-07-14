@@ -36,7 +36,7 @@
                     </div>
                     <button type="button" title="Save Images" style="border: none; background: none; outline: none; position: absolute; right: 18%;" id="downloadCaptured">
                     </button>
-                </div>            
+                </div>
                 <div class="center-box d-flex flex-column align-items-center" id="results" style="border: 2px solid #000000;">
                     <button type="button" style="border: none; background: none; outline: none; position: absolute; left: 10px; top: 10px;" onclick="showCamera()">
                         <i class="fa-solid fa-circle-xmark" style="color: #000000; font-size: 20px;"></i>
@@ -67,8 +67,8 @@
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
                         </button>
-                    </div>  
-                                
+                    </div>
+
                 </div>
                 <input type="file" class="d-none" name="pict" id="pictInput" accept="image/*">
                 <div class="d-flex flex-row justify-content-between align-items-center mt-4 w-100" style="max-width: 500px;">
@@ -82,8 +82,8 @@
                     <div class="d-flex justify-content-center align-items-center w-100">
                         <button type="submit" title="Create Post" class="send-btn d-flex justify-content-center align-items-center">
                             <span class="material-symbols-outlined" style="font-size: 280%">send</span>
-                        </button> 
-                    </div> 
+                        </button>
+                    </div>
                     <div id="cf" class="d-flex flex-column justify-content-center align-items-center w-100">
                         <input type="radio" id="star-radio" name="is_closed_friend" class="radio-btn" value="true">
                         <label for="star-radio" class="circleButton d-flex justify-content-center align-items-center">
@@ -106,28 +106,17 @@
                         <h2>{{ $post->sender->name }}</h2>
                     </div>
                     <div class="center-box d-flex flex-column align-items-center"style="border: 2px solid #000000;">
-                        <img src="{{ asset('user_post/' . $post->pict) }}" alt="" style="width: 100%; height: 100%; object-fit: cover;">      
+                        <img src="{{ asset('user_post/' . $post->pict) }}" alt="" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <p>{{ $post->caption }}</p>
                     <p>Location: {{ $post->location }}</p>
                     <p>Posted at: {{ $post->created_at }}</p>
                 </div>
             </div>
-        @endforeach
+            <input type="hidden" name="image" class="image-tag">
+
+        </form>
     </div>
-    <div class="page-control">
-        <button class="scroll-button scroll-up" data-label="Previous Post" onclick="scrollUp()">
-            <span class="material-symbols-outlined">
-                arrow_upward
-            </span>
-        </button>
-        <button class="scroll-button scroll-down" data-label="Next Post" onclick="scrollDown()">
-            <span class="material-symbols-outlined">
-                arrow_downward
-            </span>
-        </button>
-    </div>
-</div>
 @endsection
 @section('closeFriend')
 <div class="w-100 h-100 kotak" style="border: 2px solid #EFBDEE; padding: 30px; border-radius: 40px;">
@@ -147,7 +136,7 @@
                 <div class="d-flex justify-content-center align-items-center mb-3 w-100 p-2" style="background-color: #EFBDEE; height: 37px; width: 100%; border-radius: 40px;">
                     <i class="fa-solid fa-magnifying-glass me-2"></i>
                     <h6 class="m-0">Search Contact</h6>
-                </div>                
+                </div>
 
                 <!-- Friends List Section -->
                 <div class="friendSection mt-3 w-100">
@@ -316,7 +305,7 @@
         var latitude = position.coords.latitude;
         var longitude = position.coords.longitude;
         // console.log("Latitude: " + latitude + ", Longitude: " + longitude);
-        
+
         var geocodingUrl = `https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}&api_key=668e49fc91936080425126fsz367958`;
 
         fetch(geocodingUrl)
