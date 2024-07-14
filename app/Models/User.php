@@ -85,4 +85,8 @@ class User extends Authenticatable
                                 ->toArray();
         return User::whereIn('id', $youMightKnowIds)->get();
     }
+    public function getProfilePictureUrlAttribute()
+    {
+        return $this->profile_picture ? asset($this->profile_picture) : asset('default.jpg');
+    }
 }
