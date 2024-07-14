@@ -97,11 +97,6 @@
         @foreach ($posts as $post)
             <div class="camera w-100 d-flex flex-column justify-content-center p-1 align-items-center" style="height: 100vh;">
                 <div class="h-100 w-100 d-flex flex-column justify-content-center align-items-center">
-                    {{-- <div class="d-flex flex-row align-items-center justify-content-between py-1 position-relative w-100 mb-4">
-                        <div style="flex: 1; text-align: center;">
-                            <h5>Sent to...</h5>
-                        </div>
-                    </div>             --}}
                     <div class="text-center">
                         <h2>{{ $post->sender->name }}</h2>
                     </div>
