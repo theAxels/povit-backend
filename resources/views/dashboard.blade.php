@@ -17,7 +17,7 @@
                         image
                         <input type="file" id="fileInput" accept="image/*">
                     </span>
-                    <input type="button" class="circle-btn" onClick="take_snapshot()"></input>
+                    <input type="button" class="circle-btn" onClick="take_snapshot()">
                 </div>
             </div>
             <div class="history-text" id="historyArrow">
@@ -50,7 +50,7 @@
                             </div>
                             <div class="carousel-item">
                                 <div class="form-group d-flex flex-row justify-content-center">
-                                    <input type="text" name="location" class="form-control  location-input" id="locationInput" placeholder="Add a location ...">
+                                    <input type="text" name="location" class="form-control location-input" id="locationInput" placeholder="Add a location ...">
                                     <button type="button" class="location-button" onclick="getCurrentLocation()" style="border: none; outline: none;">
                                         <span class="material-symbols-outlined">my_location</span>
                                     </button>
@@ -68,7 +68,6 @@
                             <span class="visually-hidden">Next</span>
                         </button>
                     </div>
-
                 </div>
                 <input type="file" class="d-none" name="pict" id="pictInput" accept="image/*">
                 <div class="d-flex flex-row justify-content-between align-items-center mt-4 w-100" style="max-width: 500px;">
@@ -97,11 +96,6 @@
         @foreach ($posts as $post)
             <div class="camera w-100 d-flex flex-column justify-content-center p-1 align-items-center" style="height: 100vh;">
                 <div class="h-100 w-100 d-flex flex-column justify-content-center align-items-center">
-                    {{-- <div class="d-flex flex-row align-items-center justify-content-between py-1 position-relative w-100 mb-4">
-                        <div style="flex: 1; text-align: center;">
-                            <h5>Sent to...</h5>
-                        </div>
-                    </div>             --}}
                     <div class="text-center">
                         <h2>{{ $post->sender->name }}</h2>
                     </div>
@@ -114,10 +108,11 @@
                 </div>
             </div>
             <input type="hidden" name="image" class="image-tag">
-
-        </form>
+        @endforeach
     </div>
+</div>
 @endsection
+
 @section('closeFriend')
 <div class="w-100 h-100 kotak" style="border: 2px solid #EFBDEE; padding: 30px; border-radius: 40px;">
     <div class="row">
@@ -162,8 +157,8 @@
                                         <form method="POST" action="{{ route('unfollow', ['friendId' => $friend->id]) }}">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" style="border: none; background: none; outline: none">
-                                                <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px; margin-left: 5px;"></i>
+                                            <button type="submit" style="border: none; background: none; outline: none; margin-left: 15px;">
+                                                <i class="fa-regular fa-trash-can" style="color: #EC354B; font-size: 25px;"></i>
                                             </button>
                                         </form>
                                     </div>
@@ -173,44 +168,11 @@
                     </div>
                 </div>
             </div>
-            @if($youMightKnow->isNotEmpty())
-                <div class="youMightKnow mt-2 h-50">
-                    <h6>You Might Know</h6>
-                    <div class="friendSection w-100">
-                        <div class="scroll w-100">
-                            @foreach ($youMightKnow as $friend)
-                                <div class="d-flex flex-row justify-content-between align-items-center mt-2">
-                                    <div class="kiri d-flex flex-row align-items-center gap-3">
-                                        <!-- Profile Image -->
-                                        <div class="circle">
-                                            <img src="{{ asset('user_profile/'.$friend->profile_pics) }}" alt="Profile Image">
-                                        </div>
-                                        <!-- Friend Name -->
-                                        <div class="text d-flex align-items-center ml-2">
-                                            <h6>{{ $friend->name }}</h6>
-                                        </div>
-                                    </div>
-                                    <!-- Actions -->
-                                    <div class="d-flex align-items-center">
-                                        <div class="kotak-kecil d-flex align-items-center justify-content-center">
-                                            <form method="POST" action="{{ route('follow', ['friendId' => $friend->id]) }}">
-                                                @csrf
-                                                <button type="submit" style="border: none; background: none; outline: none">
-                                                    <div class="text1 m-0">ADD</div>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            @endif
         </div>
     </div>
 </div>
 @endsection
+
 
 @section('extra-js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
