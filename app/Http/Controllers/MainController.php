@@ -17,7 +17,6 @@ class MainController extends Controller
         $friends = $user->friends;
         $youMightKnow = $user->youMightKnow();
         // $friendsPosts = Post::whereIn('user_id', $user->friends->pluck('id'))->get();
-        $userPosts = $user->posts;
         $friendsIds = $user->friends->pluck('id')->toArray();
         $openFriendsPosts = Post::whereIn('user_id', $friendsIds)
                                 ->where('is_closed_friend', false)
@@ -27,25 +26,22 @@ class MainController extends Controller
                                 ->where('is_closed_friend', true)
                                 ->get();
         $friendsPosts = $openFriendsPosts->merge($closedFriendsPosts);
-        $homePosts = $userPosts->merge($friendsPosts)->sortByDesc('created_at');
-        return view('dashboard', ['posts' => $homePosts, 'friends' => $friends, 'youMightKnow' => $youMightKnow]);
+        return view('dashboard', ['posts' => $friendsPosts, 'friends' => $friends, 'youMightKnow' => $youMightKnow]);
     }
 
     public function store(Request $request){
         try {
-            // dd($request);
             $user = Auth::user();
             $request->validate([
-                'pict' => 'required|image',
+                'pict' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'caption' => 'required',
+                'location' => 'required',
                 'is_closed_friend' => 'required',
             ]);
 
-            if (!$request->hasFile('pict')) {
-                throw new \Exception('No file uploaded');
-            }
-
             $photo_file = $request->file('pict');
-            $imageName = date('dmyHis') . uniqid() . '.' . $photo_file->getClientOriginalExtension();
+            $extension = $photo_file->extension();
+            $imageName = date('dmyHis') . uniqid() . '.' . $extension;
             $photo_file->move(public_path('user_post'), $imageName);
 
             DB::beginTransaction();
@@ -55,11 +51,11 @@ class MainController extends Controller
                 'pict' => $imageName,
                 'caption' => $request->caption,
                 'location' => $request->location,
-                'is_closed_friend' => $request->is_closed_friend === 'true',
+                'is_closed_friend' => $request->is_closed_friend,
             ]);
 
             DB::commit();
-            return redirect()->route('home')->with('success', 'Successfully add new post');
+            return redirect()->route('main');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', 'Failed to create post: ' . $e->getMessage());

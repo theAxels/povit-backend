@@ -282,7 +282,7 @@
                 </li>
             </ul>
             <div class="sidebar-footer">
-                <a href="{{ route('logout') }}" class="sidebar-link d-flex align-items-center">
+                <a href="#" class="sidebar-link d-flex align-items-center">
                     <i class="material-symbols-outlined">
                         logout
                     </i>
@@ -293,12 +293,12 @@
 
         <!-- Overlay -->
         <div id="overlay" class="overlay" style="display: none;"></div>
-        <div class="row w-100" style="height: 100vh">
+        <div class="row p-3 w-100" style="height: 100vh">
             <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11;"></div>         
-            <div class="col-8 d-flex">
+            <div class="col-8 d-flex justify-content-center">
                 @yield('dashboard')
             </div>
-            <div class="col-4 m-0 h-100 p-4">
+            <div class="col-4 m-0 h-100">
                 @yield('closeFriend')
             </div>
         </div>        
