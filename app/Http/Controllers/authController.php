@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class AuthController extends Controller
 {
@@ -76,24 +77,36 @@ class AuthController extends Controller
     }
 
     public function updateProfile(Request $request){
-        $request->validate([
-            'profile_pics' => 'required|image|mimes:jpeg,png,jpg|max:2048'
-        ]);
+    $request->validate([
+        'profile_pics' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+    ]);
 
-        if ($request->hasFile('profile_pics')) {
-            $user = Auth::user();
-            $file = $request->file('profile_pics');
-            
-            $pics_name = time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/profile_pics', $pics_name);
-            $user->profile_pics = 'profile_pics/' . $pics_name;
-            $user->save();
+    if ($request->hasFile('profile_pics')) {
+        $user = Auth::user();
 
-            return redirect('/');
+        // Check if user already has a profile image
+        if ($user->profile_pics && $user->profile_pics != 'default.png') {
+            $existingImagePath = public_path('profile_pics/' . $user->profile_pics);
+            if (File::exists($existingImagePath)) {
+                File::delete($existingImagePath);  // Delete the old image
+            }
         }
 
-        return redirect('/');
+        $photo_file = $request->file('profile_pics');
+        $extension = $photo_file->extension();
+        $imageName = date('dmyHis') . uniqid() . '.' . $extension;
+        $photo_file->move(public_path('profile_pics'), $imageName);
+
+        // Update the user's profile image path in the database
+        $user->profile_pics = $imageName;
+        $user->save();
+
+        return redirect('/')->with('success', 'Profile picture updated successfully');
     }
+
+    return redirect('/')->with('error', 'No image file selected');
+}
+
 
     public function updateUsername(Request $request){
         // dd($request->all());
@@ -121,5 +134,5 @@ class AuthController extends Controller
 
         return redirect('/');
     }
-    
+
 }

@@ -29,7 +29,7 @@ class MainController extends Controller
                                 ->get();
         $friendsPosts = $openFriendsPosts->merge($closedFriendsPosts);
         $homePosts = $userPosts->merge($friendsPosts)->sortByDesc('created_at');
-        return view('dashboard', ['posts' => $homePosts, 'friends' => $friends, 'youMightKnow' => $youMightKnow]);
+        return view('dashboard', ['posts' => $homePosts, 'friends' => $friends, 'youMightKnow' => $youMightKnow, 'user'=> $user]);
     }
 
     public function store(Request $request){
