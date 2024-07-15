@@ -129,7 +129,6 @@
     </div>
 </div>
 @endsection
-
 @section('closeFriend')
 <div class="w-100 h-100 kotak" style="border: 2px solid #EFBDEE; padding: 30px; border-radius: 40px;">
     <div class="row">
@@ -174,8 +173,8 @@
                                         <form method="POST" action="{{ route('unfollow', ['friendId' => $friend->id]) }}">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" style="border: none; background: none; outline: none; margin-left: 15px;">
-                                                <i class="fa-regular fa-trash-can" style="color: #EC354B; font-size: 25px;"></i>
+                                            <button type="submit" style="border: none; background: none; outline: none">
+                                                <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px; margin-left: 5px;"></i>
                                             </button>
                                         </form>
                                     </div>
@@ -185,11 +184,44 @@
                     </div>
                 </div>
             </div>
+            @if($youMightKnow->isNotEmpty())
+                <div class="youMightKnow mt-2 h-50">
+                    <h6>You Might Know</h6>
+                    <div class="friendSection w-100">
+                        <div class="scroll w-100">
+                            @foreach ($youMightKnow as $friend)
+                                <div class="d-flex flex-row justify-content-between align-items-center mt-2">
+                                    <div class="kiri d-flex flex-row align-items-center gap-3">
+                                        <!-- Profile Image -->
+                                        <div class="circle">
+                                            <img src="{{ asset('user_profile/'.$friend->profile_pics) }}" alt="Profile Image">
+                                        </div>
+                                        <!-- Friend Name -->
+                                        <div class="text d-flex align-items-center ml-2">
+                                            <h6>{{ $friend->name }}</h6>
+                                        </div>
+                                    </div>
+                                    <!-- Actions -->
+                                    <div class="d-flex align-items-center">
+                                        <div class="kotak-kecil d-flex align-items-center justify-content-center">
+                                            <form method="POST" action="{{ route('follow', ['friendId' => $friend->id]) }}">
+                                                @csrf
+                                                <button type="submit" style="border: none; background: none; outline: none">
+                                                    <div class="text1 m-0">ADD</div>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 </div>
 @endsection
-
 
 @section('extra-js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
@@ -330,5 +362,37 @@
     $('.toast').on('hidden.bs.toast', function () {
         $(this).remove();
     });
+
+    const content = document.querySelector('.content');
+    const pageControllerPanel = document.querySelector('.page-control');
+
+    content.addEventListener('scroll', function() {
+        if (content.scrollTop > 0) {
+            pageControllerPanel.style.display = 'flex';
+        } else {
+            pageControllerPanel.style.display = 'none';
+        }
+
+        // const contentHeight = content.scrollHeight - content.clientHeight;
+        // if (content.scrollTop >= contentHeight) {
+        //     document.querySelector('.scroll-down').style.display = 'none';
+        // } else {
+        //     document.querySelector('.scroll-down').style.display = 'flex';
+        // }
+    });
+
+    function scrollUp() {
+        content.scrollBy({
+            top: -window.innerHeight,
+            behavior: 'smooth'
+        });
+    }
+
+    function scrollDown() {
+        content.scrollBy({
+            top: window.innerHeight,
+            behavior: 'smooth'
+        });
+    }
 </script>
 @endsection

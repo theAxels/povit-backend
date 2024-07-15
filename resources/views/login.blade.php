@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Register</title>
     <link rel="stylesheet" href="css/login.css">
-    <script src="js/login.js"></script>
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <script src="https://kit.fontawesome.com/f273824998.js" crossorigin="anonymous"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
@@ -21,18 +21,28 @@
     <div class="container kontainer">
         <div class="formarea">
             <div class="col leftpanel" style="border-radius: 20px;">
-                 @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
+                @if (session('success'))
+                    <div class="toast-container">
+                        <div class="toast text-bg-success" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000" data-autohide="true">
+                            <div class="toast-body"> 
+                                {{ session('success') }}
+                            </div>
                         </div>
-                    @endif
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        @foreach ($errors->all() as $item)
-                            {{ $item }}
-                        @endforeach
                     </div>
                 @endif
+
+                @if ($errors->any())
+                    <div class="toast-container">
+                        <div class="toast text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000" data-autohide="true">
+                            <div class="toast-body"> 
+                                @foreach ($errors->all() as $error)
+                                    {{ $error }}<br>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
                 <div class="container formnya p-5">
                     <h1 style="font-weight: bold; font-size: 30px; margin-bottom: 8%;">Welcome Back</h1>
                     <form id="form" action="" method="post">
@@ -99,12 +109,26 @@
             </div>
         </div>
     </div>
+    <script src="js/login.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="..." crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/f273824998.js" crossorigin="anonymous"></script>
 </body>
-
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+        var toastList = toastElList.map(function (toastEl) {
+            return new bootstrap.Toast(toastEl)
+        });
+
+        toastList.forEach(function (toast) {
+            toast.show();
+        });
+    });
+
     const showPassword = document.getElementById("show-password");
     const passwordField = document.getElementById("password");
-
     showPassword.addEventListener("click", function(){
         this.classList.toggle("fa-eye-slash");
         const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
@@ -112,6 +136,5 @@
     })
     
 </script>
-
 </html>
 
