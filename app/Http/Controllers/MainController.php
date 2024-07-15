@@ -14,41 +14,39 @@ class MainController extends Controller
     public function index()
     {
         $user = Auth::user();
-        // $friendsPosts = Post::whereIn('friend_id', $user->friends->pluck('id'))->get();
-        // dd($friendsPosts);
-        // return view('main.main', ['images' => $friendsPosts]);
-
-        // Get Friend List DONE
         $friends = $user->friends;
 
-        $friendsPosts = Post::whereIn('user_id', $user->friends->pluck('id'))->get();
-        // dd($friendsPosts);
-
-        // You Might Know DONE
         $youMightKnow = $user->youMightKnow();
-
-        // dd($friendsPosts);
-        return view('dashboard', ['user'=> $user, 'images' => $friendsPosts, 'friends' => $friends, 'youMightKnow' => $youMightKnow]);
-        // tiap user yang ada user id bisa ngepost image,
-        // kalau mau ngambil data temen temen nya, berarti harus ambil user id punya semua temen nya
-        // abis itu ambil image nya temen temennya
-
-        // Take the friend which user id is the user's id
+        // $friendsPosts = Post::whereIn('user_id', $user->friends->pluck('id'))->get();
+        $userPosts = $user->posts;
+        $friendsIds = $user->friends->pluck('id')->toArray();
+        $openFriendsPosts = Post::whereIn('user_id', $friendsIds)
+                                ->where('is_closed_friend', false)
+                                ->get();
+        $isCloseFriendOfIds = $user->isCloseFriendOf->pluck('id')->toArray();
+        $closedFriendsPosts = Post::whereIn('user_id', $isCloseFriendOfIds)
+                                ->where('is_closed_friend', true)
+                                ->get();
+        $friendsPosts = $openFriendsPosts->merge($closedFriendsPosts);
+        $homePosts = $userPosts->merge($friendsPosts)->sortByDesc('created_at');
+        return view('dashboard', ['posts' => $homePosts, 'friends' => $friends, 'youMightKnow' => $youMightKnow]);
     }
 
     public function store(Request $request){
         try {
+            // dd($request);
             $user = Auth::user();
             $request->validate([
-                'pict' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'caption' => 'required',
-                'location' => 'required',
+                'pict' => 'required|image',
                 'is_closed_friend' => 'required',
             ]);
 
+            if (!$request->hasFile('pict')) {
+                throw new \Exception('No file uploaded');
+            }
+
             $photo_file = $request->file('pict');
-            $extension = $photo_file->extension();
-            $imageName = date('dmyHis') . uniqid() . '.' . $extension;
+            $imageName = date('dmyHis') . uniqid() . '.' . $photo_file->getClientOriginalExtension();
             $photo_file->move(public_path('user_post'), $imageName);
 
             DB::beginTransaction();
@@ -58,12 +56,11 @@ class MainController extends Controller
                 'pict' => $imageName,
                 'caption' => $request->caption,
                 'location' => $request->location,
-                'is_closed_friend' => $request->is_closed_friend,
+                'is_closed_friend' => $request->is_closed_friend === 'true',
             ]);
 
             DB::commit();
-
-            return redirect()->route('main');
+            return redirect()->route('home')->with('success', 'Successfully add new post');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', 'Failed to create post: ' . $e->getMessage());
@@ -77,7 +74,6 @@ class MainController extends Controller
             if (!$friend) {
                 throw new \Exception('User not found.');
             }
-
             $user->friends()->attach($friendId);
             return redirect()->route('home')->with('success', 'Successfully followed ' . $friend->name . '.');
         } catch (\Exception $e) {

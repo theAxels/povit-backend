@@ -16,31 +16,31 @@ class UserSeeder extends Seeder
             'name' => 'Admin Admin',
             'email' => 'admin@admin.com',
             'password' => bcrypt('admin123'),
-            'profile_pics' => 'default.png',
+            'profile_pics' => 'default.jpg',
         ]);
         User::create([
             'name' => 'Andrea',
             'email' => 'andre@gmail.com',
             'password' => bcrypt('andre123'),
-            'profile_pics' => 'default.png',
+            'profile_pics' => 'andrea.png',
         ]);
         User::create([
             'name' => 'Richard',
             'email' => 'richard@gmail.com',
             'password' => bcrypt('richard123'),
-            'profile_pics' => 'default.png',
+            'profile_pics' => 'richard.jpg',
         ]);
         User::create([
             'name' => 'Sarah',
             'email' => 'sarah@gmail.com',
             'password' => bcrypt('sarah123'),
-            'profile_pics' => 'default.png',
+            'profile_pics' => 'sarah.jpg',
         ]);
         User::create([
             'name' => 'Gideon',
             'email' => 'gideon@gmail.com',
             'password' => bcrypt('gideon123'),
-            'profile_pics' => 'default.png',
+            'profile_pics' => 'gideon.jpg',
         ]);
         User::create([
             'name' => 'Angki',

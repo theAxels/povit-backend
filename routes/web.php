@@ -33,7 +33,8 @@ Route::get('/login', [AuthController::class, 'loginview'])-> name('login_page')-
 Route::post('/login',[AuthController::class, 'login'])->name('login_store')->middleware(isNotLogin::class);
 
 
-Route::resource('admin', AdminController::class)->middleware([isLogin::class, isAdmin::class]);
+// Route::resource('admin', AdminController::class)->middleware([isLogin::class, isAdmin::class]);
+Route::get('/admin',[AdminController::class, 'index']);
 
 
 #update profile
@@ -42,8 +43,8 @@ Route::post('/update-username', [AuthController::class, 'updateUsername'])->name
 Route::post('/update-profile-desc', [AuthController::class, 'updateProfileDesc'])->name('update.profile.desc');
 
 
-Route::get('/friends', function(){
- return view("components.friendslayout");
+Route::get('/history', function(){
+ return view("history");
 });
 
 Route::get('/close-friends', [CloseFriendController::class, 'index'])->name('closeFriends')->middleware(isLogin::class);

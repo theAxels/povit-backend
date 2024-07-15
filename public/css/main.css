@@ -1,15 +1,127 @@
-.center-box {
-    width: 60%;
-    height: 600px;
-    background-color: #d3d3d3;
-    border-radius: 25px;
-    border: black 2px solid;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.content-container {
     position: relative;
-    margin: auto;
-    margin-top: 50px;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    margin-left: 70px;
+}
+.content {
+    max-width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+}
+/* Hide scrollbar for Chrome, Safari, and Opera */
+.content::-webkit-scrollbar {
+    display: none;
+}
+
+.page-control{
+    width: 80px;
+    height: 180px;
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    right: 0;
+    bottom: 50%;
+    padding: 1rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.scroll-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.5rem;
+    z-index: 25;
+    position: relative;
+    padding: 10px;
+}
+
+.scroll-button::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: 110%; 
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.75);
+    font-size:  0.7rem;
+    color: white;
+    padding: 4px;
+    border-radius: 3px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.scroll-button:hover::after {
+    opacity: 1;
+}
+
+.scroll-button:hover {
+    background-color: #EFBDEE;
+}
+
+.camera {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.center-box {
+    width: 100%;
+    max-width: 500px;
+    height: 100%;
+    max-height: 375px;
+    /* aspect-ratio: 1; */
+    border-radius: 25px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    border: #000000 solid 2px;
+    position: relative;
+    overflow: hidden;
+    background-size: cover;
+    /* margin: auto; */
+    /* margin-top: 50px; */
+    z-index: 10;
+}
+
+.control-bar {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#kamera {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    height: 100%;
+    max-height: 375px;
+}
+
+#my_camera {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .circle-btn {
@@ -17,24 +129,86 @@
     height: 80px;
     background-color: white;
     border-radius: 50%;
-    border: 10px solid pink;
-    position: absolute;
-    bottom: 20px;
+    border: 8px solid pink;
+    /* position: absolute; */
     left: 50%;
-    transform: translateX(-50%);
+    /* transform: translateX(-50%); */
+    z-index: 11;
+}
+
+.control-bar .image-icon {
+    position: absolute;
+    /* left: 3rem; */
+    /* margin-right: 3rem; */
+}
+
+
+.send-btn {
+    width: 80px;
+    height: 80px;
+    background-color: white;
+    border-radius: 50%;
+    border: 8px solid pink;
+    /* position: absolute; */
+    z-index: 11;
 }
 
 .image-icon {
-    position: absolute;
-    bottom: 25px;
+    /* position: absolute; */
+    /* bottom: 25px; */
     left: 10%;
-    font-size: 30px;
+    font-size: 20px;
     color: #5F6368;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.radio-btn {
+    display: none;
+}
+
+.circleButton {
+    border: none;
+    background: none;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.circleButton span {
+    font-size: 2rem;
+}
+
+.radio-btn:checked + .circleButton {
+    background-color: #D1D5DB;
+}
+
+.image-icon input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
 }
 
 .history-text {
+    width: 100%;
+    height: 10%;
+    bottom: 0;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 1%;
+}
+
+.history-text .material-symbols-outlined {
+    font-size: 300%;
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 200,
+      'GRAD' 0,
+      'opsz' 24;
 }
 
 .material-symbols-outlined {
@@ -50,22 +224,65 @@ a {
     color: #5F6368;
 }
 
-.carousel-item {
+/*
+.carousel-item h2 {
+    font-size: 1.5rem;
+    color: #000;
+} */
+
+/* .carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: #000; 
+    background-size: 100%, 100%; 
+    border-radius: 50%;
+} */
+/* .carousel-inner {
+    display: flex;
+    align-items: center;
+} */
+
+.caption-input{
+    border-radius: 25px;
+}
+
+.location-input {
+    width: 80%;
+    border-radius: 25px 0px 0px 25px;
+}
+
+.location-button {
+    background-color: #EFBDEE;
+    width: 15%;
+    white-space: nowrap;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100%; /* Adjust the height as needed */
-    background-color: #f8f9fa; /* Optional: Add a background color for better visibility */
+    border-radius: 00px 25px 25px 0px;
 }
 
-.carousel-item h2 {
-    font-size: 1.5rem; /* Adjusted for better visibility */
-    color: #000;
+.location-button .material-symbols-outlined {
+    font-size: 200%;
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 200,
+      'GRAD' 0,
+      'opsz' 24;
 }
 
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-    background-color: #000; /* Change arrow color */
-    background-size: 100%, 100%; /* Adjust background size for better visibility */
-    border-radius: 50%; /* Optional: Add a border radius for better aesthetics */
+.carousel-control-prev,
+.carousel-control-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+}
+
+.carousel-control-prev {
+    left: -50px; 
+}
+
+.carousel-control-next {
+    right: -50px; 
 }
