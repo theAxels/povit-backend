@@ -15,6 +15,7 @@ class MainController extends Controller
     {
         $user = Auth::user();
         $friends = $user->friends;
+
         $youMightKnow = $user->youMightKnow();
         // $friendsPosts = Post::whereIn('user_id', $user->friends->pluck('id'))->get();
         $userPosts = $user->posts;
