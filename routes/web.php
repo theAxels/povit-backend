@@ -42,8 +42,8 @@ Route::post('/update-username', [AuthController::class, 'updateUsername'])->name
 Route::post('/update-profile-desc', [AuthController::class, 'updateProfileDesc'])->name('update.profile.desc');
 
 
-Route::get('/friends', function(){
- return view("components.friendslayout");
+Route::get('/history', function(){
+ return view("history");
 });
 
 Route::get('/close-friends', [CloseFriendController::class, 'index'])->name('closeFriends')->middleware(isLogin::class);
