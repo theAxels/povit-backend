@@ -48,15 +48,14 @@ body {
             /* display: flex; */
         }
 
-        .main {
+        /* .main {
             min-height: 100vh;
             width: 100%;
-            overflow: hidden;
             transition: all 0.35s ease-in-out;
             background-color: #fafbfe;
             position: relative;
             z-index: 1;
-        }
+        } */
 
         #sidebar {
             width: 70px;
@@ -67,7 +66,6 @@ body {
             display: flex;
             flex-direction: column;
             height: 100vh;
-            z-index: 1000;
             position: fixed;
         }
 
@@ -204,9 +202,7 @@ body {
         }
 
     </style>
-
     @yield('extra-css')
-
 </head>
 
 <body>
@@ -320,7 +316,7 @@ body {
             @include('main.closefriend')
 
             <div class="sidebar-footer">
-                <a href="#" class="sidebar-link d-flex align-items-center">
+                <a href="{{ route('logout') }}" class="sidebar-link d-flex align-items-center">
                     <i class="material-symbols-outlined">
                         logout
                     </i>
@@ -332,17 +328,52 @@ body {
         <!-- Overlay -->
         <div id="overlay" class="overlay" style="display: none;"></div>
 
-        <div class="main d-flex p-3 w-100">
-            <div class="d-flex flex-column" style="flex: 0 0 70%">@yield('dashboard')</div>
-            <div class="d-flex" style="flex: 0 0 30%">@yield('closeFriend')</div>
-        </div>
-    {{-- </div> --}}
-
+        <div class="row w-100" style="height: 100vh">
+            <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11;"></div>         
+            <div class="col-8 d-flex">
+                @yield('dashboard')
+            </div>
+            <div class="col-4 m-0 h-100 p-4">
+                @yield('closeFriend')
+            </div>
+        </div>        
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
 
     <script>
+        $(document).ready(function(){
+            // Munculkan toast jika ada session success atau error
+            @if(session('success'))
+                showToast('success', '{{ session('success') }}');
+            @endif
+            @if(session('error'))
+                showToast('danger', '{{ session('error') }}');
+            @endif
+
+            // Fungsi untuk menampilkan toast dengan jenis (success/danger) dan pesan
+            function showToast(type, message) {
+                var toast = $('<div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000" data-autohide="true"></div>');
+                toast.addClass('text-bg-' + type);
+                toast.append('<div class="toast-body">' + message + '</div>');
+                $('.toast-container').append(toast);
+                toast.toast('show');
+            }
+
+            // Hapus toast dari DOM setelah disembunyikan
+            $('.toast').on('hidden.bs.toast', function () {
+                $(this).remove();
+            });
+
+            // Menghilangkan toast jika di-swipe up (opsional)
+            $('.toast').on('swipeup', function () {
+                $(this).toast('hide');
+            });
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
             const hamBurger = document.querySelector(".toggle-btn");
             const overlay = document.querySelector("#overlay");

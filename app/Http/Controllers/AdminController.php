@@ -14,6 +14,7 @@ class AdminController extends Controller
     {
         $user = User::paginate(10);
         return view('admin.index', ['users' => $user]);
+        // return view('admin.index');
     }
 
     /**
@@ -37,7 +38,7 @@ class AdminController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**
