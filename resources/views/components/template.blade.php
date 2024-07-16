@@ -296,14 +296,13 @@ body {
                     </a>
                 </li>
 
-                <li class="sidebar-item" style="z-index: 3000">
+                <li class="sidebar-item">
                     <a href="#" class="sidebar-link d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                       <i class="material-symbols-outlined">
                         star
                       </i>
                       <span>Close Friend</span>
                     </a>
-
                 </li>
 
                 <li class="sidebar-item">
