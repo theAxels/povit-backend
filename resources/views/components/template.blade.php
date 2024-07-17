@@ -35,17 +35,20 @@
             list-style: none;
         }
 
-h1 {
-    font-weight: 600;
-    font-size: 1.5rem;
-}
+        h1 {
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
 
-body {
-    font-family: 'Poppins', sans-serif;
-}
+        body {
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+        }
 
         .wrapper {
-            /* display: flex; */
+            display: flex;
+            width: 100%;
+            height: 100%;
         }
 
         /* .main {
@@ -58,13 +61,14 @@ body {
         } */
 
         #sidebar {
-            width: 70px;
-            min-width: 70px;
+            width: 80px;
+            min-width: 80px;
+            z-index: 1009;
             transition: all .25s ease-in-out;
             background-color: #F3E8F3;
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            height: 100%;
             position: fixed;
         }
 
@@ -104,12 +108,13 @@ body {
 
         #sidebar:not(.expand) .sidebar-logo,
         #sidebar:not(.expand) a.sidebar-link span,
+        #sidebar:not(.expand) a.sidebar-link h5,
         #sidebar:not(.expand) .profileDetail {
             visibility: hidden;
         }
 
         .sidebar-nav {
-            padding: 2rem 0;
+            padding: 1rem 0;
             flex: 1 1 auto;
         }
 
@@ -181,7 +186,7 @@ body {
         }
 
         .sidebar-footer {
-            margin-bottom: 10vh;
+            bottom: 10%;
         }
 
         .menu-logo i{
@@ -200,10 +205,15 @@ body {
             font-size: 1.5rem;
         }
 
-        #staticBackdrop{
-            z-index: 3020;
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
         }
-
     </style>
     @yield('extra-css')
 </head>
@@ -222,19 +232,16 @@ body {
                 </div>
             </div>
             <ul class="sidebar-nav">
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link flex-column d-flex justify-content-center">
-                        <div class="d-flex">
-                            <!-- ini yang diubah untuk gambar yang dipassing -->
-                            {{-- <i class="lni lni-user"></i>  --}}
-                            <img src="{{asset('profile_pics/'.$user->profile_pics)}}" class="user-img" id="image_preview">
-                            <span>Profile</span>
+                <li class="sidebar-item" title="Profile">
+                    <a href="#" class="sidebar-link flex-column d-flex justify-content-center" style="padding: .425rem 1.025rem;">
+                        <div class="d-flex flex-row align-items-center">
+                            <img src="{{asset('user_profile/'.$user->profile_pics)}}" class="user-img" id="image_preview">
+                            <h5 class="ms-2">Profile</h5>
                         </div>
 
                         <!-- hidden detail navbar -->
                         <div class="profileDetail w-100">
                             <div class="mb-3 mt-1 ">
-
                                 <form action="{{ route('update.profile') }}" method="POST" enctype="multipart/form-data" id="profileForm" >
                                     @csrf
                                     <input type="file" name="profile_pics" id="profile_pics" class="form-control d-none">
@@ -276,9 +283,8 @@ body {
                             </div>
                         </div>
                     </a>
-
                 </li>
-                <li class="sidebar-item">
+                <li class="sidebar-item" title="Home">
                     <a href="#" class="sidebar-link d-flex align-items-center">
                         <i class="material-symbols-outlined">
                             home
@@ -287,7 +293,7 @@ body {
                     </a>
                 </li>
 
-                <li class="sidebar-item">
+                <li class="sidebar-item" title="Chat">
                     <a href="#" class="sidebar-link d-flex align-items-center">
                         <i class="material-symbols-outlined">
                             chat
@@ -296,7 +302,7 @@ body {
                     </a>
                 </li>
 
-                <li class="sidebar-item" style="z-index: 3000">
+                <li class="sidebar-item" title="Close Friend">
                     <a href="#" class="sidebar-link d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                       <i class="material-symbols-outlined">
                         star
@@ -306,7 +312,7 @@ body {
 
                 </li>
 
-                <li class="sidebar-item">
+                <li class="sidebar-item" title="History">
                     <a href="#" class="sidebar-link d-flex align-items-center">
                         <i class="material-symbols-outlined">
                             photo_library
@@ -315,9 +321,7 @@ body {
                     </a>
                 </li>
             </ul>
-
-
-            <div class="sidebar-footer">
+            <div class="sidebar-footer" title="Logout">
                 <a href="{{ route('logout') }}" class="sidebar-link d-flex align-items-center">
                     <i class="material-symbols-outlined">
                         logout
@@ -402,12 +406,12 @@ body {
             });
 
             // Ketika sidebar di-klik, meng-expand jika tidak expand
-            sidebar.addEventListener("click", (e) => {
-                if (!sidebar.classList.contains("expand")) {
-                    e.stopPropagation(); // Mencegah event bubbling
-                    toggleSidebar();
-                }
-            });
+            // sidebar.addEventListener("click", (e) => {
+            //     if (!sidebar.classList.contains("expand")) {
+            //         e.stopPropagation(); // Mencegah event bubbling
+            //         toggleSidebar();
+            //     }
+            // });
 
             // Ketika overlay di-klik, menutup sidebar
             overlay.addEventListener("click", (e) => {

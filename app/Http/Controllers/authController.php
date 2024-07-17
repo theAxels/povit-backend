@@ -86,9 +86,9 @@ class AuthController extends Controller
 
         // Check if user already has a profile image
         if ($user->profile_pics && $user->profile_pics != 'default.png') {
-            $existingImagePath = public_path('profile_pics/' . $user->profile_pics);
+            $existingImagePath = public_path('user_profile/' . $user->profile_pics);
             if (File::exists($existingImagePath)) {
-                File::delete($existingImagePath);  // Delete the old image
+                File::delete($existingImagePath);
             }
         }
 

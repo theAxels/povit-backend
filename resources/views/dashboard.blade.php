@@ -124,22 +124,22 @@
                             <p class="m-0">{{ $post->caption }}</p>
                         </div>   
                     </div>
-                    @if ($post->location != NULL)
-                        <div class="d-flex flex-row align-items-center justify-content-start w-100 mt-4 px-2" style="max-width: 500px;">
-                            <span class="material-symbols-outlined" style="font-size: 200%; margin-right: 8px;">
-                                location_on
-                            </span>
-                            <p class="mb-0" style="flex: 1; text-align: left;">{{ $post->location }}</p>
-                        </div>                    
-                    @endif
                     @if ($post->postTags->count() > 0)
                         <div class="d-flex flex-row align-items-center justify-content-start w-100 mt-2 gap-1" style="max-width: 500px;">
-                            <h6>Tagged Friends : </h6>
+                            <h6 style="font-size: 0.9rem;">Tagged Friends : </h6>
                             @foreach ($post->postTags as $tag)
                                 <div class="selected-user">{{ $tag->user->name }}</div>
                             @endforeach
                         </div>                 
                     @endif  
+                    @if ($post->location != NULL)
+                        <div class="d-flex flex-row align-items-center justify-content-start w-100 mt-4 px-2" style="max-width: 500px;">
+                            <span class="material-symbols-outlined" style="font-size: 200%; margin-right: 8px;">
+                                location_on
+                            </span>
+                            <p class="mb-0" style="flex: 1; text-align: left; font-size: 0.9rem;">{{ $post->location }}</p>
+                        </div>                    
+                    @endif
                     <div class="d-flex flex-row justify-content-center align-items-center mt-2 w-100" style="max-width: 500px;">
                         <button type="button" class="circle-btn-small" onClick="scrollToCamera()"></button>
                     </div>
