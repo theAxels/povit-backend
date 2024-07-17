@@ -205,10 +205,15 @@
             font-size: 1.5rem;
         }
 
-        #staticBackdrop{
-            z-index: 3020;
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
         }
-
     </style>
     @yield('extra-css')
 </head>
@@ -401,12 +406,12 @@
             });
 
             // Ketika sidebar di-klik, meng-expand jika tidak expand
-            sidebar.addEventListener("click", (e) => {
-                if (!sidebar.classList.contains("expand")) {
-                    e.stopPropagation(); // Mencegah event bubbling
-                    toggleSidebar();
-                }
-            });
+            // sidebar.addEventListener("click", (e) => {
+            //     if (!sidebar.classList.contains("expand")) {
+            //         e.stopPropagation(); // Mencegah event bubbling
+            //         toggleSidebar();
+            //     }
+            // });
 
             // Ketika overlay di-klik, menutup sidebar
             overlay.addEventListener("click", (e) => {
