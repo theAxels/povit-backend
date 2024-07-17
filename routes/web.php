@@ -50,3 +50,4 @@ Route::get('/close-friends', [CloseFriendController::class, 'index'])->name('clo
 Route::post('/users/{friendId}/follow', [MainController::class, 'follow'])->name('follow');
 Route::delete('/users/{friendId}/unfollow', [MainController::class, 'unfollow'])->name('unfollow');
 
+Route::get('/search-users', [MainController::class, 'searchUsers'])->name('search.users');
