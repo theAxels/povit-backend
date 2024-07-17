@@ -316,6 +316,7 @@ a {
     margin: 0.2em;
     border-radius: 25px;
     background-color: #007bff;
+    font-size: 0.8rem;
     color: white;
 }
 .selected-user .remove-user {

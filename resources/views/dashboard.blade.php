@@ -11,7 +11,7 @@
     <div class="content">
         <div class="camera w-100 d-flex flex-column justify-content-center p-1 align-items-center" style="height: 100vh;">
             <div class="center-box" id="kamera">
-                <div id="my_camera" style="transform: scaleX(-1);"></div>
+                <div id="my_camera"></div>
                 <div class="control-bar p-3">
                     <span class="material-symbols-outlined image-icon" style="font-size: 3rem;">
                         image
@@ -43,17 +43,6 @@
                         <button type="button" title="Save Images" style="border: none; background: none; outline: none; position: absolute; right: 0;" id="downloadCaptured"></button>
                     </div>
                 </div>
-                {{-- <div class="form-group position-relative mb-2" id="searchContainer" style="max-width: 500px;">
-                    <div class="input-group">
-                        <input type="text" id="friendSearch" class="form-control" placeholder="Search to tag">
-                        <div class="input-group-append" style="margin-left: -1px;">
-                            <button class="btn btn-outline-secondary" type="button" id="clearSearchInput">
-                                <span class="material-icons">clear</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div id="searchResults" class="dropdown-search-results" style="display: none;"></div>
-                </div>                 --}}
                 <div class="center-box d-flex flex-column align-items-center" id="results" style="border: 2px solid #000000;">
                     <button type="button" style="border: none; background: none; outline: none; position: absolute; left: 10px; top: 10px;" onclick="showCamera()">
                         <i class="fa-solid fa-circle-xmark" style="color: #000000; font-size: 20px;"></i>
@@ -91,8 +80,8 @@
                     </div>            
                 </div>
                 <input type="file" class="d-none" name="pict" id="pictInput" accept="image/*">
-                <div id="selectedFriends" class=" align-items-center flex-wrap mt-3" style="display: none;">
-                    <h6>Tagged friends:</h6>
+                <div id="selectedFriends" class="align-items-center flex-wrap mt-3 justify-content-start gap-1" style="display: none; max-width: 500px;">
+                    <h6>Tagged friends : </h6>
                 </div>
                 <div class="d-flex flex-row justify-content-between align-items-center mt-4 w-100" style="max-width: 500px;">
                     <div id="all" class="d-flex flex-column justify-content-center align-items-center w-100">
@@ -147,7 +136,7 @@
                         <div class="d-flex flex-row align-items-center justify-content-start w-100 mt-2 gap-1" style="max-width: 500px;">
                             <h6>Tagged Friends : </h6>
                             @foreach ($post->postTags as $tag)
-                                <button class="btn btn-outline-primary" style="border-radius: 50px; font-size: 0.8rem;">{{ $tag->user->name }}</button>
+                                <div class="selected-user">{{ $tag->user->name }}</div>
                             @endforeach
                         </div>                 
                     @endif  
