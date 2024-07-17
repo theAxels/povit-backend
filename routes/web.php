@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CloseFriendController;
@@ -7,11 +8,11 @@ use App\Http\Controllers\MainController;
 use App\Http\Middleware\isAdmin;
 use App\Http\Middleware\isLogin;
 use App\Http\Middleware\isNotLogin;
-use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('dashboard');
-})->name('home');
+
+// Route::get('/', function () {
+//     return view('dashboard');
+// })->name('home');
 
 // Route::get('/check_login', function(){
 //     return ' ehe dia login';
@@ -42,8 +43,8 @@ Route::post('/update-username', [AuthController::class, 'updateUsername'])->name
 Route::post('/update-profile-desc', [AuthController::class, 'updateProfileDesc'])->name('update.profile.desc');
 
 
-Route::get('/friends', function(){
- return view("components.friendslayout");
+Route::get('/history', function(){
+ return view("history");
 });
 
 Route::get('/close-friends', [CloseFriendController::class, 'index'])->name('closeFriends')->middleware(isLogin::class);

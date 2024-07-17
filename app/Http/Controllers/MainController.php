@@ -40,6 +40,7 @@ class MainController extends Controller
     {
         $user = Auth::user();
         $friends = $user->friends;
+
         $youMightKnow = $user->youMightKnow();
         $userPosts = $user->posts;
         $friendsIds = $user->friends->pluck('id')->toArray();
@@ -56,7 +57,7 @@ class MainController extends Controller
             $post->time = $this->formatCreatedAt($post->created_at);
             return $post;
         });
-        return view('dashboard', ['posts' => $homePosts, 'friends' => $friends, 'youMightKnow' => $youMightKnow]);
+        return view('dashboard', ['posts' => $homePosts, 'friends' => $friends, 'youMightKnow' => $youMightKnow, 'user'=> $user]);
     }
 
     public function store(Request $request){
