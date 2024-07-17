@@ -8,13 +8,7 @@
 .content {
     max-width: 100%;
     height: 100%;
-    overflow-y: scroll;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE 10+ */
-}
-/* Hide scrollbar for Chrome, Safari, and Opera */
-.content::-webkit-scrollbar {
-    display: none;
+    overflow-y: hidden;
 }
 
 .page-control{
@@ -130,16 +124,33 @@
     background-color: white;
     border-radius: 50%;
     border: 8px solid pink;
-    /* position: absolute; */
     left: 50%;
-    /* transform: translateX(-50%); */
-    z-index: 11;
+}
+
+.circle-btn-small {
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    border-radius: 50%;
+    border: 8px solid pink;
 }
 
 .control-bar .image-icon {
     position: absolute;
     /* left: 3rem; */
     /* margin-right: 3rem; */
+}
+
+.caption{
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #FFFFFF;
+    border-radius: 50px;
+    padding: 10px;
+    font-size: 0.8rem;
+    /* text-align: center;  */
+    max-width: 90%;
+    margin: 0 auto;
+    bottom: 10px;
 }
 
 
@@ -285,4 +296,35 @@ a {
 
 .carousel-control-next {
     right: -50px; 
+}
+
+.dropdown-search-results {
+    position: absolute;
+    background: white;
+    border: 1px solid #ddd;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+.dropdown-search-results div {
+    padding: 0.5em;
+    cursor: pointer;
+}
+.dropdown-search-results div:hover {
+    background: #f1f1f1;
+}
+.selected-user {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5em 1em;
+    margin: 0.2em;
+    border-radius: 25px;
+    background-color: #007bff;
+    font-size: 0.8rem;
+    color: white;
+}
+.selected-user .remove-user {
+    cursor: pointer;
+    margin-left: 0.5em;
 }

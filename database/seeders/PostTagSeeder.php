@@ -15,13 +15,11 @@ class PostTagSeeder extends Seeder
     {
         PostTag::create([
             'post_id' => 3,
-            'user_id' => 3,
-            'friend_id' => 2,
+            'user_id' => 2,
         ]);
         PostTag::create([
             'post_id' => 2,
-            'user_id' => 2,
-            'friend_id' => 3,
+            'user_id' => 3,
         ]);
     }
 }

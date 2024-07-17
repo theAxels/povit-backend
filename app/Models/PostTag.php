@@ -24,6 +24,6 @@ class PostTag extends Model
     // Define a relationship with the User model (owner of the post tag)
     public function user()
     {
-        return $this->belongsTo(User::class, 'friend_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

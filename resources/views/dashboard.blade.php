@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="history-text" id="historyArrow">
-                <button onclick="scrollDown()" style="border: none; background: none; outline: none;">
+                <button onclick="scrollDown(this)" style="border: none; background: none; outline: none;">
                     <p class="mb-0">History</p>
                     <span class="material-symbols-outlined">
                         keyboard_double_arrow_down
@@ -30,22 +30,34 @@
             </div>
             <form id="hasil" class="h-100 w-100 flex-column justify-content-center align-items-center" style="display: none;" method="POST" action="{{ route('post_image') }}" enctype="multipart/form-data">
                 @csrf
-                <div class="d-flex flex-row align-items-center justify-content-between py-1 position-relative w-100 mb-4">
-                    <div style="flex: 1; text-align: center;">
+                <div class="d-flex flex-row align-items-center justify-content-between py-1 position-relative w-100 mb-2" style="max-width: 500px;">
+                    <div class="d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                        <button type="button" class="btn btn-transparent border-0" id="tagFriendsButton" title="Tag Friends">
+                            <span class="material-symbols-outlined" style="font-size: 200%;">person_pin</span>
+                        </button>
+                    </div>
+                    <div style="flex: 1; text-align: center; margin-left: 1em;">
                         <h5>Sent to...</h5>
                     </div>
-                    <button type="button" title="Save Images" style="border: none; background: none; outline: none; position: absolute; right: 18%;" id="downloadCaptured">
-                    </button>
+                    <div class="d-flex align-items-center" style="width: 50px; height: 50px;">
+                        <button type="button" title="Save Images" style="border: none; background: none; outline: none; position: absolute; right: 0;" id="downloadCaptured"></button>
+                    </div>
                 </div>
                 <div class="center-box d-flex flex-column align-items-center" id="results" style="border: 2px solid #000000;">
                     <button type="button" style="border: none; background: none; outline: none; position: absolute; left: 10px; top: 10px;" onclick="showCamera()">
                         <i class="fa-solid fa-circle-xmark" style="color: #000000; font-size: 20px;"></i>
                     </button>
+                    <div class="w-70 form-group position-absolute mb-2" id="searchContainer" style="display: none; top: 10px;">
+                        <div class="input-group">
+                            <input type="search" id="friendSearch" class="form-control" placeholder="Search to tag"  aria-label="Search">
+                        </div>
+                        <div id="searchResults" class="dropdown-search-results" style="display: none;"></div>
+                    </div>
                     <div id="carouselExample" class="carousel slide position-absolute w-70" style="bottom: 20px;">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 <div class="form-group">
-                                    <input type="text" name="caption" class="form-control caption-input" placeholder="Add a message ...">
+                                    <input type="text" name="caption" id="caption" class="form-control caption-input" placeholder="Add a message ...">
                                 </div>
                             </div>
                             <div class="carousel-item">
@@ -54,8 +66,6 @@
                                     <button type="button" class="location-button" onclick="getCurrentLocation()" style="border: none; outline: none;">
                                         <span class="material-symbols-outlined">my_location</span>
                                     </button>
-                                </div>
-                                <div class="d-block w-100">
                                 </div>
                             </div>
                         </div>
@@ -68,24 +78,26 @@
                             <span class="visually-hidden">Next</span>
                         </button>
                     </div>
-
                 </div>
                 <input type="file" class="d-none" name="pict" id="pictInput" accept="image/*">
+                <div id="selectedFriends" class="align-items-center flex-wrap mt-3 justify-content-start gap-1" style="display: none; max-width: 500px;">
+                    <h6>Tagged friends : </h6>
+                </div>
                 <div class="d-flex flex-row justify-content-between align-items-center mt-4 w-100" style="max-width: 500px;">
                     <div id="all" class="d-flex flex-column justify-content-center align-items-center w-100">
-                        <input type="radio" id="group-radio" name="is_closed_friend" class="radio-btn" value="false" checked>
+                        <input type="radio" id="group-radio" name="is_closed_friend" class="radio-btn" value="0" checked>
                         <label for="group-radio" class="circleButton d-flex justify-content-center align-items-center">
                             <span class="material-symbols-outlined">group</span>
                         </label>
                         <h6 class="mt-1">All</h6>
                     </div>
                     <div class="d-flex justify-content-center align-items-center w-100">
-                        <button type="submit" title="Create Post" class="send-btn d-flex justify-content-center align-items-center">
+                        <button type="button" title="Create Post" id="submitButton" class="send-btn d-flex justify-content-center align-items-center">
                             <span class="material-symbols-outlined" style="font-size: 280%">send</span>
                         </button>
                     </div>
                     <div id="cf" class="d-flex flex-column justify-content-center align-items-center w-100">
-                        <input type="radio" id="star-radio" name="is_closed_friend" class="radio-btn" value="true">
+                        <input type="radio" id="star-radio" name="is_closed_friend" class="radio-btn" value="1">
                         <label for="star-radio" class="circleButton d-flex justify-content-center align-items-center">
                             <span class="material-symbols-outlined">star</span>
                         </label>
@@ -97,31 +109,51 @@
         @foreach ($posts as $post)
             <div class="camera w-100 d-flex flex-column justify-content-center p-1 align-items-center" style="height: 100vh;">
                 <div class="h-100 w-100 d-flex flex-column justify-content-center align-items-center">
-                    {{-- <div class="d-flex flex-row align-items-center justify-content-between py-1 position-relative w-100 mb-4">
-                        <div style="flex: 1; text-align: center;">
-                            <h5>Sent to...</h5>
-                        </div>
-                    </div>             --}}
-                    <div class="text-center">
-                        <h2>{{ $post->sender->name }}</h2>
-                    </div>
+                    <div class="d-flex flex-row justify-content-center align-items-end mb-4">
+                        @if ($post->is_closed_friend == 1)
+                            <div class="bg-success text-center p-1 rounded-circle d-flex justify-content-center align-items-center me-2" style="width: 25px; height: 25px;" title="Close Friend">
+                                <span class="material-symbols-outlined" style="font-size: 12px; color: white;">star</span>
+                            </div>                        
+                        @endif
+                        <h4 class="d-inline-block mb-0">{{ $post->sender->name }}</h4>
+                        <span class="d-block ms-2" style="font-size: 0.7rem">{{ $post->time }}</span>
+                    </div>                           
                     <div class="center-box d-flex flex-column align-items-center"style="border: 2px solid #000000;">
                         <img src="{{ asset('user_post/' . $post->pict) }}" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="caption position-absolute d-flex justify-content-center align-items-center">
+                            <p class="m-0">{{ $post->caption }}</p>
+                        </div>   
                     </div>
-                    <p>{{ $post->caption }}</p>
-                    <p>Location: {{ $post->location }}</p>
-                    <p>Posted at: {{ $post->created_at }}</p>
+                    @if ($post->location != NULL)
+                        <div class="d-flex flex-row align-items-center justify-content-start w-100 mt-4 px-2" style="max-width: 500px;">
+                            <span class="material-symbols-outlined" style="font-size: 200%; margin-right: 8px;">
+                                location_on
+                            </span>
+                            <p class="mb-0" style="flex: 1; text-align: left;">{{ $post->location }}</p>
+                        </div>                    
+                    @endif
+                    @if ($post->postTags->count() > 0)
+                        <div class="d-flex flex-row align-items-center justify-content-start w-100 mt-2 gap-1" style="max-width: 500px;">
+                            <h6>Tagged Friends : </h6>
+                            @foreach ($post->postTags as $tag)
+                                <div class="selected-user">{{ $tag->user->name }}</div>
+                            @endforeach
+                        </div>                 
+                    @endif  
+                    <div class="d-flex flex-row justify-content-center align-items-center mt-2 w-100" style="max-width: 500px;">
+                        <button type="button" class="circle-btn-small" onClick="scrollToCamera()"></button>
+                    </div>
                 </div>
             </div>
         @endforeach
     </div>
     <div class="page-control">
-        <button class="scroll-button scroll-up" data-label="Previous Post" onclick="scrollUp()">
+        <button class="scroll-button scroll-up" data-label="Previous Post" onclick="scrollUp(this)">
             <span class="material-symbols-outlined">
                 arrow_upward
             </span>
         </button>
-        <button class="scroll-button scroll-down" data-label="Next Post" onclick="scrollDown()">
+        <button class="scroll-button scroll-down" data-label="Next Post" onclick="scrollDown(this)">
             <span class="material-symbols-outlined">
                 arrow_downward
             </span>
@@ -238,6 +270,10 @@
             if (err) {
                 showToast('danger', err);
             }
+        });
+
+        $('#clearSearchInput').click(function() {
+            $('#friendSearch').val('');
         });
     });
 
@@ -365,34 +401,177 @@
 
     const content = document.querySelector('.content');
     const pageControllerPanel = document.querySelector('.page-control');
+    const scrollUpButton = document.querySelector('.scroll-up');
+    const scrollDownButton = document.querySelector('.scroll-down');
 
     content.addEventListener('scroll', function() {
         if (content.scrollTop > 0) {
             pageControllerPanel.style.display = 'flex';
+            hideCamera();
         } else {
             pageControllerPanel.style.display = 'none';
+            showCamera();
         }
 
-        // const contentHeight = content.scrollHeight - content.clientHeight;
-        // if (content.scrollTop >= contentHeight) {
-        //     document.querySelector('.scroll-down').style.display = 'none';
-        // } else {
-        //     document.querySelector('.scroll-down').style.display = 'flex';
-        // }
+        if(content.scrollTop + content.clientHeight >= content.scrollHeight){
+            scrollDownButton.style.display = 'none';
+        }else{
+            scrollDownButton.style.display = 'block';
+        }
     });
 
-    function scrollUp() {
+    function scrollToCamera() {
+        content.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+
+    function scrollUp(button) {
+        disableButton(button);
         content.scrollBy({
             top: -window.innerHeight,
             behavior: 'smooth'
         });
+        setTimeout(() => enableButton(button), 1000);
     }
 
-    function scrollDown() {
+    function scrollDown(button) {
+        disableButton(button);
         content.scrollBy({
             top: window.innerHeight,
             behavior: 'smooth'
         });
+        setTimeout(() => enableButton(button), 1000);
     }
+
+    function disableButton(button) {
+        button.disabled = true;
+    }
+
+    function enableButton(button) {
+        button.disabled = false;
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const submitButton = document.getElementById('submitButton');
+        const form = document.getElementById('hasil');
+
+        submitButton.addEventListener('click', function() {
+            form.querySelectorAll('input[name="tags[]"]').forEach(input => input.remove());
+
+            selectedFriendsList.forEach(friendId => {
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'tags[]';
+                hiddenInput.value = friendId;
+                form.appendChild(hiddenInput);
+            });
+
+            form.submit();
+        });
+        var captionInput = document.getElementById('caption');
+        var maxLength = 23;
+
+        captionInput.addEventListener('input', function (event) {
+            if (captionInput.value.length >= maxLength) {
+                captionInput.value = captionInput.value.slice(0, maxLength);
+                event.preventDefault();
+            }
+        });
+
+        captionInput.addEventListener('keypress', function (event) {
+            if (captionInput.value.length >= maxLength) {
+                event.preventDefault();
+            }
+        });
+
+        const friendSearch = document.getElementById('friendSearch');
+        const searchResults = document.getElementById('searchResults');
+        const selectedFriends = document.getElementById('selectedFriends');
+        const tagFriendsButton = document.getElementById('tagFriendsButton');
+
+        tagFriendsButton.addEventListener('click', function() {
+            searchContainer.style.display = searchContainer.style.display === 'none' ? 'block' : 'none';
+        });
+
+        let selectedFriendsList = [];
+
+        friendSearch.addEventListener('input', function() {
+            const query = friendSearch.value;
+            if (query.length > 2) {
+                fetch(`/search-users?query=${query}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (Array.isArray(data)) {
+                            showSearchResults(data);
+                        } else {
+                            console.error('Unexpected data format:', data);
+                        }
+                    })
+                    .catch(error => console.error('Error fetching friends:', error));
+            } else {
+                searchResults.style.display = 'none';
+            }
+        });
+
+        function showSearchResults(friends) {
+            searchResults.innerHTML = '';
+            if (friends.length > 0) {
+                friends.forEach(friend => {
+                    const friendElement = document.createElement('div');
+                    friendElement.textContent = friend.name;
+                    friendElement.dataset.id = friend.id;
+                    friendElement.addEventListener('click', function() {
+                        addSelectedFriend(friend.id, friend.name);
+                        searchResults.style.display = 'none';
+                    });
+                    searchResults.appendChild(friendElement);
+                });
+                searchResults.style.display = 'block';
+            } else {
+                searchResults.style.display = 'none';
+            }
+        }
+
+        function addSelectedFriend(friendId, friendName) {
+            if (!selectedFriendsList.includes(friendId)) {
+                selectedFriendsList.push(friendId);
+
+                const friendElement = document.createElement('div');
+                friendElement.classList.add('selected-user');
+                friendElement.textContent = friendName;
+                friendElement.dataset.id = friendId;
+
+                const removeButton = document.createElement('span');
+                removeButton.classList.add('remove-user');
+                removeButton.innerHTML = '&times;';
+                removeButton.addEventListener('click', function() {
+                    removeSelectedFriend(friendId);
+                });
+
+                friendElement.appendChild(removeButton);
+                selectedFriends.appendChild(friendElement);
+
+                if (selectedFriendsList.length === 1) {
+                    document.getElementById('selectedFriends').style.display = 'flex';
+                }
+            }
+        }
+
+        function removeSelectedFriend(friendId) {
+            selectedFriendsList = selectedFriendsList.filter(id => id !== friendId);
+            const friendElement = selectedFriends.querySelector(`[data-id='${friendId}']`);
+            if (friendElement) {
+                selectedFriends.removeChild(friendElement);
+
+                if (selectedFriendsList.length === 0) {
+                    document.getElementById('selectedFriends').style.display = 'none';
+                }
+            }
+        }
+    });
+
 </script>
 @endsection
