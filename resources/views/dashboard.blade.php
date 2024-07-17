@@ -77,7 +77,7 @@
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
                         </button>
-                    </div>            
+                    </div>
                 </div>
                 <input type="file" class="d-none" name="pict" id="pictInput" accept="image/*">
                 <div id="selectedFriends" class="align-items-center flex-wrap mt-3 justify-content-start gap-1" style="display: none; max-width: 500px;">
@@ -94,8 +94,8 @@
                     <div class="d-flex justify-content-center align-items-center w-100">
                         <button type="button" title="Create Post" id="submitButton" class="send-btn d-flex justify-content-center align-items-center">
                             <span class="material-symbols-outlined" style="font-size: 280%">send</span>
-                        </button> 
-                    </div> 
+                        </button>
+                    </div>
                     <div id="cf" class="d-flex flex-column justify-content-center align-items-center w-100">
                         <input type="radio" id="star-radio" name="is_closed_friend" class="radio-btn" value="1">
                         <label for="star-radio" class="circleButton d-flex justify-content-center align-items-center">
@@ -179,7 +179,7 @@
                 <div class="d-flex justify-content-center align-items-center mb-3 w-100 p-2" style="background-color: #EFBDEE; height: 37px; width: 100%; border-radius: 40px;">
                     <i class="fa-solid fa-magnifying-glass me-2"></i>
                     <h6 class="m-0">Search Contact</h6>
-                </div>                
+                </div>
 
                 <!-- Friends List Section -->
                 <div class="friendSection mt-3 w-100">
@@ -352,7 +352,7 @@
         var latitude = position.coords.latitude;
         var longitude = position.coords.longitude;
         // console.log("Latitude: " + latitude + ", Longitude: " + longitude);
-        
+
         var geocodingUrl = `https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}&api_key=668e49fc91936080425126fsz367958`;
 
         fetch(geocodingUrl)
