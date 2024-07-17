@@ -54,8 +54,8 @@
         } */
 
         #sidebar {
-            width: 70px;
-            min-width: 70px;
+            width: 80px;
+            min-width: 80px;
             z-index: 1000;
             transition: all .25s ease-in-out;
             background-color: #F3E8F3;
