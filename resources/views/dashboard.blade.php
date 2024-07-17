@@ -140,6 +140,9 @@
                             @endforeach
                         </div>                 
                     @endif  
+                    <div class="d-flex flex-row justify-content-center align-items-center mt-2 w-100" style="max-width: 500px;">
+                        <button type="button" class="circle-btn-small" onClick="scrollToCamera()"></button>
+                    </div>
                 </div>
             </div>
         @endforeach
@@ -416,6 +419,14 @@
             scrollDownButton.style.display = 'block';
         }
     });
+
+    function scrollToCamera() {
+        content.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
 
     function scrollUp(button) {
         disableButton(button);

@@ -124,10 +124,15 @@
     background-color: white;
     border-radius: 50%;
     border: 8px solid pink;
-    /* position: absolute; */
     left: 50%;
-    /* transform: translateX(-50%); */
-    z-index: 11;
+}
+
+.circle-btn-small {
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    border-radius: 50%;
+    border: 8px solid pink;
 }
 
 .control-bar .image-icon {
