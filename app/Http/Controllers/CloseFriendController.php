@@ -8,10 +8,13 @@ use Illuminate\Support\Facades\Auth;
 
 class CloseFriendController extends Controller
 {
-    public function index(){
+    public function index() {
         $user = Auth::user();
-        $closeFriends = $user->closefriends();
-        // dd($closeFriends);
-        return view('main.closefriend', ['closeFriends' => $closeFriends]);
+        $closeFriends = $user->closefriends;
+        $suggestedFriends = $user->friends::whereNotIn('id', $closeFriends->pluck('id'))->take(5)->get();
+        return view('main.closefriend', [
+            'closeFriends' => $closeFriends,
+            'suggestedFriends' => $suggestedFriends,
+        ]);
     }
 }
