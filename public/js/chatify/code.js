@@ -1305,9 +1305,10 @@ $(document).ready(function () {
   });
 
   // show info side button
-  $(".messenger-infoView nav a , .show-infoSide").on("click", function () {
-    $(".messenger-infoView").toggle();
-  });
+//   HUANK INI GUA MATIIN WKWKWK!!!!!!!
+//   $(".messenger-infoView nav a , .show-infoSide").on("click", function () {
+//     $(".messenger-infoView").toggle();
+//   });
 
   // make favorites card dragable on click to slide.
   hScroller(".messenger-favorites");
