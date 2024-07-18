@@ -56,7 +56,7 @@ class MainController extends Controller
 
         $closeFriends = $user->closefriends;
         $suggestedFriends = User::whereNotIn('id', $closeFriends->pluck('id'))->take(5)->get();
-      
+
         $homePosts->transform(function ($post) {
             $post->time = $this->formatCreatedAt($post->created_at);
             return $post;
@@ -68,7 +68,7 @@ class MainController extends Controller
             'user'=> $user,
             'closeFriends' => $closeFriends,
             'suggestedFriends' => $suggestedFriends,
-        ]);  
+        ]);
     }
 
     public function store(Request $request){

@@ -285,7 +285,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item" title="Home">
-                    <a href="#" class="sidebar-link d-flex align-items-center">
+                    <a href="{{ route('home') }}" class="sidebar-link d-flex align-items-center">
                         <i class="material-symbols-outlined">
                             home
                         </i>
@@ -294,7 +294,7 @@
                 </li>
 
                 <li class="sidebar-item" title="Chat">
-                    <a href="#" class="sidebar-link d-flex align-items-center">
+                    <a href="{{ route('Chat') }}" class="sidebar-link d-flex align-items-center">
                         <i class="material-symbols-outlined">
                             chat
                         </i>
