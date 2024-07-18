@@ -24,7 +24,7 @@
                 @if (session('success'))
                     <div class="toast-container">
                         <div class="toast text-bg-success" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000" data-autohide="true">
-                            <div class="toast-body"> 
+                            <div class="toast-body">
                                 {{ session('success') }}
                             </div>
                         </div>
@@ -34,7 +34,7 @@
                 @if ($errors->any())
                     <div class="toast-container">
                         <div class="toast text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000" data-autohide="true">
-                            <div class="toast-body"> 
+                            <div class="toast-body">
                                 @foreach ($errors->all() as $error)
                                     {{ $error }}<br>
                                 @endforeach
@@ -102,8 +102,7 @@
 
             <div class="col rightpanel text-center">
                 <h1 style="font-weight: bold; justify-content: center; font-size: 30px;">Don't Have an Account Yet?</h1>
-                <span style="display: flex; margin-top: 5%; font-size: 22px; margin-right: 2%;">Let’s get you all set up
-                    so you can start creating your selfie experience</span>
+                <span style="display: flex; margin-top: 5%; font-size: 22px; margin-right: 2%;">Let’s get you all set up so you can start<br>creating your selfie experience</span>
 
                 <a href="{{ route('register_page') }}" class="loginButton mt-3" style="justify-content: center; align-content: center">Sign Up</a>
             </div>
@@ -134,7 +133,7 @@
         const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
         passwordField.setAttribute("type", type);
     })
-    
+
 </script>
 </html>
 

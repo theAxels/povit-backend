@@ -18,7 +18,7 @@
         <div class="formarea">
             <div class="col leftpanel text-center">
                 <h1 style="font-weight: bold; justify-content: center; font-size: 30px;">Welcome Back</h1>
-                <span style="display: flex; margin-top: 5%; font-size: 22px; margin-right: 2%;">To keep connected with us please login with your personal info</span>
+                <span style="display: flex; margin-top: 5%; font-size: 22px; margin-right: 2%;">To keep connected with us<br>please login with your personal info</span>
                 {{-- <p>To keep connected with us please login with your personal info</p> --}}
                 <a href="{{ route('login_page') }}" class="loginButton mt-3" style="justify-content: center; align-content: center">Login</a>
             </div>
@@ -28,7 +28,7 @@
                     @if (session('success'))
                         <div class="toast-container">
                             <div class="toast text-bg-success" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000" data-autohide="true">
-                                <div class="toast-body"> 
+                                <div class="toast-body">
                                     {{ session('success') }}
                                 </div>
                             </div>
@@ -38,7 +38,7 @@
                     @if ($errors->any())
                         <div class="toast-container">
                             <div class="toast text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000" data-autohide="true">
-                                <div class="toast-body"> 
+                                <div class="toast-body">
                                     @foreach ($errors->all() as $error)
                                         {{ $error }}<br>
                                     @endforeach
@@ -124,7 +124,7 @@
         const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
         passwordField.setAttribute("type", type);
     })
-    
+
 </script>
 
 </html>

@@ -119,6 +119,7 @@ class MainController extends Controller
     public function searchUsers(Request $request){
         $query = $request->get('query');
         $users = User::where('name', 'like', '%' . $query . '%')->get();
+
         return response()->json($users);
     }
 
