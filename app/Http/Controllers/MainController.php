@@ -65,7 +65,6 @@ class MainController extends Controller
             'posts' => $homePosts,
             'friends' => $friends,
             'youMightKnow' => $youMightKnow,
-            'user'=> $user,
             'closeFriends' => $closeFriends,
             'suggestedFriends' => $suggestedFriends,
         ]);

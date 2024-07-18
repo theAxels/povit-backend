@@ -126,15 +126,21 @@ input{
     color: #555;
 }
 
-.fa-eye {
+#password {
+    padding-right: 40px;
+}
+
+#show-password {
     position: absolute;
-    right: 10px; 
-    top: 52%;
-    transform: translateY(-50%);
-    margin-right: 22.5%;
     cursor: pointer;
-    color: lightgrey;
-    z-index: 10;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+}
+
+#show-password:hover {
+    color: #495057;
 }
 
 .toast-container {

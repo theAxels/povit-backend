@@ -7,7 +7,6 @@ document.querySelector('#profile_pics').addEventListener('change', function () {
   document.querySelector('#hiddenSubmitButton').click();
 });
 
-// click icon untuk edit username
 const editUserBtn = document.getElementById('edit-username-btn');
 const newUserInput = document.getElementById('username_input');
 const newDescInput = document.getElementById('desc_input');
