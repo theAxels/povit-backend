@@ -101,10 +101,10 @@ class AuthController extends Controller
         $user->profile_pics = $imageName;
         $user->save();
 
-        return redirect('/')->with('success', 'Profile picture updated successfully');
+        return redirect()->back()->with('success', 'Profile picture updated successfully');
     }
 
-    return redirect('/')->with('error', 'No image file selected');
+    return redirect()->back()->with('error', 'No image file selected');
 }
 
 
@@ -120,7 +120,7 @@ class AuthController extends Controller
         $user->save();
 
         // return redirect()->back()->with('success', 'Username updated successfully');
-        return redirect('/');
+        return redirect()->back();
     }
 
     public function updateProfileDesc(Request $request){
@@ -132,7 +132,7 @@ class AuthController extends Controller
         $user->profile_desc = $request->input('profile_desc');
         $user->save();
 
-        return redirect('/');
+        return redirect()->back();
     }
 
 }

@@ -66,13 +66,16 @@
                             <label for="email">Email</label>
                             <input type="email" class="form-control" id="email" name="email" placeholder="Enter Your Email">
                         </div>
+
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter Your Password">
-                            <i class="fa-solid fa-eye" id="show-password"></i>
+                            <div class="d-flex align-items-center position-relative">
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter Your Password">
+                                <i class="fa-solid fa-eye position-absolute" id="show-password"></i>
+                            </div>
                             <div class="error"></div>
-                        </div>
-
+                        </div>                            
+                        
                         <div class="form-group">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="tnc">
@@ -114,17 +117,23 @@
         toastList.forEach(function (toast) {
             toast.show();
         });
+
+        const showPassword = document.getElementById("show-password");
+        const passwordField = document.getElementById("password");
+    
+        showPassword.addEventListener("click", function() {
+            const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+            passwordField.setAttribute("type", type);
+    
+            if (type === "password") {
+                this.classList.remove("fa-eye-slash");
+                this.classList.add("fa-eye");
+            } else {
+                this.classList.remove("fa-eye");
+                this.classList.add("fa-eye-slash");
+            }
+        });
     });
-
-    const showPassword = document.getElementById("show-password");
-    const passwordField = document.getElementById("password");
-
-    showPassword.addEventListener("click", function(){
-        this.classList.toggle("fa-eye-slash");
-        const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
-        passwordField.setAttribute("type", type);
-    })
-
 </script>
 
 </html>
