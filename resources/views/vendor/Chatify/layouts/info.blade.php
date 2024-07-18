@@ -80,42 +80,8 @@
         $friends = $user->friends;
     ?>
 
-{{-- user info and avatar --}}
-<div class="avatar av-l chatify-d-flex">
-    {{-- <img src="{{}}" alt=""> --}}
-</div>
-<p class="info-name">{{ config('chatify.name') }}</p>
-<div class="line"></div>
-
-{{-- user description --}}
-<div class="about-me" style="position: relative; left: 4%; top: 0; text-align: left;">
-    <p style="font-size: 15px; margin-bottom: 2%; width: 100%; font-weight: 700;">About Me</p>
-    <p style="font-size: 14px; margin: 0; width: 90%; font-weight: 500;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, obcaecati at eos fugit qui incidunt deserunt eius laborum quas quibusdam veritatis!</p>
-</div>
-
 {{-- friend list --}}
-<div class="about-me" style="position: relative; left: 4%; top: -1%; text-align: left;">
-    <p style="font-size: 15px; margin-bottom: 2%; width: 100%; font-weight: 700;">Friends</p>
-    <div class="friendSection">
-        <div class="scroll">
-            <!-- Profile Image Section -->
-            {{-- @foreach ($friends as $friend)
-            <?php
-                // dd($friend->profile_pics);
-            ?>
-                <div class="friend-row">
-                    <div class="circle">
-                        <img src="{{$friend->profile_pics}}" alt="Profile Image">
-                    </div>
-                    <div class="text">
-                        <h6 class="m-0">{{$friend->name}}</h6>
-                        <p style="margin-top: 1%">Halo aku andrea jelek dan sarah cantik</p>
-                    </div>
-                    <div class="actions" style="margin-right: 10%">
-                        <i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;"></i>
-                    </div>
-                </div>
-            @endforeach --}}
+
 {{-- ----------------------Users/Groups lists side---------------------- --}}
         <div class="messenger-listView {{ !!$id ? 'conversation-active' : '' }}">
             {{-- Header and search bar --}}
@@ -162,9 +128,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        </div>
-    </div>
 </div>
 
 </body>
