@@ -309,7 +309,6 @@
                       </i>
                       <span>Close Friend</span>
                     </a>
-
                 </li>
 
                 <li class="sidebar-item" title="History">

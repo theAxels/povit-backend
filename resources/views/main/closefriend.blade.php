@@ -77,14 +77,14 @@
         <div class="modal-dialog">
             <div class="modal-content " style="border-radius: 30px; position: absolute; z-index:100;">
                 <div class="modal-header">
-                    <img src="{{ asset('closefriend.png') }}" alt="" style="width: 30px; height: 30px;">
+                    <img src="{{ asset('logo-cf.png') }}" alt="" style="width: 30px; height: 30px;">
                     <h1 class="modal-title fs-5" id="staticBackdropLabel" style="margin-left: 10px">Close Friends</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row mt-4">
                         <div class="col-6 d-flex align-items-center">
-                            <h6>5 People</h6>
+                            <h6>{{ $closeFriends->count() }} People</h6>
                         </div>
                         <div class="col-6 d-flex justify-content-end align-items-center">
                             <button class="clear-button" style="color: #0D99FF; background: none; border: none;">Clear All</button>
@@ -94,100 +94,24 @@
                     <div class="friendSection">
                         <div class="scroll">
                             <!-- Profile Image Section -->
-                            <div class="row mt-4">
-                                <div class="col d-flex align-items-center">
-                                    <div class="circle">
-                                        <img src="https://via.placeholder.com/50" alt="Profile Image">
-                                    </div>
-                                    <div class="text d-flex align-items-center mt-0" style="margin-left: 5%;">
-                                        <h6 class="m-0">andreaaaaaaaaaeaaa_</h6>
-                                    </div>
-                                    <div class="ms-auto d-flex align-items-center flex-grow-1 justify-content-end">
-                                        <i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;"></i>
-                                        <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px; margin-left: 5px;"></i>
-                                        <div class="form-check form-check-inline ms-auto">
-                                            <input type="radio" class="form-check-input" id="option1" checked>
-                                            <label for="option1"></label>
+                            @foreach ($closeFriends as $friend)
+                                <div class="row mt-4">
+                                    <div class="col d-flex align-items-center">
+                                        <div class="circle">
+                                            <img src="{{ asset('user_profile/'. $friend->profile_pics) }}" alt="Profile Image">
+                                        </div>
+                                        <div class="text d-flex align-items-center mt-0" style="margin-left: 5%;">
+                                            <h6 class="m-0">{{ $friend->name }}</h6>
+                                        </div>
+                                        <div class="ms-auto d-flex align-items-center flex-grow-1 justify-content-end">
+                                            <div class="form-check form-check-inline ms-auto">
+                                                <input type="radio" class="form-check-input" id="option1" checked>
+                                                <label for="option1"></label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row mt-4">
-                                <div class="col d-flex align-items-center">
-                                    <div class="circle">
-                                        <img src="https://via.placeholder.com/50" alt="Profile Image">
-                                    </div>
-                                    <div class="text d-flex align-items-center mt-0" style="margin-left: 5%;">
-                                        <h6 class="m-0">p0eetry</h6>
-                                    </div>
-                                    <div class="ms-auto d-flex align-items-center flex-grow-1 justify-content-end">
-                                        <i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;"></i>
-                                        <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px; margin-left: 5px;"></i>
-                                        <div class="form-check form-check-inline ms-auto">
-                                            <input type="radio" class="form-check-input" id="option2" checked>
-                                            <label for="option2"></label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row mt-4">
-                                <div class="col d-flex align-items-center">
-                                    <div class="circle">
-                                        <img src="https://via.placeholder.com/50" alt="Profile Image">
-                                    </div>
-                                    <div class="text d-flex align-items-center mt-0" style="margin-left: 5%;">
-                                        <h6 class="m-0">ricathuang12</h6>
-                                    </div>
-                                    <div class="ms-auto d-flex align-items-center flex-grow-1 justify-content-end">
-                                        <i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;"></i>
-                                        <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px; margin-left: 5px;"></i>
-                                        <div class="form-check form-check-inline ms-auto">
-                                            <input type="radio" class="form-check-input" id="option3" checked>
-                                            <label for="option3"></label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row mt-4">
-                                <div class="col d-flex align-items-center">
-                                    <div class="circle">
-                                        <img src="https://via.placeholder.com/50" alt="Profile Image">
-                                    </div>
-                                    <div class="text d-flex align-items-center mt-0" style="margin-left: 5%;">
-                                        <h6 class="m-0">gidneon</h6>
-                                    </div>
-                                    <div class="ms-auto d-flex align-items-center flex-grow-1 justify-content-end">
-                                        <i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;"></i>
-                                        <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px; margin-left: 5px;"></i>
-                                        <div class="form-check form-check-inline ms-auto">
-                                            <input type="radio" class="form-check-input" id="option4" checked>
-                                            <label for="option4"></label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row mt-4">
-                                <div class="col d-flex align-items-center">
-                                    <div class="circle">
-                                        <img src="https://via.placeholder.com/50" alt="Profile Image">
-                                    </div>
-                                    <div class="text d-flex align-items-center mt-0" style="margin-left: 5%;">
-                                        <h6 class="m-0">angkiantok</h6>
-                                    </div>
-                                    <div class="ms-auto d-flex align-items-center flex-grow-1 justify-content-end">
-                                        <i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;"></i>
-                                        <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px; margin-left: 5px;"></i>
-                                        <div class="form-check form-check-inline ms-auto">
-                                            <input type="radio" class="form-check-input" id="option5" checked>
-                                            <label for="option5"></label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
 
@@ -198,62 +122,25 @@
                     <div class="friendSection">
                         <div class="scroll">
                             <!-- Profile Image Section -->
-                            <div class="row mt-4">
-                                <div class="col d-flex align-items-center">
-                                    <div class="circle">
-                                        <img src="https://via.placeholder.com/50" alt="Profile Image">
-                                    </div>
-                                    <div class="text d-flex align-items-center mt-0" style="margin-left: 5%;">
-                                        <h6 class="m-0">kamukepo_</h6>
-                                    </div>
-                                    <div class="ms-auto d-flex align-items-center flex-grow-1 justify-content-end">
-                                        <i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;"></i>
-                                        <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px; margin-left: 5px;"></i>
-                                        <div class="form-check form-check-inline ms-auto">
-                                            <input type="radio" class="form-check-input" id="option6" name="radioExam">
-                                            <label for="option6"></label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="row mt-4">
-                                <div class="col d-flex align-items-center">
-                                    <div class="circle">
-                                        <img src="https://via.placeholder.com/50" alt="Profile Image">
-                                    </div>
-                                    <div class="text d-flex align-items-center mt-0" style="margin-left: 5%;">
-                                        <h6 class="m-0">wedehpakeh</h6>
-                                    </div>
-                                    <div class="ms-auto d-flex align-items-center flex-grow-1 justify-content-end">
-                                        <i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;"></i>
-                                        <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px; margin-left: 5px;"></i>
-                                        <div class="form-check form-check-inline ms-auto">
-                                            <input type="radio" class="form-check-input" id="option7" name="radioExam">
-                                            <label for="option7"></label>
+                            @foreach ($suggestedFriends as $friend )
+                                <div class="row mt-4">
+                                    <div class="col d-flex align-items-center">
+                                        <div class="circle">
+                                            <img src="{{ asset('user_profile/'. $friend->profile_pics) }}" alt="Profile Image">
+                                        </div>
+                                        <div class="text d-flex align-items-center mt-0" style="margin-left: 5%;">
+                                            <h6 class="m-0">{{ $friend->name }}</h6>
+                                        </div>
+                                        <div class="ms-auto d-flex align-items-center flex-grow-1 justify-content-end">
+                                            <div class="form-check form-check-inline ms-auto">
+                                                <input type="radio" class="form-check-input" id="option6" name="radioExam">
+                                                <label for="option6"></label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row mt-4">
-                                <div class="col d-flex align-items-center">
-                                    <div class="circle">
-                                        <img src="https://via.placeholder.com/50" alt="Profile Image">
-                                    </div>
-                                    <div class="text d-flex align-items-center mt-0" style="margin-left: 5%;">
-                                        <h6 class="m-0">ricathuang12</h6>
-                                    </div>
-                                    <div class="ms-auto d-flex align-items-center flex-grow-1 justify-content-end">
-                                        <i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;"></i>
-                                        <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px; margin-left: 5px;"></i>
-                                        <div class="form-check form-check-inline ms-auto">
-                                            <input type="radio" class="form-check-input" id="option8" name="radioExam">
-                                            <label for="option8"></label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
 

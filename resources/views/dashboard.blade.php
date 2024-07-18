@@ -201,7 +201,7 @@
                                     </div>
                                     <!-- Actions -->
                                     <div class="d-flex align-items-center">
-                                        <i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;"></i>
+                                        <a href="{{ route('user', $friend->id) }}"><i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;"></i></a>
                                         <form method="POST" action="{{ route('unfollow', ['friendId' => $friend->id]) }}">
                                             @csrf
                                             @method('DELETE')

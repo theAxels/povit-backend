@@ -371,43 +371,50 @@ body {
   z-index: 0;
 }
 .messenger-infoView {
-  display: block;
-  overflow: auto;
-  width: 40%;
-  min-width: 200px;
+    display: block;
+    overflow: auto;
+    width: 40%;
+    min-width: 200px;
 }
+
 .messenger-infoView nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--headers-padding);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--headers-padding);
 }
-.messenger-infoView nav a {
-  color: var(--primary-color);
-  text-decoration: none;
-  font-size: var(--icon-size);
+
+.nav-icons a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: var(--icon-size);
+    margin-left: 10px;
 }
+
 .messenger-infoView > div {
-  margin: auto;
-  margin-top: 8%;
-  text-align: center;
+    margin: auto;
+    margin-top: 8%;
+    text-align: center;
 }
+
 .messenger-infoView > p {
-  text-align: center;
-  margin: auto;
-  margin-top: 15px;
-  font-size: 18px;
-  font-weight: 600;
+    text-align: center;
+    margin: auto;
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: 600;
 }
+
 .messenger-infoView-btns a {
-  display: block;
-  text-decoration: none !important;
-  padding: 5px 10px;
-  margin: 0% 10%;
-  border-radius: 3px;
-  font-size: 14px;
-  transition: background 0.3s;
+    display: block;
+    text-decoration: none !important;
+    padding: 5px 10px;
+    margin: 0% 10%;
+    border-radius: 3px;
+    font-size: 14px;
+    transition: background 0.3s;
 }
+
 .messenger-infoView-btns a.default {
   color: var(--primary-color);
 }
