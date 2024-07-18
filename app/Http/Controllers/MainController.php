@@ -56,7 +56,7 @@ class MainController extends Controller
 
         $closeFriends = $user->closefriends;
         $suggestedFriends = User::whereNotIn('id', $closeFriends->pluck('id'))->take(5)->get();
-      
+
         $homePosts->transform(function ($post) {
             $post->time = $this->formatCreatedAt($post->created_at);
             return $post;
@@ -68,27 +68,27 @@ class MainController extends Controller
             'user'=> $user,
             'closeFriends' => $closeFriends,
             'suggestedFriends' => $suggestedFriends,
-        ]);  
+        ]);
     }
 
     public function store(Request $request){
         try {
             $user = Auth::user();
-    
+
             $request->validate([
                 'pict' => 'required|image|max:2048',
                 'tags' => 'array',
                 'is_closed_friend' => 'required',
             ]);
-    
+
             if (!$request->hasFile('pict')) {
                 throw new \Exception('No file uploaded');
             }
-    
+
             $photo_file = $request->file('pict');
             $imageName = date('YmdHis') . '_' . uniqid() . '.' . $photo_file->getClientOriginalExtension();
             $photo_file->move(public_path('user_post'), $imageName);
-    
+
             DB::beginTransaction();
             $post = Post::create([
                 'user_id' => $user->id,
@@ -97,7 +97,7 @@ class MainController extends Controller
                 'location' => $request->location ?? null,
                 'is_closed_friend' => $request->is_closed_friend,
             ]);
-    
+
             if ($request->filled('tags')) {
                 foreach ($request->tags as $userId) {
                     PostTag::create([
@@ -106,9 +106,9 @@ class MainController extends Controller
                     ]);
                 }
             }
-    
+
             DB::commit();
-    
+
             return redirect()->route('home')->with('success', 'Successfully added new post');
         } catch (\Exception $e) {
             DB::rollback();
