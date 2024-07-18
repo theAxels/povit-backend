@@ -161,15 +161,24 @@ input{
     margin-top: 5px;
 }
 
-.fa-eye {
+#password {
+    padding-right: 40px; /* Space for the icon */
+}
+
+#show-password {
     position: absolute;
-    right: 10px; 
-    top: 60%;
+    right: 10px;
+    top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-    color: lightgrey;
-    z-index: 10;
+    color: #6c757d;
+    z-index: 2; /* Ensure it is above the input */
 }
+
+#show-password:hover {
+    color: #495057;
+}
+
 
 .toast-container {
     position: fixed;

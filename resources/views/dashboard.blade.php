@@ -140,24 +140,24 @@
                             <p class="mb-0" style="flex: 1; text-align: left; font-size: 0.9rem;">{{ $post->location }}</p>
                         </div>                    
                     @endif
-                    <div class="d-flex flex-row justify-content-center align-items-center mt-2 w-100" style="max-width: 500px;">
-                        <button type="button" class="circle-btn-small" onClick="scrollToCamera()"></button>
-                    </div>
                 </div>
             </div>
         @endforeach
     </div>
     <div class="page-control">
-        <button class="scroll-button scroll-up" data-label="Previous Post" onclick="scrollUp(this)">
-            <span class="material-symbols-outlined">
-                arrow_upward
-            </span>
-        </button>
-        <button class="scroll-button scroll-down" data-label="Next Post" onclick="scrollDown(this)">
-            <span class="material-symbols-outlined">
-                arrow_downward
-            </span>
-        </button>
+        <div class="controller">
+            <button class="scroll-button scroll-up" data-label="Previous Post" onclick="scrollUp(this)">
+                <span class="material-symbols-outlined">
+                    arrow_upward
+                </span>
+            </button>
+            <button type="button" class="circle-btn-small" onClick="scrollToCamera()"></button>
+            <button class="scroll-button scroll-down" data-label="Next Post" onclick="scrollDown(this)">
+                <span class="material-symbols-outlined">
+                    arrow_downward
+                </span>
+            </button>
+        </div>
     </div>
 </div>
 @endsection

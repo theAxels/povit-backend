@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CloseFriendController extends Controller
 {
-    public function index() {
+    public function getCloseFriends()
+    {
         $user = Auth::user();
         $closeFriends = $user->closefriends;
-        $suggestedFriends = $user->friends::whereNotIn('id', $closeFriends->pluck('id'))->take(5)->get();
-        return view('main.closefriend', [
+        $suggestedFriends = User::whereNotIn('id', $closeFriends->pluck('id'))->get();
+        return response()->json([
             'closeFriends' => $closeFriends,
             'suggestedFriends' => $suggestedFriends,
         ]);

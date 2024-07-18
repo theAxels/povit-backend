@@ -36,11 +36,11 @@
         }
 
         .friendSection {
-            width: auto;
+            width: 100%;
         }
 
         .scroll {
-            width: auto;
+            width: 100%;
             height: 35%;
             overflow: hidden;
             overflow-y: auto;
