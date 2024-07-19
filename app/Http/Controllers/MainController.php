@@ -150,4 +150,13 @@ class MainController extends Controller
             return redirect()->back()->with('error', 'Failed to unfollow user: ' . $e->getMessage());
         }
     }
+
+    public function gallery(){
+        $user = Auth::user();
+        $posts = Post::where('user_id', $user->id)->get();
+        dd($posts);
+
+        // return 
+
+    }
 }

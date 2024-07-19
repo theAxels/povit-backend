@@ -53,3 +53,4 @@ Route::delete('/users/{friendId}/unfollow', [MainController::class, 'unfollow'])
 
 Route::get('/search-users', [MainController::class, 'searchUsers'])->name('search.users');
 
+Route::get('/gallery', [MainController::class, 'gallery'])->name('gallery');

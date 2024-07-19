@@ -91,7 +91,7 @@
         </li>
 
         <li class="sidebar-item" title="History">
-            <a href="#" class="sidebar-link d-flex align-items-center">
+            <a href="{{ route('gallery') }}" class="sidebar-link d-flex align-items-center">
                 <i class="material-symbols-outlined">
                     photo_library
                 </i>
