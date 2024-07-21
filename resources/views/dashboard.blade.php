@@ -356,7 +356,7 @@
             })
             .then(data => {
                 if(Array.isArray(data)){
-                    showFriendResult(data, type);
+                    showFriendResult(data);
                 }else{
                     console.error('Data format invalid', 'error');
                 }
@@ -369,14 +369,14 @@
             }
     }
 
-    function showFriendResult(friends, type) {
+    function showFriendResult(friends) {
         searchsList.innerHTML = '';
         if (friends.length > 0) {
             friends.forEach(friend => {
                 const friendDiv = document.createElement('div');
                 friendDiv.classList.add('d-flex', 'flex-row', 'justify-content-between', 'align-items-center', 'mt-2');
                 
-                if(type == 'PID'){
+                if(friend.type == 'new'){
                     friendDiv.innerHTML = `
                 <div class="kiri d-flex flex-row align-items-center gap-3">
                     <div class="circle">
