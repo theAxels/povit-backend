@@ -19,24 +19,32 @@ class FriendSeeder extends Seeder
         $userIdToExclude = $userToExclude ? $userToExclude->id : null;
         $userIds = User::pluck('id')->toArray();
 
-        $combinations = [];
-
         $userIds = array_filter($userIds, function ($id) use ($userIdToExclude) {
             return $id !== $userIdToExclude;
         });
+
+        $combinations = [];
 
         for ($i = 0; $i < 10; $i++) {
             do {
                 $userId = $faker->randomElement($userIds);
                 $friendId = $faker->randomElement($userIds);
-                $combination = $userId . '-' . $friendId;
-            } while ($userId === $friendId || in_array($combination, $combinations));
+                $combination1 = $userId . '-' . $friendId;
+                $combination2 = $friendId . '-' . $userId;
+            } while ($userId === $friendId || in_array($combination1, $combinations) || in_array($combination2, $combinations));
 
-            $combinations[] = $combination;
+            $combinations[] = $combination1;
+            $combinations[] = $combination2;
 
             Friend::create([
                 'user_id' => $userId,
                 'friend_id' => $friendId,
+            ]);
+
+            // Insert the reverse direction
+            Friend::create([
+                'user_id' => $friendId,
+                'friend_id' => $userId,
             ]);
         }
     }
