@@ -8,13 +8,13 @@
     <title>History</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .photo-placeholder {
+        .photo-container {
             position: relative;
             width: 100%;
-            padding-bottom: 100%; /* This maintains a 1:1 aspect ratio */
-            background-color: #e0e0e0;
+            padding-top: 100%; /* 1:1 Aspect Ratio */
+            overflow: hidden;
         }
-        .photo-placeholder img {
+        .photo-container img {
             position: absolute;
             top: 0;
             left: 0;
@@ -29,18 +29,13 @@
         <h1 class="mb-4">Your Photos</h1>
 
         <div class="row">
-            <div class="col-4 col-md-2 mb-4">
-                <div class="photo-placeholder"></div>
-            </div>
-            <div class="col-4 col-md-2 mb-4">
-                <div class="photo-placeholder"></div>
-            </div>
-            <div class="col-4 col-md-2 mb-4">
-                <div class="photo-placeholder"></div>
-            </div>
-            <div class="col-4 col-md-2 mb-4">
-                <div class="photo-placeholder"></div>
-            </div>
+            @foreach($posts as $post)
+                <div class="col-4 col-md-2 mb-4">
+                    <div class="photo-container">
+                        <img src="{{ asset('user_post/' . $post->pict) }}" alt="Photo">
+                    </div>
+                </div>
+            @endforeach
         </div>
     </div>
     @extends('main.closefriend')

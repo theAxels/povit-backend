@@ -196,9 +196,8 @@ class MainController extends Controller
     public function gallery(){
         $user = Auth::user();
         $posts = Post::where('user_id', $user->id)->get();
-        dd($posts);
-        
+        // dd($posts);
+        return view('history', compact('posts'));
         // return
-
     }
 }
