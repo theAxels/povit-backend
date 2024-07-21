@@ -197,7 +197,7 @@ class MainController extends Controller
         $user = Auth::user();
         $posts = Post::where('user_id', $user->id)->get();
         dd($posts);
-
+        
         // return
 
     }
