@@ -4,6 +4,7 @@
 @section('extra-css')
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/friends.css">
+</head>
 @endsection
 
 @section('dashboard')
@@ -12,13 +13,27 @@
         <div class="camera w-100 d-flex flex-column justify-content-center p-1 align-items-center" style="height: 100vh;">
             <div class="center-box" id="kamera">
                 <div id="my_camera"></div>
-                <div class="control-bar p-3">
-                    <span class="material-symbols-outlined image-icon" style="font-size: 3rem;">
-                        image
-                        <input type="file" id="fileInput" accept="image/*">
-                    </span>
-                    <input type="button" class="circle-btn" onClick="take_snapshot()"></input>
-                </div>
+                @if ($friends->isEmpty())
+                    <div class="control-bar p-3">
+                        <span class="material-symbols-outlined image-icon disabled" style="font-size: 3rem;">
+                            image
+                            <input type="file" id="fileInput" accept="image/*" disabled>
+                        </span>
+                        <button type="button" class="circle-btn" onClick="take_snapshot()" disabled></button>
+                    </div>
+                    <div class="disabled-message text-center">
+                        <p>You currently have no friends, so you cannot take a snapshot or upload an image. Please add friends to enable these features.</p>
+                    </div>
+                @else
+                    <div class="control-bar p-3">
+                        <span class="material-symbols-outlined image-icon" style="font-size: 3rem;">
+                            image
+                            <input type="file" id="fileInput" accept="image/*">
+                        </span>
+                        <input type="button" class="circle-btn" onClick="take_snapshot()">
+                    </div>
+                @endif
+
             </div>
             <div class="history-text" id="historyArrow">
                 <button onclick="scrollDown(this)" style="border: none; background: none; outline: none;">
@@ -62,7 +77,7 @@
                             </div>
                             <div class="carousel-item">
                                 <div class="form-group d-flex flex-row justify-content-center">
-                                    <input type="text" name="location" class="form-control  location-input" id="locationInput" placeholder="Add a location ...">
+                                    <input type="text" name="location" class="form-control location-input" id="locationInput" placeholder="Add a location ...">
                                     <button type="button" class="location-button" onclick="getCurrentLocation()" style="border: none; outline: none;">
                                         <span class="material-symbols-outlined">my_location</span>
                                     </button>
@@ -93,7 +108,7 @@
                     </div>
                     <div class="d-flex justify-content-center align-items-center w-100">
                         <button type="button" title="Create Post" id="submitButton" class="send-btn d-flex justify-content-center align-items-center">
-                            <span class="material-symbols-outlined" style="font-size: 280%">send</span>
+                            <span class="material-symbols-outlined" style="font-size: 280%; transform: rotate(-45deg);">send</span>
                         </button>
                     </div>
                     <div id="cf" class="d-flex flex-column justify-content-center align-items-center w-100">
@@ -106,43 +121,54 @@
                 </div>
             </form>
         </div>
-        @foreach ($posts as $post)
+        @if ($posts->isEmpty())
             <div class="camera w-100 d-flex flex-column justify-content-center p-1 align-items-center" style="height: 100vh;">
-                <div class="h-100 w-100 d-flex flex-column justify-content-center align-items-center">
-                    <div class="d-flex flex-row justify-content-center align-items-end mb-4">
-                        @if ($post->is_closed_friend == 1)
-                            <div class="bg-success text-center p-1 rounded-circle d-flex justify-content-center align-items-center me-2" style="width: 25px; height: 25px;" title="Close Friend">
-                                <span class="material-symbols-outlined" style="font-size: 12px; color: white;">star</span>
-                            </div>
-                        @endif
-                        <h4 class="d-inline-block mb-0">{{ $post->sender->name }}</h4>
-                        <span class="d-block ms-2" style="font-size: 0.7rem">{{ $post->time }}</span>
+                <div class="h-100 w-100 d-flex flex-column justify-content-center align-items-center text-center p-5">
+                    <div class="p-2">
+                        <h1 class="text-center">Try adding a friend first!</h1>
+                        <h5>Once you have a friend, you can take a picture and send it to their home screen.</h5>
                     </div>
-                    <div class="center-box d-flex flex-column align-items-center"style="border: 2px solid #000000;">
-                        <img src="{{ asset('user_post/' . $post->pict) }}" alt="" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="caption position-absolute d-flex justify-content-center align-items-center">
-                            <p class="m-0">{{ $post->caption }}</p>
-                        </div>
-                    </div>
-                    @if ($post->postTags->count() > 0)
-                        <div class="d-flex flex-row align-items-center justify-content-start w-100 mt-2 gap-1" style="max-width: 500px;">
-                            <h6 style="font-size: 0.9rem;">Tagged Friends : </h6>
-                            @foreach ($post->postTags as $tag)
-                                <div class="selected-user">{{ $tag->user->name }}</div>
-                            @endforeach
-                        </div>
-                    @endif
-                    @if ($post->location != NULL)
-                        <div class="d-flex flex-row align-items-center justify-content-start w-100 mt-4 px-2" style="max-width: 500px;">
-                            <span class="material-symbols-outlined" style="font-size: 200%; margin-right: 8px;">
-                                location_on
-                            </span>
-                            <p class="mb-0" style="flex: 1; text-align: left; font-size: 0.9rem;">{{ $post->location }}</p>
-                        </div>
-                    @endif
                 </div>
             </div>
-        @endforeach
+        @else
+            @foreach ($posts as $post)
+                <div class="camera w-100 d-flex flex-column justify-content-center p-1 align-items-center" style="height: 100vh;">
+                    <div class="h-100 w-100 d-flex flex-column justify-content-center align-items-center">
+                        <div class="d-flex flex-row justify-content-center align-items-end mb-4">
+                            @if ($post->is_closed_friend == 1)
+                                <div class="bg-success text-center p-1 rounded-circle d-flex justify-content-center align-items-center me-2" style="width: 25px; height: 25px;" title="Close Friend">
+                                    <span class="material-symbols-outlined" style="font-size: 12px; color: white;">star</span>
+                                </div>                        
+                            @endif
+                            <h4 class="d-inline-block mb-0">{{ $post->sender->name }}</h4>
+                            <span class="d-block ms-2" style="font-size: 0.7rem">{{ $post->time }}</span>
+                        </div>                           
+                        <div class="center-box d-flex flex-column align-items-center"style="border: 2px solid #000000;">
+                            <img src="{{ asset('user_post/' . $post->pict) }}" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div class="caption position-absolute d-flex justify-content-center align-items-center">
+                                <p class="m-0">{{ $post->caption }}</p>
+                            </div>   
+                        </div>
+                        @if ($post->postTags->count() > 0)
+                            <div class="d-flex flex-row align-items-center justify-content-start w-100 mt-2 gap-1" style="max-width: 500px;">
+                                <h6 style="font-size: 0.9rem;">Tagged Friends : </h6>
+                                @foreach ($post->postTags as $tag)
+                                    <div class="selected-user">{{ $tag->user->name }}</div>
+                                @endforeach
+                            </div>                 
+                        @endif  
+                        @if ($post->location != NULL)
+                            <div class="d-flex flex-row align-items-center justify-content-start w-100 mt-4 px-2" style="max-width: 500px;">
+                                <span class="material-symbols-outlined" style="font-size: 200%; margin-right: 8px;">
+                                    location_on
+                                </span>
+                                <p class="mb-0" style="flex: 1; text-align: left; font-size: 0.9rem;">{{ $post->location }}</p>
+                            </div>                    
+                        @endif
+                    </div>
+                </div>
+            @endforeach
+        @endif
     </div>
     <div class="page-control">
         <div class="controller">
@@ -162,102 +188,123 @@
 </div>
 @endsection
 @section('closeFriend')
-<div class="w-100 h-100 kotak" style="border: 2px solid #EFBDEE; padding: 30px; border-radius: 40px;">
-    <div class="row">
-        <div class="col-auto d-flex flex-column w-100 h-100">
-            <div class="friendsList h-50">
-                <!-- Your Friends Section -->
-                <div class="d-flex flex-column mb-3">
-                    <div class="d-flex align-items-center mb-2">
-                        <i class="fa-solid fa-user-group me-2"></i>
-                        <h5 class="mb-0">Your Friends</h5>
-                    </div>
-                    <h6>{{ $friends->count() }} friends</h6>
-                </div>
-
-                <!-- Search Contact Section -->
-                <div class="d-flex justify-content-center align-items-center mb-3 w-100 p-2" style="background-color: #EFBDEE; height: 37px; width: 100%; border-radius: 40px;">
-                    <i class="fa-solid fa-magnifying-glass me-2"></i>
-                    <h6 class="m-0">Search Contact</h6>
-                </div>
-
-                <!-- Friends List Section -->
-                <div class="friendSection mt-3 w-100">
-                    <div class="scroll w-100">
-                        @if($friends->isEmpty())
-                            <p>You have no friends.</p>
-                        @else
-                            @foreach ($friends as $friend)
-                                <div class="d-flex flex-row justify-content-between align-items-center mt-2">
-                                    <div class="kiri d-flex flex-row align-items-center gap-3">
-                                        <!-- Profile Image -->
-                                        <div class="circle">
-                                            <img src="{{ asset('user_profile/'.$friend->profile_pics) }}" alt="Profile Image">
-                                        </div>
-                                        <!-- Friend Name -->
-                                        <div class="text ml-20">
-                                            <h6>{{ $friend->name }}</h6>
-                                        </div>
-                                    </div>
-                                    <!-- Actions -->
-                                    <div class="d-flex align-items-center">
-                                        <a href="{{ route('user', $friend->id) }}"><i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;"></i></a>
-                                        <form method="POST" action="{{ route('unfollow', ['friendId' => $friend->id]) }}">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" style="border: none; background: none; outline: none">
-                                                <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px; margin-left: 5px;"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>s
-                            @endforeach
-                        @endif
-                    </div>
-                </div>
+<div class="w-100 h-100 kotak" style="border: 2px solid #EFBDEE; padding: 20px; border-radius: 40px;">
+    <div class="d-flex flex-column w-100 h-100" style="overflow-y: auto;">
+        <div class="d-flex flex-column mb-2">
+            <div class="d-flex align-items-center mb-2">
+                <i class="fa-solid fa-user-group me-2"></i>
+                <h5 class="mb-0">Your Friends</h5>
             </div>
-            @if($youMightKnow->isNotEmpty())
-                <div class="youMightKnow mt-2 h-50">
-                    <h6>You Might Know</h6>
-                    <div class="friendSection w-100">
-                        <div class="scroll w-100">
-                            @foreach ($youMightKnow as $friend)
-                                <div class="d-flex flex-row justify-content-between align-items-center mt-2">
-                                    <div class="kiri d-flex flex-row align-items-center gap-3">
-                                        <!-- Profile Image -->
-                                        <div class="circle">
-                                            <img src="{{ asset('user_profile/'.$friend->profile_pics) }}" alt="Profile Image">
-                                        </div>
-                                        <!-- Friend Name -->
-                                        <div class="text d-flex align-items-center ml-2">
-                                            <h6>{{ $friend->name }}</h6>
-                                        </div>
-                                    </div>
-                                    <!-- Actions -->
-                                    <div class="d-flex align-items-center">
-                                        <div class="kotak-kecil d-flex align-items-center justify-content-center">
-                                            <form method="POST" action="{{ route('follow', ['friendId' => $friend->id]) }}">
-                                                @csrf
-                                                <button type="submit" style="border: none; background: none; outline: none">
-                                                    <div class="text1 m-0">ADD</div>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
+            <h6>{{ $friends->count() }} friends</h6>
+        </div>
+
+        <div class="d-flex align-items-center mb-2 pe-4">
+            <div class="search-container me-2">
+                <i class="fa-solid fa-magnifying-glass fa-xs search-icon" id="searchIcon"></i>
+                <input type="text" id="searchInput" placeholder="Search Contact" onkeyup="searchFriends()" onfocus="toggleIcon()" onblur="toggleIcon()">
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="toggleSwitch">
+                <label class="form-check-label" for="toggleSwitch">PID</label>
+            </div>
+        </div>
+        <div id="searchsList" class="pe-4 position-absolute" style="display: none; background: white; overflow-y: auto; z-index: 1000; top: 26%; max-height: 60%; width: 25%; max-width: 350px; border: 1px solid #ddd; border-radius: 5px; padding: 0.5em;"></div>
+
+        <div class="friendsList h-100 pe-4">
+            @if($friends->isEmpty())
+                <div class="text-center w-100 h-100">
+                    <h5>You have no friends</h5>
+                    <p>Share your Povit ID to your friends and get contact in Povit.</p>
+                    <div class="copy-container">
+                        <input type="text" id="link" class="copy-input" value="{{ Auth::user()->link }}" readonly>
+                        <button class="copy-button" onclick="copyLink()">
+                            <span class="material-symbols-outlined">
+                                content_copy
+                            </span>
+                        </button>
+                    </div>
+                    <br>
+                    <div class="copy-container">
+                        <h6>or share via </h6>
+                        <button class="share-button ms-2" onclick="shareToWhatsApp()">
+                            <i class="fa-brands fa-whatsapp fa-xl" style="color: #63E6BE;"></i>
+                        </button>        
+                    </div>                      
+                </div>
+            @else
+                @foreach ($friends as $friend)
+                    <div class="d-flex flex-row justify-content-between align-items-center mt-2">
+                        <div class="kiri d-flex flex-row align-items-center gap-3">
+                            <!-- Profile Image -->
+                            <div class="circle">
+                                @if ($friend->profile_pics != NULL) 
+                                    <img src="{{ asset('user_profile/'.$friend->profile_pics) }}" alt="Profile Image">
+                                @else
+                                    <img src="{{asset('avatar.png')}}" alt="Default Profile">
+                                @endif
+                            </div>
+                            <!-- Friend Name -->
+                            <div class="text ml-20">
+                                <h6>{{ $friend->name }}</h6>
+                            </div>
+                        </div>
+                        <!-- Actions -->
+                        <div class="d-flex align-items-center">
+                            <a href="{{ route('user', $friend->id) }}"><i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;" title="Chat"></i></a>
+                            <form method="POST" action="{{ route('unfollow', ['friendId' => $friend->id]) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" style="border: none; background: none; outline: none" title="Unfollow {{$friend->name}}">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px; margin-left: 5px;"></i>
+                                </button>
+                            </form>
                         </div>
                     </div>
-                </div>
+                @endforeach
             @endif
+            
         </div>
+        @if($youMightKnow->isNotEmpty())
+            <div class="youMightKnow h-100 pe-4">
+                <h6 class=" mt-2">You Might Know</h6>
+                @foreach ($youMightKnow as $friend)
+                    <div class="d-flex flex-row justify-content-between align-items-center mt-2">
+                        <div class="kiri d-flex flex-row align-items-center gap-3">
+                            <!-- Profile Image -->
+                            <div class="circle">
+                                @if ($friend->profile_pics != NULL) 
+                                    <img src="{{ asset('user_profile/'.$friend->profile_pics) }}" alt="Profile Image">
+                                @else
+                                    <img src="{{asset('avatar.png')}}" alt="Default Profile">
+                                @endif
+                            </div>
+                            <!-- Friend Name -->
+                            <div class="text d-flex align-items-center ml-2">
+                                <h6>{{ $friend->name }}</h6>
+                            </div>
+                        </div>
+                        <!-- Actions -->
+                        <div class="d-flex align-items-center">
+                            <div class="kotak-kecil d-flex align-items-center justify-content-center">
+                                <form method="POST" action="{{ route('follow', ['friendId' => $friend->id]) }}">
+                                    @csrf
+                                    <button type="submit" style="border: none; background: none; outline: none">
+                                        <div class="text1 m-0">ADD</div>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
     </div>
 </div>
 @endsection
 
 @section('extra-js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
-<script src="https://kit.fontawesome.com/d84972a54e.js" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/f273824998.js" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function() {
         Webcam.set({
@@ -276,6 +323,134 @@
             $('#friendSearch').val('');
         });
     });
+
+    function toggleIcon() {
+        const input = document.getElementById('searchInput');
+        const icon = document.getElementById('searchIcon');
+        
+        if (input.value === '' && document.activeElement !== input) {
+            icon.style.display = 'block';
+            input.style.textAlign = 'center';
+        } else {
+            icon.style.display = 'none';
+            input.style.textAlign = 'left';
+        }
+    }
+
+    window.onload = toggleIcon;
+
+    const searchsList = document.getElementById('searchsList');
+
+    function searchFriends() {
+        const input = document.getElementById('searchInput').value.toLowerCase();
+        const type = document.getElementById('toggleSwitch').checked ? 'PID' : 'f';
+        toggleIcon();
+
+        if (input.length > 2) {
+            fetch(`/search-friends?query=${encodeURIComponent(input)}&type=${encodeURIComponent(type)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if(Array.isArray(data)){
+                    showFriendResult(data, type);
+                }else{
+                    console.error('Data format invalid', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+            } else {
+                searchsList.style.display = 'none';
+            }
+    }
+
+    function showFriendResult(friends, type) {
+        searchsList.innerHTML = '';
+        if (friends.length > 0) {
+            friends.forEach(friend => {
+                const friendDiv = document.createElement('div');
+                friendDiv.classList.add('d-flex', 'flex-row', 'justify-content-between', 'align-items-center', 'mt-2');
+                
+                if(type == 'PID'){
+                    friendDiv.innerHTML = `
+                <div class="kiri d-flex flex-row align-items-center gap-3">
+                    <div class="circle">
+                        <img src="${friend.profile_pics ? '/user_profile/' + friend.profile_pics : '/avatar.png'}" alt="Profile Image">
+                    </div>
+                    <div class="text d-flex align-items-center ml-2">
+                        <h6>${friend.name}</h6>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="kotak-kecil d-flex align-items-center justify-content-center">
+                        <form method="POST" action="/users/${friend.id}/follow">
+                            @csrf
+                            <button type="submit" style="border: none; background: none; outline: none">
+                                <div class="text1 m-0">ADD</div>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            `;
+                }else{
+                    friendDiv.innerHTML = `
+                    <div class="kiri d-flex flex-row align-items-center gap-3">
+                            <!-- Profile Image -->
+                            <div class="circle">
+                                <img src="${friend.profile_pics ? '/user_profile/' + friend.profile_pics : '/avatar.png'}" alt="Profile Image">
+                            </div>
+                            <!-- Friend Name -->
+                            <div class="text m-0">
+                                <h6>${friend.name}</h6>
+                            </div>
+                        </div>
+                        <!-- Actions -->
+                        <div class="d-flex align-items-center">
+                            <a href="/chatify/${friend.id}"><i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;" title="Chat"></i></a>
+                            <form method="POST" action="/users/${friend.id}/unfollow">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" style="border: none; background: none; outline: none" title="Unfollow ${friend.name}">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px; margin-left: 5px;"></i>
+                                </button>
+                            </form>
+                        </div>
+                    `
+                }
+                searchsList.appendChild(friendDiv);
+            });
+            searchsList.style.display = 'block';
+        } else {
+            searchsList.style.display = 'none';
+        }
+    }
+
+    function copyLink() {
+        var copyText = document.getElementById("link");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        document.execCommand("copy");
+        showToast('success', 'Successfully copied your Povit ID');
+    }
+
+    function shareToWhatsApp() {
+        const userLink = document.getElementById('link').value;
+        const message = `
+            Hey there!
+
+            Want to connect on Povit? Add me using my ID: ${userLink}.
+
+            Looking forward to it!
+        `;
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
+        window.open(whatsappUrl, '_blank');
+    }
 
     function hideCamera() {
         Webcam.reset();
@@ -415,8 +590,10 @@
 
         if(content.scrollTop + content.clientHeight >= content.scrollHeight){
             scrollDownButton.style.display = 'none';
+            document.querySelector('.controller').style.height = '180px';
         }else{
             scrollDownButton.style.display = 'block';
+            document.querySelector('.controller').style.height = '300px';
         }
     });
 

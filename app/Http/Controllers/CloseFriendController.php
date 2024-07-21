@@ -19,4 +19,34 @@ class CloseFriendController extends Controller
             'suggestedFriends' => $suggestedFriends,
         ]);
     }
+
+    public function addCloseFriend(Request $request){
+        $user = Auth::user();
+        $friendId = $request->input('friend_id');
+        $user->closefriends()->attach($friendId);
+        return response()->json([
+            'message' => 'Friend added to close friends successfully',
+            'closeFriends' => $user->closefriends,
+        ]);
+    }
+
+    public function deleteCloseFriend(Request $request){
+        $user = Auth::user();
+        $friendId = $request->input('friend_id');
+        $user->closefriends()->detach($friendId);
+        return response()->json([
+            'message' => 'Friend removed from close friends successfully',
+            'closeFriends' => $user->closefriends,
+        ]);
+    }
+
+    public function clearCloseFriends(){
+        $user = Auth::user();
+        $user->closefriends()->detach();
+        return response()->json([
+            'message' => 'All close friends cleared successfully',
+            'closeFriends' => $user->closefriends,
+        ]);
+    }
+
 }
