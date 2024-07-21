@@ -155,6 +155,7 @@ class MainController extends Controller
                 throw new \Exception('User not found.');
             }
             $user->friends()->attach($friendId);
+            $friend->friends()->attach($user->id);
             return redirect()->route('home')->with('success', 'Successfully followed ' . $friend->name . '.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to follow user: ' . $e->getMessage());

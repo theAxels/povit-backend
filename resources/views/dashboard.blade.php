@@ -189,7 +189,7 @@
 @endsection
 @section('closeFriend')
 <div class="w-100 h-100 kotak" style="border: 2px solid #EFBDEE; padding: 20px; border-radius: 40px;">
-    <div class="d-flex flex-column w-100 h-100" style="overflow-y: scroll;">
+    <div class="d-flex flex-column w-100 h-100" style="overflow-y: auto;">
         <div class="d-flex flex-column mb-2">
             <div class="d-flex align-items-center mb-2">
                 <i class="fa-solid fa-user-group me-2"></i>
