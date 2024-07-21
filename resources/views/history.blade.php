@@ -25,8 +25,16 @@
     <div class="container mt-0">
 
         <h1 class="mb-4">Your Photos</h1>
+
         <div class="row">
+
+            @foreach ($posts as $post)
             <div class="col-4 col-md-2 mb-4">
+                <img class="photo-placeholder" src="{{ asset('user_post/'. $post->pict) }}"></img>
+            </div>
+            @endforeach
+
+            {{-- <div class="col-4 col-md-2 mb-4">
                 <div class="photo-placeholder"></div>
             </div>
             <div class="col-4 col-md-2 mb-4">
@@ -34,10 +42,7 @@
             </div>
             <div class="col-4 col-md-2 mb-4">
                 <div class="photo-placeholder"></div>
-            </div>
-            <div class="col-4 col-md-2 mb-4">
-                <div class="photo-placeholder"></div>
-            </div>
+            </div> --}}
         </div>
     </div>
     @include('main.closefriend')

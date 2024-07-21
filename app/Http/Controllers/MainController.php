@@ -127,7 +127,7 @@ class MainController extends Controller
     $type = $request->get('type');
     $query = $request->get('query');
     $user = Auth::user();
-    
+
     if ($type == 'f') {
         $friends = $user->friends->filter(function ($friend) use ($query) {
             return stripos($friend->name, $query) !== false;
@@ -136,10 +136,10 @@ class MainController extends Controller
         $userQuery = User::where('link', 'LIKE', "%{$query}%")
             ->where('id', '!=', $user->id)
             ->first();
-        
+
         if ($userQuery) {
             $isFriend = $user->friends()->where('friend_id', $userQuery->id)->exists();
-            
+
             $friends = [
                 [
                     'id' => $userQuery->id,
@@ -152,7 +152,7 @@ class MainController extends Controller
             $friends = [];
         }
     }
-    
+
     return response()->json($friends);
 }
 
@@ -196,9 +196,8 @@ class MainController extends Controller
     public function gallery(){
         $user = Auth::user();
         $posts = Post::where('user_id', $user->id)->get();
-        dd($posts);
+        // dd($posts);
 
-        // return 
-
+        return view('history', compact('posts'));
     }
 }
