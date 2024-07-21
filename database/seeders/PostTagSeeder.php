@@ -2,9 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Post;
 use App\Models\PostTag;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
 
 class PostTagSeeder extends Seeder
 {
@@ -13,13 +16,17 @@ class PostTagSeeder extends Seeder
      */
     public function run(): void
     {
+        $faker = Faker::create();
+        $userIds = User::pluck('id')->toArray();
+        $postIds = Post::pluck('id')->toArray();
+
         PostTag::create([
-            'post_id' => 3,
-            'user_id' => 2,
+            'post_id' => $faker->randomElement($postIds),
+            'user_id' => $faker->randomElement($userIds),
         ]);
         PostTag::create([
-            'post_id' => 2,
-            'user_id' => 3,
+            'post_id' => $faker->randomElement($postIds),
+            'user_id' => $faker->randomElement($userIds),
         ]);
     }
 }

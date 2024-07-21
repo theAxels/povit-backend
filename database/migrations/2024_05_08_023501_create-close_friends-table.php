@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('close_friends', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('friend_id');
+            $table->string('user_id');
+            $table->string('friend_id');
             $table->timestamps();
 
             // Define foreign key constraints

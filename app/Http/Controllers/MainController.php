@@ -42,6 +42,7 @@ class MainController extends Controller
         $friends = $user->friends;
 
         $youMightKnow = $user->youMightKnow();
+        // $youMightKnow = User::all();
         $userPosts = $user->posts;
         $friendsIds = $user->friends->pluck('id')->toArray();
         $openFriendsPosts = Post::whereIn('user_id', $friendsIds)
@@ -118,9 +119,49 @@ class MainController extends Controller
     public function searchUsers(Request $request){
         $query = $request->get('query');
         $users = User::where('name', 'like', '%' . $query . '%')->get();
-
         return response()->json($users);
     }
+
+    public function searchFriends(Request $request)
+{
+    $type = $request->get('type');
+    $query = $request->get('query');
+    $user = Auth::user();
+    
+    if ($type == 'f') {
+        $friends = $user->friends->filter(function ($friend) use ($query) {
+            return stripos($friend->name, $query) !== false;
+        })->values()->toArray();
+    } else if ($type == 'PID') {
+        $userQuery = User::where('link', 'LIKE', "%{$query}%")
+            ->where('id', '!=', $user->id)
+            ->first();
+        
+        if ($userQuery) {
+            $isFriend = $user->friends()->where('friend_id', $userQuery->id)->exists();
+            
+            $friends = [
+                [
+                    'id' => $userQuery->id,
+                    'name' => $userQuery->name,
+                    'profile_pics' => $userQuery->profile_pics,
+                    'type' => $isFriend ? 'old' : 'new'
+                ]
+            ];
+        } else {
+            $friends = [];
+        }
+    }
+    
+    return response()->json($friends);
+}
+
+    // public function searchUsersPID(Request $request)
+    // {
+    //     $query = $request->input('query');
+    //     $users = User::where('link', 'LIKE', "%{$query}%")->get();
+    //     return response()->json($users);
+    // }
 
 
     public function follow($friendId){
@@ -131,6 +172,7 @@ class MainController extends Controller
                 throw new \Exception('User not found.');
             }
             $user->friends()->attach($friendId);
+            $friend->friends()->attach($user->id);
             return redirect()->route('home')->with('success', 'Successfully followed ' . $friend->name . '.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to follow user: ' . $e->getMessage());

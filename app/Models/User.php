@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Friend;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -22,7 +23,8 @@ class User extends Authenticatable
         'email',
         'password',
         'profile_pics',
-        'profile_desc'
+        'profile_desc',
+        'link'
     ];
 
     /**
@@ -46,6 +48,23 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public $incrementing = false; // Disable auto-incrementing
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->id)) {
+                $model->id = (string) Str::uuid();
+            }
+
+            if (empty($model->link)) {
+                $model->link = Str::random(8);
+            }
+        });
     }
 
     public function friends()

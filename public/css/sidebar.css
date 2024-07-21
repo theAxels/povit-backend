@@ -158,12 +158,12 @@ a.sidebar-link:hover {
     font-size: 1.5rem;
 }
 
-.user-img{
+.user-img {
     width: 45px;
     height: 45px;
+    object-fit: cover;
     border-radius: 50%;
     margin-bottom: 2%;
-    /* margin: auto; */
 }
 
 .menu-logo i {
