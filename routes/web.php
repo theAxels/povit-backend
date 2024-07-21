@@ -10,13 +10,15 @@ use App\Http\Middleware\isLogin;
 use App\Http\Middleware\isNotLogin;
 
 
-// Route::get('/', function () {
-//     return view('dashboard');
-// })->name('home');
+Route::get('/main', function () {
+    return view('main.main');
+})->name('main');
+
+Route::get('/check-session', [AuthController::class, 'check']);
 
 // Route::get('/check_login', function(){
 //     return ' ehe dia login';
-// })->name('check_login')->middleware(isLogin::class);
+// })->name('check_login')->middleware(isLogin::class);w
 
 Route::get('/', [MainController::class, 'index'])->name('home')->middleware(isLogin::class);
 
@@ -47,9 +49,14 @@ Route::get('/history', function(){
  return view("history");
 });
 
-Route::get('/close-friends', [CloseFriendController::class, 'getCloseFriends'])->name('closeFriends')->middleware(isLogin::class);
+Route::get('/close-friend', [CloseFriendController::class, 'getCloseFriends'])->name('closeFriends')->middleware(isLogin::class);
+Route::post('/add-close-friend', [CloseFriendController::class, 'addCloseFriend'])->name('addCloseFriend');
+Route::post('/delete-close-friend', [CloseFriendController::class, 'deleteCloseFriend'])->name('deleteCloseFriend');
+Route::post('/clear-close-friends', [CloseFriendController::class, 'clearCloseFriends'])->name('clearCloseFriends');
+
+
 Route::post('/users/{friendId}/follow', [MainController::class, 'follow'])->name('follow');
 Route::delete('/users/{friendId}/unfollow', [MainController::class, 'unfollow'])->name('unfollow');
 
 Route::get('/search-users', [MainController::class, 'searchUsers'])->name('search.users');
-
+Route::get('/search-friends', [MainController::class, 'searchFriends'])->name('search.friends');

@@ -42,6 +42,7 @@ class MainController extends Controller
         $friends = $user->friends;
 
         $youMightKnow = $user->youMightKnow();
+        // $youMightKnow = User::all();
         $userPosts = $user->posts;
         $friendsIds = $user->friends->pluck('id')->toArray();
         $openFriendsPosts = Post::whereIn('user_id', $friendsIds)
@@ -118,9 +119,32 @@ class MainController extends Controller
     public function searchUsers(Request $request){
         $query = $request->get('query');
         $users = User::where('name', 'like', '%' . $query . '%')->get();
-
         return response()->json($users);
     }
+
+    public function searchFriends(Request $request){
+        $type = $request->get('type');
+        $query = $request->get('query');
+        $user = Auth::user();
+        if($type == 'f'){
+            $friends = $user->friends->filter(function($friend) use ($query) {
+                return stripos($friend->name, $query) !== false;
+            })->values()->toArray();
+        }else if($type == 'PID'){
+            $users = User::where('link', 'LIKE', "%{$query}%")
+                     ->where('id', '!=', $user->id)
+                     ->get();
+            $friends = $users->toArray();
+        }
+        return response()->json($friends);
+    }
+
+    // public function searchUsersPID(Request $request)
+    // {
+    //     $query = $request->input('query');
+    //     $users = User::where('link', 'LIKE', "%{$query}%")->get();
+    //     return response()->json($users);
+    // }
 
 
     public function follow($friendId){

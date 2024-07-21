@@ -16,13 +16,13 @@ class UserSeeder extends Seeder
             'name' => 'Admin Admin',
             'email' => 'admin@admin.com',
             'password' => bcrypt('admin123'),
-            'profile_pics' => 'default.jpg',
+            'profile_pics' => NULL,
         ]);
         User::create([
             'name' => 'Andrea',
             'email' => 'andre@gmail.com',
             'password' => bcrypt('andre123'),
-            'profile_pics' => 'andrea.png',
+            'profile_pics' => 'andrea.jpg',
         ]);
         User::create([
             'name' => 'Richard',
@@ -46,7 +46,7 @@ class UserSeeder extends Seeder
             'name' => 'Angki',
             'email' => 'angki@gmail.com',
             'password' => bcrypt('angki123'),
-            'profile_pics' => 'default.png',
+            'profile_pics' => NULL,
         ]);
     }
 }

@@ -12,13 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->string('id')->unique();
+            $table->string('user_id');
             $table->string('pict');
             $table->text('caption')->nullable();
             $table->string('location')->nullable();
             $table->boolean('is_closed_friend')->default(false);
             $table->timestamps();
+            $table->primary('id');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
