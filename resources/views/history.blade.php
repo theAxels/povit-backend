@@ -27,14 +27,20 @@
 <body>
     <div class="container mt-0">
         <h1 class="mb-4">Your Photos</h1>
+
         <div class="row">
-            @foreach($posts as $post)
-                <div class="col-4 col-md-2 mb-4">
-                    <div class="photo-placeholder">
-                        <img src="{{ $post->image_path }}" alt="Photo">
-                    </div>
-                </div>
-            @endforeach
+            <div class="col-4 col-md-2 mb-4">
+                <div class="photo-placeholder"></div>
+            </div>
+            <div class="col-4 col-md-2 mb-4">
+                <div class="photo-placeholder"></div>
+            </div>
+            <div class="col-4 col-md-2 mb-4">
+                <div class="photo-placeholder"></div>
+            </div>
+            <div class="col-4 col-md-2 mb-4">
+                <div class="photo-placeholder"></div>
+            </div>
         </div>
     </div>
     @extends('main.closefriend')
