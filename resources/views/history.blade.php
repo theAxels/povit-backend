@@ -11,7 +11,7 @@
         .photo-container {
             position: relative;
             width: 100%;
-            padding-top: 100%; /* 1:1 Aspect Ratio */
+            padding-top: 100%; 
             overflow: hidden;
         }
         .photo-container img {
