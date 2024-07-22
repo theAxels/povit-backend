@@ -37,7 +37,7 @@
         }
         #modalImage {
             width: 100%;
-            height: auto;
+            height: 440px;
         }
     </style>
 </head>
