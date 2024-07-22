@@ -89,7 +89,7 @@ class User extends Authenticatable
     {
         // Assuming 'profile_pics' is the column in your users table
         if ($this->profile_pics) {
-            return asset('user_profile/' . $this->profile_pics);
+            return asset("user_profile/{$this->profile_pics}");
         }
 
         // Default avatar if the user does not have a profile picture
