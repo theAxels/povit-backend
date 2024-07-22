@@ -75,80 +75,28 @@
     </style>
 </head>
 <body>
-
-{{-- user info and avatar --}}
-<div class="avatar av-l chatify-d-flex"></div>
-<p class="info-name">{{ config('chatify.name') }}</p>
-<div class="line"></div>
-
-{{-- user description --}}
-<div class="about-me" style="position: relative; left: 4%; top: 0; text-align: left;">
-    <p style="font-size: 15px; margin-bottom: 2%; width: 100%; font-weight: 700;">About Me</p>
-    <p style="font-size: 14px; margin: 0; width: 90%; font-weight: 500;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, obcaecati at eos fugit qui incidunt deserunt eius laborum quas quibusdam veritatis!</p>
-</div>
+    <?php
+        $user = Auth::user();
+        $friends = $user->friends;
+    ?>
 
 {{-- friend list --}}
-<div class="about-me" style="position: relative; left: 4%; top: -1%; text-align: left;">
-    <p style="font-size: 15px; margin-bottom: 2%; width: 100%; font-weight: 700;">Friends</p>
-    <div class="friendSection">
-        <div class="scroll">
-            <!-- Profile Image Section -->
-            <div class="friend-row">
-                <div class="circle">
-                    <img src="https://via.placeholder.com/50" alt="Profile Image">
-                </div>
-                <div class="text">
-                    <h6 class="m-0">kamukepo_</h6>
-                    <p style="margin-top: 1%">Halo aku andrea jelek dan sarah cantik</p>
-                </div>
-                <div class="actions" style="margin-right: 10%">
-                    <i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;"></i>
-                </div>
+
+{{-- ----------------------Users/Groups lists side---------------------- --}}
+        
+        <div class="messenger-listView {{ !!$id ? 'conversation-active' : '' }}">
             </div>
 
-            <div class="friend-row">
-                <div class="circle">
-                    <img src="https://via.placeholder.com/50" alt="Profile Image">
-                </div>
-                <div class="text">
-                    <h6 class="m-0">kamukepo_</h6>
-                    <p style="margin-top: 1%">Halo aku andrea jelek dan sarah cantik</p>
-                </div>
-                <div class="actions" style="margin-right: 10%">
-                    <i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;"></i>
-                </div>
-            </div>
+            <div class="show messenger-tab users-tab app-scroll" data-view="users">
 
-            <div class="friend-row">
-                <div class="circle">
-                    <img src="https://via.placeholder.com/50" alt="Profile Image">
+                <div class="favorites-section">
+                    <p class="messenger-title"><span>Favorites</span></p>
+                    <div class="messenger-favorites app-scroll-hidden"></div>
                 </div>
-                <div class="text">
-                    <h6 class="m-0">kamukepo_</h6>
-                    <p style="margin-top: 1%">Halo aku andrea jelek dan sarah cantik</p>
-                </div>
-                <div class="actions" style="margin-right: 10%">
-                    <i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;"></i>
-                </div>
-            </div>
 
-            <div class="friend-row">
-                <div class="circle">
-                    <img src="https://via.placeholder.com/50" alt="Profile Image">
-                </div>
-                <div class="text">
-                    <h6 class="m-0">kamukepo_</h6>
-                    <p style="margin-top: 1%">Halo aku andrea jelek dan sarah cantik</p>
-                </div>
-                <div class="actions" style="margin-right: 10%">
-                    <i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;"></i>
-                </div>
             </div>
-
 
         </div>
-    </div>
-</div>
 
 </body>
 </html>
