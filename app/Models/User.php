@@ -104,4 +104,14 @@ class User extends Authenticatable
                                 ->toArray();
         return User::whereIn('id', $youMightKnowIds)->get();
     }
+    public function getAvatarAttribute()
+    {
+        // Assuming 'profile_pics' is the column in your users table
+        if ($this->profile_pics) {
+            return asset("user_profile/{$this->profile_pics}");
+        }
+
+        // Default avatar if the user does not have a profile picture
+        return asset('user_profile/avatar.png');
+    }
 }
