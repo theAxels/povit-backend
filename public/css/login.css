@@ -1,7 +1,7 @@
 body{
     background: linear-gradient(to right, #F3E8F3, #EEE3EE, #FFFFFF);
     font-family: 'Poppins', sans-serif;
-}   
+}
 
 form{
     width: 100%;
@@ -125,7 +125,7 @@ form{
 }
 
 input{
-    background-color: #EDEDED !important; 
+    background-color: #EDEDED !important;
     border-radius: 50px !important;
     font-size: 1rem !important;
 }
@@ -192,4 +192,12 @@ input{
     max-width: 350px;
     margin: 10px;
     opacity: 1;
+}
+
+.form-check-input{
+    background-color: #EDEDED !important ;
+}
+
+.form-check-input:checked {
+    background-color: #007bff !important; 
 }
