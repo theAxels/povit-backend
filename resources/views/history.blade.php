@@ -18,6 +18,7 @@
             left: 0;
             width: 100%;
             height: 100%;
+            border-radius: 15px;
             object-fit: cover;
             cursor: pointer;
         }
@@ -45,19 +46,38 @@
             border: none;
         }
         .center-box {
-            position: relative;
-            width: 500px;
-            height: 500px;
-            /* border: 2px solid #000000; */
-        }
-        .caption {
-            position: absolute;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            color: #fff;
             width: 100%;
-            text-align: center;
+            max-width: 500px;
+            height: 100%;
+            max-height: 375px;
+            /* aspect-ratio: 1; */
+            border-radius: 25px;
+            /* display: flex;
+            justify-content: center;
+            align-items: center; */
+            border: #000000 solid 2px;
+            position: relative;
+            overflow: hidden;
+            background-size: cover;
+            /* margin: auto; */
+            /* margin-top: 50px; */
+            z-index: 10;
         }
+            .caption {
+                position: absolute;
+                width: 40%;
+                height: 8%;
+                text-align: center;
+                background-color: rgba(0, 0, 0, 0.3);
+                color: #FFFFFF;
+                border-radius: 50px;
+                padding: 2px;
+                font-size: 0.9rem;
+                /* text-align: center; */
+                /* max-width: 90%; */
+                margin: 0 auto;
+                bottom: 10px;
+            }
     </style>
 </head>
 <body>
@@ -84,11 +104,8 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="camera w-100 d-flex flex-column justify-content-center p-1 align-items-center">
-                                <div class="h-100 w-100 d-flex flex-column justify-content-center align-items-center">
-                                    <div class="d-flex flex-row justify-content-center align-items-end mb-4">
+                            <div class="h-100 w-100 d-flex flex-column justify-content-center align-items-center">
+                                <div class="d-flex flex-row justify-content-center align-items-end mb-0">
                                         @if ($post->is_closed_friend == 1)
                                             <div class="bg-success text-center p-1 rounded-circle d-flex justify-content-center align-items-center me-2" style="width: 25px; height: 25px;" title="Close Friend">
                                                 <span class="material-symbols-outlined" style="font-size: 12px; color: white;">star</span>
@@ -96,7 +113,11 @@
                                         @endif
                                         <h4 class="d-inline-block mb-0">{{ $post->sender->name }}</h4>
                                         <span class="d-block ms-2" style="font-size: 0.7rem">{{ $post->time }}</span>
-                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <div class="camera w-100 d-flex flex-column justify-content-center p-1 align-items-center">
                                     <div class="center-box d-flex flex-column align-items-center">
                                         <img src="{{ asset('user_post/' . $post->pict) }}" class="modal-photo" alt="">
                                         <div class="caption">
@@ -120,7 +141,6 @@
                                     @endif
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
