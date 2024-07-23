@@ -83,8 +83,8 @@
 {{-- friend list --}}
 
 {{-- ----------------------Users/Groups lists side---------------------- --}}
-        
-        <div class="messenger-listView {{ !!$id ? 'conversation-active' : '' }}">
+
+        {{-- <div class="messenger-listView {{ !!$id ? 'conversation-active' : '' }}">
             </div>
 
             <div class="show messenger-tab users-tab app-scroll" data-view="users">
@@ -96,7 +96,7 @@
 
             </div>
 
-        </div>
+        </div> --}}
 
 </body>
 </html>

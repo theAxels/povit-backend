@@ -16,7 +16,7 @@
         <li class="sidebar-item" title="Profile">
             <a href="#" class="sidebar-link flex-column d-flex justify-content-center" style="padding: .425rem 1.025rem;">
                 <div class="d-flex flex-row align-items-center">
-                    @if (auth()->user()->profile_pics != NULL) 
+                    @if (auth()->user()->profile_pics != NULL)
                         <img src="{{asset('user_profile/'.auth()->user()->profile_pics)}}" class="user-img" id="image_preview">
                     @else
                         <img src="{{asset('avatar.png')}}" alt="Default Profile" class="user-img" id="image_preview">
