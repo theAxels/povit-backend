@@ -44,6 +44,14 @@ class AuthController extends Controller
         return redirect()->route('login_page')->with('success', 'You have been registered successfully');
     }
 
+    public function check(Request $request)
+    {
+        if (Auth::check()) {
+            return response()->json(['status' => 'authenticated', 'user' => Auth::user()]);
+        }
+        return response()->json(['status' => 'not authenticated']);
+    }
+
     public function loginview()
     {
         return view('login');
@@ -59,6 +67,7 @@ class AuthController extends Controller
 
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
+            // dd("Berhasil Login");
             $request->session()->regenerate();
             return redirect()->route('home');
         }

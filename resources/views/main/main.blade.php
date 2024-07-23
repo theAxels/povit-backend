@@ -6,6 +6,15 @@
 
 <div class="container">
     {{-- @extends('components.friendslayout') --}}
+    @include('components.sidebar')
+    <li class="sidebar-item" title="Close Friend">
+        <a href="#" class="sidebar-link d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          <i class="material-symbols-outlined">
+            star
+          </i>
+          <h6>Close Friend</h6>
+        </a>
+    </li>
     @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
@@ -26,7 +35,7 @@
 
     <h1>Friends List</h1>
 
-    @if ($friends->isEmpty())
+    {{-- @if ($friends->isEmpty())
         <p>You have no friends.</p>
     @else
         <ul>
@@ -54,7 +63,7 @@
                 </li>
             @endforeach
         </ul>
-    @endif
+    @endif --}}
         <div>
             {{-- @foreach ($images as $post)
                 <div class="post">

@@ -16,7 +16,11 @@
         <li class="sidebar-item" title="Profile">
             <a href="#" class="sidebar-link flex-column d-flex justify-content-center" style="padding: .425rem 1.025rem;">
                 <div class="d-flex flex-row align-items-center">
-                    <img src="{{asset('user_profile/'.auth()->user()->profile_pics)}}" class="user-img" id="image_preview">
+                    @if (auth()->user()->profile_pics != NULL) 
+                        <img src="{{asset('user_profile/'.auth()->user()->profile_pics)}}" class="user-img" id="image_preview">
+                    @else
+                        <img src="{{asset('avatar.png')}}" alt="Default Profile" class="user-img" id="image_preview">
+                    @endif
                     <h5 class="ms-2">Profile</h5>
                 </div>
                 <div class="profileDetail w-100 mt-2">
@@ -91,7 +95,7 @@
         </li>
 
         <li class="sidebar-item" title="History">
-            <a href="#" class="sidebar-link d-flex align-items-center">
+            <a href="{{ route('gallery') }}" class="sidebar-link d-flex align-items-center">
                 <i class="material-symbols-outlined">
                     photo_library
                 </i>
