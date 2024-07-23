@@ -180,6 +180,7 @@ class MainController extends Controller
                 throw new \Exception('User not found.');
             }
             $user->friends()->detach($friendId);
+            $friend->friends()->detach($user->id);
             return redirect()->route('home')->with('success', 'Successfully unfollowed ' . $friend->name . '.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to unfollow user: ' . $e->getMessage());
@@ -189,6 +190,7 @@ class MainController extends Controller
     public function gallery(){
         $user = Auth::user();
         $posts = Post::where('user_id', $user->id)->get();
-        return view('history', compact('posts'));
+        [$friends, $youMightKnow] = $this->getFriendData();
+        return view('history', compact('posts', 'friends', 'youMightKnow'));
     }
 }

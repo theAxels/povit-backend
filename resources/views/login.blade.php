@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Register</title>
+    <title>Login</title>
     <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -60,18 +60,15 @@
                                 <i class="fa-solid fa-eye position-absolute" id="show-password"></i>
                             </div>
                             <div class="error"></div>
-                        </div>                                                                    
+                        </div>
 
                         <div class="row mb-4">
                             <div class="col-6 d-flex align-items-center">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="tnc">
+                                    <input class="form-check-input" type="checkbox" id="remember_me" name="remember_me">
                                     <label class="form-check-label" style="font-size: 16px; color: black" for="tnc">Remember
                                         me</label>
                                 </div>
-                            </div>
-                            <div class="col-6 d-flex text-right">
-                                <a href="#!" style="font-size: 16px; margin-left: 30%;">Forgot password?</a>
                             </div>
                         </div>
 
@@ -97,7 +94,7 @@
                             </path>
                             <path fill="none" d="M0 0h48v48H0z"></path>
                         </svg>
-                        <span>Or Log in With Google</span>
+                        <span>Continue With Google</span>
                     </button>
                 </div>
             </div>
@@ -128,11 +125,11 @@
         });
         const showPassword = document.getElementById("show-password");
         const passwordField = document.getElementById("password");
-    
+
         showPassword.addEventListener("click", function() {
             const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
             passwordField.setAttribute("type", type);
-    
+
             if (type === "password") {
                 this.classList.remove("fa-eye-slash");
                 this.classList.add("fa-eye");
