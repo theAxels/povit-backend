@@ -114,7 +114,7 @@ class AuthController extends Controller
         $photo_file = $request->file('profile_pics');
         $extension = $photo_file->extension();
         $imageName = date('dmyHis') . uniqid() . '.' . $extension;
-        $photo_file->move(public_path('profile_pics'), $imageName);
+        $photo_file->move(public_path('user_profile'), $imageName);
 
         // Update the user's profile image path in the database
         $user->profile_pics = $imageName;
