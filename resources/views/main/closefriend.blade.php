@@ -12,13 +12,13 @@
                 <div class="closeFriend" id="close-friend-section">
                     <div class="row mt-2">
                         <div class="col-6 d-flex align-items-center">
-                            <h6 id="close-friends-count">0 People</h6>
+                            <h6 id="close-friends-count">Loading..</h6>
                         </div>
                         <div class="col-6 d-flex justify-content-end align-items-center">
                             <button class="clear-button" style="color: #0D99FF; background: none; border: none;">Clear All</button>
                         </div>
                     </div>
-                
+
                     <div class="friendSection">
                         <div class="scroll" id="close-friends-list">
                             <!-- Profile Image Section -->
@@ -30,7 +30,7 @@
                     <div class="row mt-2">
                         <h6>Suggested</h6>
                     </div>
-    
+
                     <div class="friendSection">
                         <div class="scroll" id="suggested-friends-list">
                             <!-- Profile Image Section -->
@@ -46,59 +46,146 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function () {
+        var userId = '{{ Auth::user()->id }}';  // Assuming you have access to the authenticated user's ID
+
+        $.ajaxSetup({
+            headers: {
+                '_token': '{{ csrf_token() }}'
+            }
+        });
+
         $.ajax({
             url: '{{ route("closeFriends") }}',
             method: 'GET',
             success: function (data) {
-                $('#close-friends-count').text(data.closeFriends.length + ' People');
-                var closeFriendsList = '';
-                data.closeFriends.forEach(function (friend) {
-                    closeFriendsList += '<div class="row mt-4">';
-                    closeFriendsList += '    <div class="col d-flex align-items-center">';
-                    closeFriendsList += '        <div class="circle">';
-                    closeFriendsList += '            <img src="{{ asset('user_profile/') }}/' + friend.profile_pics + '" alt="Profile Image">';
-                    closeFriendsList += '        </div>';
-                    closeFriendsList += '        <div class="text d-flex align-items-center mt-0" style="margin-left: 5%;">';
-                    closeFriendsList += '            <h6 class="m-0">' + friend.name + '</h6>';
-                    closeFriendsList += '        </div>';
-                    closeFriendsList += '        <div class="ms-auto d-flex align-items-center flex-grow-1 justify-content-end">';
-                    closeFriendsList += '            <div class="form-check form-check-inline ms-auto">';
-                    closeFriendsList += '                <input type="radio" class="form-check-input" id="option1" checked>';
-                    closeFriendsList += '                <label for="option1"></label>';
-                    closeFriendsList += '            </div>';
-                    closeFriendsList += '        </div>';
-                    closeFriendsList += '    </div>';
-                    closeFriendsList += '</div>';
-                });
-                $('#close-friends-list').html(closeFriendsList);
+                // Filter out the user from the suggested friends list
+                data.suggestedFriends = data.suggestedFriends.filter(friend => friend.id !== userId);
 
-                var suggestedFriendsList = '';
-                data.suggestedFriends.forEach(function (friend) {
-                    suggestedFriendsList += '<div class="row mt-4">';
-                    suggestedFriendsList += '    <div class="col d-flex align-items-center">';
-                    suggestedFriendsList += '        <div class="circle">';
-                    suggestedFriendsList += '            <img src="{{ asset('user_profile/') }}/' + friend.profile_pics + '" alt="Profile Image">';
-                    suggestedFriendsList += '        </div>';
-                    suggestedFriendsList += '        <div class="text d-flex align-items-center mt-0" style="margin-left: 5%;">';
-                    suggestedFriendsList += '            <h6 class="m-0">' + friend.name + '</h6>';
-                    suggestedFriendsList += '        </div>';
-                    suggestedFriendsList += '        <div class="ms-auto d-flex align-items-center flex-grow-1 justify-content-end">';
-                    suggestedFriendsList += '            <div class="form-check form-check-inline ms-auto">';
-                    suggestedFriendsList += '                <input type="radio" class="form-check-input" id="option6" name="radioExam">';
-                    suggestedFriendsList += '                <label for="option6"></label>';
-                    suggestedFriendsList += '            </div>';
-                    suggestedFriendsList += '        </div>';
-                    suggestedFriendsList += '    </div>';
-                    suggestedFriendsList += '</div>';
+                updateCloseFriendsList(data.closeFriends);
+                updateSuggestedFriendsList(data.suggestedFriends);
+
+                // Add event listeners to the radio buttons for suggested friends
+                $(document).on('click', '.suggested-friend-radio', function () {
+                    var friendId = $(this).data('id');
+                    var friend = data.suggestedFriends.find(f => f.id === friendId);
+
+                    if (friend) {
+                        // Remove friend from suggested friends
+                        data.suggestedFriends = data.suggestedFriends.filter(f => f.id !== friendId);
+                        // Add friend to close friends
+                        data.closeFriends.push(friend);
+
+                        // Update the DOM
+                        updateCloseFriendsList(data.closeFriends);
+                        updateSuggestedFriendsList(data.suggestedFriends);
+
+                        // Send an AJAX request to update the backend
+                        $.ajax({
+                            url: '{{ route("addCloseFriend") }}',
+                            method: 'POST',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                id: friendId,
+                                added: true
+                            },
+                            success: function (response) {
+                                alert('Friend added successfully');
+                            },
+                            error: function (error) {
+                                alert('Error adding friend');
+                            }
+                        });
+                    }
                 });
-                $('#suggested-friends-list').html(suggestedFriendsList);
+
+                // Add event listeners to the radio buttons for close friends
+                $(document).on('click', '.close-friend-radio', function () {
+                    var friendId = $(this).data('id');
+                    var friend = data.closeFriends.find(f => f.id === friendId);
+
+                    if (friend) {
+                        // Remove friend from close friends
+                        data.closeFriends = data.closeFriends.filter(f => f.id !== friendId);
+                        // Add friend to suggested friends
+                        data.suggestedFriends.push(friend);
+
+                        // Update the DOM
+                        updateCloseFriendsList(data.closeFriends);
+                        updateSuggestedFriendsList(data.suggestedFriends);
+
+                        // Send an AJAX request to update the backend
+                        $.ajax({
+                            url: '{{ route("removeCloseFriend") }}',
+                            method: 'POST',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                id: friendId,
+                                added: false
+                            },
+                            success: function (response) {
+                                alert('Friend removed from close friends successfully');
+                            },
+                            error: function (error) {
+                                alert('Error removing friend');
+                            }
+                        });
+                    }
+                });
             }
         });
     });
 
+    function updateCloseFriendsList(closeFriends) {
+        $('#close-friends-count').text(closeFriends.length + ' People');
+        var closeFriendsList = '';
+        closeFriends.forEach(function (friend) {
+            closeFriendsList += '<div class="row mt-4">';
+            closeFriendsList += '    <div class="col d-flex align-items-center">';
+            closeFriendsList += '        <div class="circle">';
+            closeFriendsList += '            <img src="{{ asset('user_profile/') }}/' + friend.profile_pics + '" alt="Profile Image">';
+            closeFriendsList += '        </div>';
+            closeFriendsList += '        <div class="text d-flex align-items-center mt-0" style="margin-left: 5%;">';
+            closeFriendsList += '            <h6 class="m-0">' + friend.name + '</h6>';
+            closeFriendsList += '        </div>';
+            closeFriendsList += '        <div class="ms-auto d-flex align-items-center flex-grow-1 justify-content-end">';
+            closeFriendsList += '            <div class="form-check form-check-inline ms-auto">';
+            closeFriendsList += '                <input type="radio" class="form-check-input close-friend-radio" data-id="' + friend.id + '" checked>';
+            closeFriendsList += '                <label for="option1"></label>';
+            closeFriendsList += '            </div>';
+            closeFriendsList += '        </div>';
+            closeFriendsList += '    </div>';
+            closeFriendsList += '</div>';
+        });
+        $('#close-friends-list').html(closeFriendsList);
+    }
+
+    function updateSuggestedFriendsList(suggestedFriends) {
+        var suggestedFriendsList = '';
+        suggestedFriends.forEach(function (friend) {
+            suggestedFriendsList += '<div class="row mt-4">';
+            suggestedFriendsList += '    <div class="col d-flex align-items-center">';
+            suggestedFriendsList += '        <div class="circle">';
+            suggestedFriendsList += '            <img src="{{ asset('user_profile/') }}/' + friend.profile_pics + '" alt="Profile Image">';
+            suggestedFriendsList += '        </div>';
+            suggestedFriendsList += '        <div class="text d-flex align-items-center mt-0" style="margin-left: 5%;">';
+            suggestedFriendsList += '            <h6 class="m-0">' + friend.name + '</h6>';
+            suggestedFriendsList += '        </div>';
+            suggestedFriendsList += '        <div class="ms-auto d-flex align-items-center flex-grow-1 justify-content-end">';
+            suggestedFriendsList += '            <div class="form-check form-check-inline ms-auto">';
+            suggestedFriendsList += '                <input type="radio" class="form-check-input suggested-friend-radio" data-id="' + friend.id + '">';
+            suggestedFriendsList += '                <label for="option6"></label>';
+            suggestedFriendsList += '            </div>';
+            suggestedFriendsList += '        </div>';
+            suggestedFriendsList += '    </div>';
+            suggestedFriendsList += '</div>';
+        });
+        $('#suggested-friends-list').html(suggestedFriendsList);
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         // Get the close friends count element
         const closeFriendsCount = document.getElementById('close-friends-count');
+        console.log(closeFriendsCount);
         // Get the close friend section container
         const closeFriendSection = document.getElementById('close-friend-section');
 

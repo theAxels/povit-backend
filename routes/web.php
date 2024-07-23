@@ -51,7 +51,7 @@ Route::get('/history', function(){
 
 Route::get('/close-friend', [CloseFriendController::class, 'getCloseFriends'])->name('closeFriends')->middleware(isLogin::class);
 Route::post('/add-close-friend', [CloseFriendController::class, 'addCloseFriend'])->name('addCloseFriend');
-Route::post('/delete-close-friend', [CloseFriendController::class, 'deleteCloseFriend'])->name('deleteCloseFriend');
+Route::post('/delete-close-friend', [CloseFriendController::class, 'deleteCloseFriend'])->name('removeCloseFriend');
 Route::post('/clear-close-friends', [CloseFriendController::class, 'clearCloseFriends'])->name('clearCloseFriends');
 
 
