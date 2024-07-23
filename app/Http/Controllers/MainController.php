@@ -219,9 +219,10 @@ class MainController extends Controller
 
     public function gallery(){
         $user = Auth::user();
-        $posts = Post::where('user_id', $user->id)->get();
+        $posts = Post::where('user_id', $user->id)->orderBy('created_at', 'asc')->get();
         [$friends, $youMightKnow] = $this->getFriendData();
         return view('history', compact('posts', 'friends', 'youMightKnow'));
     }
+
 
 }
