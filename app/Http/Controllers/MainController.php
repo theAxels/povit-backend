@@ -36,13 +36,19 @@ class MainController extends Controller
         }
     }
 
+    public function getFriendData(){
+        $user = Auth::user();
+        $friends = $user->friends;
+        $youMightKnow = $user->youMightKnow();
+        // $youMightKnow = User::all();
+        return [$friends, $youMightKnow];
+    }
+
+
     public function index()
     {
         $user = Auth::user();
-        $friends = $user->friends;
-
-        $youMightKnow = $user->youMightKnow();
-        // $youMightKnow = User::all();
+        [$friends, $youMightKnow] = $this->getFriendData();
         $userPosts = $user->posts;
         $friendsIds = $user->friends->pluck('id')->toArray();
         $openFriendsPosts = Post::whereIn('user_id', $friendsIds)
@@ -122,47 +128,34 @@ class MainController extends Controller
         return response()->json($users);
     }
 
-    public function searchFriends(Request $request)
-{
-    $type = $request->get('type');
+    public function searchFriends(Request $request){
     $query = $request->get('query');
     $user = Auth::user();
 
-    if ($type == 'f') {
-        $friends = $user->friends->filter(function ($friend) use ($query) {
-            return stripos($friend->name, $query) !== false;
-        })->values()->toArray();
-    } else if ($type == 'PID') {
-        $userQuery = User::where('link', 'LIKE', "%{$query}%")
-            ->where('id', '!=', $user->id)
-            ->first();
+    $filteredFriends = $user->friends->filter(function ($friend) use ($query) {
+        return stripos($friend->name, $query) !== false;
+    })->values()->toArray();
 
-        if ($userQuery) {
-            $isFriend = $user->friends()->where('friend_id', $userQuery->id)->exists();
+    $userQuery = User::where('link', 'LIKE', "%{$query}%")
+        ->where('id', '!=', $user->id)
+        ->first();
 
-            $friends = [
-                [
-                    'id' => $userQuery->id,
-                    'name' => $userQuery->name,
-                    'profile_pics' => $userQuery->profile_pics,
-                    'type' => $isFriend ? 'old' : 'new'
-                ]
-            ];
-        } else {
-            $friends = [];
-        }
+    if ($userQuery) {
+        $isFriend = $user->friends()->where('friend_id', $userQuery->id)->exists();
+        $userQueryResult = [
+            [
+                'id' => $userQuery->id,
+                'name' => $userQuery->name,
+                'profile_pics' => $userQuery->profile_pics,
+                'type' => $isFriend ? 'old' : 'new'
+            ]
+        ];
+        $combinedResults = array_merge($filteredFriends, $userQueryResult);
+    } else {
+        $combinedResults = $filteredFriends;
     }
-
-    return response()->json($friends);
-}
-
-    // public function searchUsersPID(Request $request)
-    // {
-    //     $query = $request->input('query');
-    //     $users = User::where('link', 'LIKE', "%{$query}%")->get();
-    //     return response()->json($users);
-    // }
-
+        return response()->json($combinedResults);
+    }
 
     public function follow($friendId){
         try {
@@ -196,8 +189,6 @@ class MainController extends Controller
     public function gallery(){
         $user = Auth::user();
         $posts = Post::where('user_id', $user->id)->get();
-        // dd($posts);
         return view('history', compact('posts'));
-        // return
     }
 }
