@@ -3,7 +3,6 @@
 
 @section('extra-css')
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/friends.css">
 </head>
 @endsection
 
@@ -15,7 +14,7 @@
                 <div id="my_camera"></div>
                 @if ($friends->isEmpty())
                     <div class="control-bar p-3">
-                        <span class="material-symbols-outlined image-icon disabled" style="font-size: 3rem;">
+                        <span class="material-symbols-outlined image-icon disabled" style="font-size: 3rem; color: #FFFFFF;">
                             image
                             <input type="file" id="fileInput" accept="image/*" disabled>
                         </span>
@@ -26,14 +25,13 @@
                     </div>
                 @else
                     <div class="control-bar p-3">
-                        <span class="material-symbols-outlined image-icon" style="font-size: 3rem;">
+                        <span class="material-symbols-outlined image-icon" style="font-size: 3rem; color: #FFFFFF; ">
                             image
                             <input type="file" id="fileInput" accept="image/*">
                         </span>
                         <input type="button" class="circle-btn" onClick="take_snapshot()">
                     </div>
                 @endif
-
             </div>
             <div class="history-text" id="historyArrow">
                 <button onclick="scrollDown(this)" style="border: none; background: none; outline: none;">
@@ -145,9 +143,11 @@
                         </div>                           
                         <div class="center-box d-flex flex-column align-items-center"style="border: 2px solid #000000;">
                             <img src="{{ asset('user_post/' . $post->pict) }}" alt="" style="width: 100%; height: 100%; object-fit: cover;">
-                            <div class="caption position-absolute d-flex justify-content-center align-items-center">
-                                <p class="m-0">{{ $post->caption }}</p>
-                            </div>   
+                            @if($post->caption != NULL)
+                                <div class="caption position-absolute d-flex justify-content-center align-items-center">
+                                    <p class="m-0">{{ $post->caption }}</p>
+                                </div>
+                            @endif
                         </div>
                         @if ($post->postTags->count() > 0)
                             <div class="d-flex flex-row align-items-center justify-content-start w-100 mt-2 gap-1" style="max-width: 500px;">
@@ -187,270 +187,30 @@
     </div>
 </div>
 @endsection
-@section('closeFriend')
-<div class="w-100 h-100 kotak" style="border: 2px solid #EFBDEE; padding: 20px; border-radius: 40px;">
-    <div class="d-flex flex-column w-100 h-100" style="overflow-y: auto;">
-        <div class="d-flex flex-column mb-2">
-            <div class="d-flex align-items-center mb-2">
-                <i class="fa-solid fa-user-group me-2"></i>
-                <h5 class="mb-0">Your Friends</h5>
-            </div>
-            <h6>{{ $friends->count() }} friends</h6>
-        </div>
-
-        <div class="d-flex align-items-center mb-2 pe-4">
-            <div class="search-container me-2">
-                <i class="fa-solid fa-magnifying-glass fa-xs search-icon" id="searchIcon"></i>
-                <input type="text" id="searchInput" placeholder="Search Contact" onkeyup="searchFriends()" onfocus="toggleIcon()" onblur="toggleIcon()">
-            </div>
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="toggleSwitch">
-                <label class="form-check-label" for="toggleSwitch">PID</label>
-            </div>
-        </div>
-        <div id="searchsList" class="pe-4 position-absolute" style="display: none; background: white; overflow-y: auto; z-index: 1000; top: 26%; max-height: 60%; width: 25%; max-width: 350px; border: 1px solid #ddd; border-radius: 5px; padding: 0.5em;"></div>
-
-        <div class="friendsList h-100 pe-4">
-            @if($friends->isEmpty())
-                <div class="text-center w-100 h-100">
-                    <h5>You have no friends</h5>
-                    <p>Share your Povit ID to your friends and get contact in Povit.</p>
-                    <div class="copy-container">
-                        <input type="text" id="link" class="copy-input" value="{{ Auth::user()->link }}" readonly>
-                        <button class="copy-button" onclick="copyLink()">
-                            <span class="material-symbols-outlined">
-                                content_copy
-                            </span>
-                        </button>
-                    </div>
-                    <br>
-                    <div class="copy-container">
-                        <h6>or share via </h6>
-                        <button class="share-button ms-2" onclick="shareToWhatsApp()">
-                            <i class="fa-brands fa-whatsapp fa-xl" style="color: #63E6BE;"></i>
-                        </button>        
-                    </div>                      
-                </div>
-            @else
-                @foreach ($friends as $friend)
-                    <div class="d-flex flex-row justify-content-between align-items-center mt-2">
-                        <div class="kiri d-flex flex-row align-items-center gap-3">
-                            <!-- Profile Image -->
-                            <div class="circle">
-                                @if ($friend->profile_pics != NULL) 
-                                    <img src="{{ asset('user_profile/'.$friend->profile_pics) }}" alt="Profile Image">
-                                @else
-                                    <img src="{{asset('avatar.png')}}" alt="Default Profile">
-                                @endif
-                            </div>
-                            <!-- Friend Name -->
-                            <div class="text ml-20">
-                                <h6>{{ $friend->name }}</h6>
-                            </div>
-                        </div>
-                        <!-- Actions -->
-                        <div class="d-flex align-items-center">
-                            <a href="{{ route('user', $friend->id) }}"><i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;" title="Chat"></i></a>
-                            <form method="POST" action="{{ route('unfollow', ['friendId' => $friend->id]) }}">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" style="border: none; background: none; outline: none" title="Unfollow {{$friend->name}}">
-                                    <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px; margin-left: 5px;"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                @endforeach
-            @endif
-            
-        </div>
-        @if($youMightKnow->isNotEmpty())
-            <div class="youMightKnow h-100 pe-4">
-                <h6 class=" mt-2">You Might Know</h6>
-                @foreach ($youMightKnow as $friend)
-                    <div class="d-flex flex-row justify-content-between align-items-center mt-2">
-                        <div class="kiri d-flex flex-row align-items-center gap-3">
-                            <!-- Profile Image -->
-                            <div class="circle">
-                                @if ($friend->profile_pics != NULL) 
-                                    <img src="{{ asset('user_profile/'.$friend->profile_pics) }}" alt="Profile Image">
-                                @else
-                                    <img src="{{asset('avatar.png')}}" alt="Default Profile">
-                                @endif
-                            </div>
-                            <!-- Friend Name -->
-                            <div class="text d-flex align-items-center ml-2">
-                                <h6>{{ $friend->name }}</h6>
-                            </div>
-                        </div>
-                        <!-- Actions -->
-                        <div class="d-flex align-items-center">
-                            <div class="kotak-kecil d-flex align-items-center justify-content-center">
-                                <form method="POST" action="{{ route('follow', ['friendId' => $friend->id]) }}">
-                                    @csrf
-                                    <button type="submit" style="border: none; background: none; outline: none">
-                                        <div class="text1 m-0">ADD</div>
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        @endif
-    </div>
-</div>
-@endsection
 
 @section('extra-js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 <script src="https://kit.fontawesome.com/f273824998.js" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function() {
-        Webcam.set({
-            width: 500,
-            height: 375,
-            image_format: 'jpeg',
-            jpeg_quality: 90
-        });
-        Webcam.attach('#my_camera', function(err) {
-            if (err) {
-                showToast('danger', err);
-            }
-        });
+        @if (!$friends->isEmpty())
+            Webcam.set({
+                width: 500,
+                height: 375,
+                image_format: 'jpeg',
+                jpeg_quality: 90
+            });
+            Webcam.attach('#my_camera', function(err) {
+                if (err) {
+                    showToast('danger', err);
+                }
+            });
+        @endif
 
         $('#clearSearchInput').click(function() {
             $('#friendSearch').val('');
         });
     });
-
-    function toggleIcon() {
-        const input = document.getElementById('searchInput');
-        const icon = document.getElementById('searchIcon');
-        
-        if (input.value === '' && document.activeElement !== input) {
-            icon.style.display = 'block';
-            input.style.textAlign = 'center';
-        } else {
-            icon.style.display = 'none';
-            input.style.textAlign = 'left';
-        }
-    }
-
-    window.onload = toggleIcon;
-
-    const searchsList = document.getElementById('searchsList');
-
-    function searchFriends() {
-        const input = document.getElementById('searchInput').value.toLowerCase();
-        const type = document.getElementById('toggleSwitch').checked ? 'PID' : 'f';
-        toggleIcon();
-
-        if (input.length > 2) {
-            fetch(`/search-friends?query=${encodeURIComponent(input)}&type=${encodeURIComponent(type)}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if(Array.isArray(data)){
-                    showFriendResult(data);
-                }else{
-                    console.error('Data format invalid', 'error');
-                }
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
-            } else {
-                searchsList.style.display = 'none';
-            }
-    }
-
-    function showFriendResult(friends) {
-        searchsList.innerHTML = '';
-        if (friends.length > 0) {
-            friends.forEach(friend => {
-                const friendDiv = document.createElement('div');
-                friendDiv.classList.add('d-flex', 'flex-row', 'justify-content-between', 'align-items-center', 'mt-2');
-                
-                if(friend.type == 'new'){
-                    friendDiv.innerHTML = `
-                <div class="kiri d-flex flex-row align-items-center gap-3">
-                    <div class="circle">
-                        <img src="${friend.profile_pics ? '/user_profile/' + friend.profile_pics : '/avatar.png'}" alt="Profile Image">
-                    </div>
-                    <div class="text d-flex align-items-center ml-2">
-                        <h6>${friend.name}</h6>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center">
-                    <div class="kotak-kecil d-flex align-items-center justify-content-center">
-                        <form method="POST" action="/users/${friend.id}/follow">
-                            @csrf
-                            <button type="submit" style="border: none; background: none; outline: none">
-                                <div class="text1 m-0">ADD</div>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            `;
-                }else{
-                    friendDiv.innerHTML = `
-                    <div class="kiri d-flex flex-row align-items-center gap-3">
-                            <!-- Profile Image -->
-                            <div class="circle">
-                                <img src="${friend.profile_pics ? '/user_profile/' + friend.profile_pics : '/avatar.png'}" alt="Profile Image">
-                            </div>
-                            <!-- Friend Name -->
-                            <div class="text m-0">
-                                <h6>${friend.name}</h6>
-                            </div>
-                        </div>
-                        <!-- Actions -->
-                        <div class="d-flex align-items-center">
-                            <a href="/chatify/${friend.id}"><i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;" title="Chat"></i></a>
-                            <form method="POST" action="/users/${friend.id}/unfollow">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" style="border: none; background: none; outline: none" title="Unfollow ${friend.name}">
-                                    <i class="fa-solid fa-circle-xmark" style="color: #EFBDEE; font-size: 20px; margin-left: 5px;"></i>
-                                </button>
-                            </form>
-                        </div>
-                    `
-                }
-                searchsList.appendChild(friendDiv);
-            });
-            searchsList.style.display = 'block';
-        } else {
-            searchsList.style.display = 'none';
-        }
-    }
-
-    function copyLink() {
-        var copyText = document.getElementById("link");
-        copyText.select();
-        copyText.setSelectionRange(0, 99999);
-        document.execCommand("copy");
-        showToast('success', 'Successfully copied your Povit ID');
-    }
-
-    function shareToWhatsApp() {
-        const userLink = document.getElementById('link').value;
-        const message = `
-            Hey there!
-
-            Want to connect on Povit? Add me using my ID: ${userLink}.
-
-            Looking forward to it!
-        `;
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
-        window.open(whatsappUrl, '_blank');
-    }
 
     function hideCamera() {
         Webcam.reset();
@@ -461,7 +221,9 @@
     function showCamera() {
         document.getElementById('kamera').style.display = 'block';
         document.getElementById('historyArrow').style.display = 'block';
-        Webcam.attach('#my_camera');
+        @if (!$friends->isEmpty())
+            Webcam.attach('#my_camera');
+        @endif
         document.getElementById('hasil').style.display = 'none';
     }
 
@@ -574,62 +336,62 @@
         $(this).remove();
     });
 
-    const content = document.querySelector('.content');
-    const pageControllerPanel = document.querySelector('.page-control');
-    const scrollUpButton = document.querySelector('.scroll-up');
-    const scrollDownButton = document.querySelector('.scroll-down');
+    // const content = document.querySelector('.content');
+    // const pageControllerPanel = document.querySelector('.page-control');
+    // const scrollUpButton = document.querySelector('.scroll-up');
+    // const scrollDownButton = document.querySelector('.scroll-down');
 
-    content.addEventListener('scroll', function() {
-        if (content.scrollTop > 0) {
-            pageControllerPanel.style.display = 'flex';
-            hideCamera();
-        } else {
-            pageControllerPanel.style.display = 'none';
-            showCamera();
-        }
+    // content.addEventListener('scroll', function() {
+    //     if (content.scrollTop > 0) {
+    //         pageControllerPanel.style.display = 'flex';
+    //         hideCamera();
+    //     } else {
+    //         pageControllerPanel.style.display = 'none';
+    //         showCamera();
+    //     }
 
-        if(content.scrollTop + content.clientHeight >= content.scrollHeight){
-            scrollDownButton.style.display = 'none';
-            document.querySelector('.controller').style.height = '180px';
-        }else{
-            scrollDownButton.style.display = 'block';
-            document.querySelector('.controller').style.height = '300px';
-        }
-    });
+    //     if(content.scrollTop + content.clientHeight >= content.scrollHeight){
+    //         scrollDownButton.style.display = 'none';
+    //         document.querySelector('.controller').style.height = '180px';
+    //     }else{
+    //         scrollDownButton.style.display = 'block';
+    //         document.querySelector('.controller').style.height = '300px';
+    //     }
+    // });
 
-    function scrollToCamera() {
-        content.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    }
+    // function scrollToCamera() {
+    //     content.scrollTo({
+    //         top: 0,
+    //         behavior: 'smooth'
+    //     });
+    // }
 
 
-    function scrollUp(button) {
-        disableButton(button);
-        content.scrollBy({
-            top: -window.innerHeight,
-            behavior: 'smooth'
-        });
-        setTimeout(() => enableButton(button), 1000);
-    }
+    // function scrollUp(button) {
+    //     disableButton(button);
+    //     content.scrollBy({
+    //         top: -window.innerHeight,
+    //         behavior: 'smooth'
+    //     });
+    //     setTimeout(() => enableButton(button), 1000);
+    // }
 
-    function scrollDown(button) {
-        disableButton(button);
-        content.scrollBy({
-            top: window.innerHeight,
-            behavior: 'smooth'
-        });
-        setTimeout(() => enableButton(button), 1000);
-    }
+    // function scrollDown(button) {
+    //     disableButton(button);
+    //     content.scrollBy({
+    //         top: window.innerHeight,
+    //         behavior: 'smooth'
+    //     });
+    //     setTimeout(() => enableButton(button), 1000);
+    // }
 
-    function disableButton(button) {
-        button.disabled = true;
-    }
+    // function disableButton(button) {
+    //     button.disabled = true;
+    // }
 
-    function enableButton(button) {
-        button.disabled = false;
-    }
+    // function enableButton(button) {
+    //     button.disabled = false;
+    // }
 
     document.addEventListener('DOMContentLoaded', function () {
         const submitButton = document.getElementById('submitButton');
@@ -748,6 +510,73 @@
                 }
             }
         }
+
+        const content = document.querySelector('.content');
+        const pageControllerPanel = document.querySelector('.page-control');
+        const scrollUpButton = document.querySelector('.scroll-up');
+        const scrollDownButton = document.querySelector('.scroll-down');
+        const sections = document.querySelectorAll('.camera');
+        let currentSection = 0;
+
+        function updateCurrentSection() {
+            let sectionHeight = window.innerHeight;
+            currentSection = Math.round(content.scrollTop / sectionHeight);
+        }
+
+        content.addEventListener('scroll', function() {
+            if (content.scrollTop > 0) {
+                pageControllerPanel.style.display = 'flex';
+                hideCamera();
+            } else {
+                pageControllerPanel.style.display = 'none';
+                showCamera();
+            }
+
+            if (content.scrollTop + content.clientHeight >= content.scrollHeight) {
+                scrollDownButton.style.display = 'none';
+                document.querySelector('.controller').style.height = '180px';
+            } else {
+                scrollDownButton.style.display = 'block';
+                document.querySelector('.controller').style.height = '300px';
+            }
+        });
+
+        function scrollToSection(index) {
+            if (index >= 0 && index < sections.length) {
+                sections[index].scrollIntoView({ behavior: 'smooth' });
+                currentSection = index;
+            }
+        }
+
+        function scrollToCamera() {
+            scrollToSection(0);
+        }
+
+        scrollUpButton.addEventListener('click', function() {
+            if (currentSection > 0) {
+                disableButton(scrollUpButton);
+                scrollToSection(currentSection - 1);
+                setTimeout(() => enableButton(scrollUpButton), 1000);
+            }
+        });
+
+        scrollDownButton.addEventListener('click', function() {
+            if (currentSection < sections.length - 1) {
+                disableButton(scrollDownButton);
+                scrollToSection(currentSection + 1);
+                setTimeout(() => enableButton(scrollDownButton), 1000);
+            }
+        });
+
+        function disableButton(button) {
+            button.disabled = true;
+        }
+
+        function enableButton(button) {
+            button.disabled = false;
+        }
+
+        content.addEventListener('scroll', updateCurrentSection);
     });
 
 </script>
