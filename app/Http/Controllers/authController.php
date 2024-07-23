@@ -128,8 +128,6 @@ class AuthController extends Controller
         $user = Auth::user();
         $user->name = $request->input('username');
         $user->save();
-
-        // return redirect()->back()->with('success', 'Username updated successfully');
         return redirect()->back();
     }
 
@@ -141,7 +139,6 @@ class AuthController extends Controller
         $user = Auth::user();
         $user->profile_desc = $request->input('profile_desc');
         $user->save();
-
         return redirect()->back();
     }
 
