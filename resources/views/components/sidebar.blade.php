@@ -23,8 +23,8 @@
                     @endif
                     <h5 class="ms-2">Profile</h5>
                 </div>
-                <div class="profileDetail w-100 mt-2">
-                    <div class="mb-3 mt-1 ">
+                <div class="profileDetail w-100 mt-1e">
+                    <div class="mt-1 ">
                         <form action="{{ route('update.profile') }}" method="POST" enctype="multipart/form-data" id="profileForm" >
                             @csrf
                             <input type="file" name="profile_pics" id="profile_pics" class="form-control d-none">
@@ -32,30 +32,41 @@
                             <button type="submit" class="d-none" id="hiddenSubmitButton"></button>
                         </form>
                     </div>
-                    <div class="mb-3">
+                    <span class="form-label" style="font-size: 0.7rem;">POVIT ID</span>
+                    <br>
+                    <div class="d-flex">
+                        <b>{{ Auth::user()->link }}</b>
+                        <input type="text" id="links" class="d-none" value="{{ Auth::user()->link }}" readonly>
+                        <button class="copy-button" onclick="copyLinks()">
+                            <span class="material-symbols-outlined">
+                                content_copy
+                            </span>
+                        </button>
+                    </div>
+                    <div>
                         <span class="form-label" style="font-size: 0.7rem;">Username</span>
                         <form action="{{ route('update.username') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="d-flex">
-                                <input type="text" class="form-control" id="username_input" name="username" value="{{auth()->user()->name}}"disabled>
+                                <input type="text" class="form-control" id="username_input" name="username" value="{{auth()->user()->name}}" style="max-height: 2rem;" disabled>
                                 <button type="button" class="btn" id="edit-username-btn">
-                                    <i class="material-symbols-outlined">
-                                        edit_square
+                                    <i class="material-symbols-outlined"  style="font-size: 1.2rem;">
+                                        edit
                                     </i>
                                 </button>
                                 <button type="submit" class="d-none" id="submitChangeUsr"></button>
                             </div>
                         </form>
                     </div>
-                    <div class="mb-1">
+                    <div>
                         <span class="form-label" style="font-size: 0.7rem;">Profile Description</span>
                         <form action="{{ route('update.profile.desc') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="d-flex ">
-                                <input type="text" class="form-control" id="desc_input" name="profile_desc" value="{{ auth()->user()->profile_desc }}" disabled>
+                                <textarea type="text" class="form-control" id="desc_input" name="profile_desc" value="{{ auth()->user()->profile_desc }}" style="max-height: 5rem; font-size: 0.8rem;" disabled></textarea>
                                 <button type="button" class="btn" id="edit-desc-btn">
-                                    <i class="material-symbols-outlined">
-                                        edit_square
+                                    <i class="material-symbols-outlined" style="font-size: 1.2rem;">
+                                        edit
                                     </i>
                                 </button>
                                  <button type="submit" class="d-none" id="submitChangeDesc"></button>
@@ -115,5 +126,18 @@
 <!-- Overlay -->
 <div id="overlay" class="overlay" style="display: none;"></div>
 @include('main.closefriend')
+<script>
+    function copyLinks() {
+        var copyText = document.getElementById("links");
+        navigator.clipboard.writeText(copyText.value)
+        .then(() => {
+            showToast('success', 'Successfully copied your Povit ID');
+        })
+        .catch(err => {
+            showToast('error', 'Failed to copy your Povit ID');
+            console.error('Failed to copy text: ', err);
+        });
+    }
+</script>
 <script src="{{ asset('js/sidebar.js') }}"></script>
 <script src="{{ asset('js/profileUpdate.js') }}"></script>

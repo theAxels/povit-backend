@@ -20,19 +20,44 @@ class CloseFriendController extends Controller
         ]);
     }
 
-    public function addCloseFriend(Request $request){
+    public function addCloseFriend(Request $request)
+    {
         $user = Auth::user();
-        $friendId = $request->input('friend_id');
-        $user->closefriends()->attach($friendId);
-        return response()->json([
-            'message' => 'Friend added to close friends successfully',
-            'closeFriends' => $user->closefriends,
-        ]);
+        $friendId = $request->input('id');
+
+        try {
+            // Check if the friend is already in the close friends list
+            if ($user->closefriends()->where('friend_id', $friendId)->exists()) {
+                return response()->json([
+                    'message' => 'Friend is already in the close friends list',
+                ], 400);
+            }
+
+            // Attach the friend to the user's close friends list
+            $user->closefriends()->attach($friendId);
+            // also insert the created at and updated at
+            $user->closefriends()->updateExistingPivot($friendId, ['created_at' => now(), 'updated_at' => now()]);
+
+            return response()->json([
+                'message' => 'Friend added to close friends successfully',
+                'closeFriends' => $user->closefriends,
+            ]);
+        } catch (\Exception $e) {
+            // Log the error for further investigation
+            // \Log::error('Error adding friend to close friends: ' . $e->getMessage());
+
+            return response()->json([
+                'message' => 'Error adding friend to close friends',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
+
+
 
     public function deleteCloseFriend(Request $request){
         $user = Auth::user();
-        $friendId = $request->input('friend_id');
+        $friendId = $request->input('id');
         $user->closefriends()->detach($friendId);
         return response()->json([
             'message' => 'Friend removed from close friends successfully',
