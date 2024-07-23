@@ -50,12 +50,13 @@
                             <div class="d-flex">
                                 <input type="text" class="form-control" id="username_input" name="username" value="{{auth()->user()->name}}" style="max-height: 2rem;" disabled>
                                 <button type="button" class="btn" id="edit-username-btn">
-                                    <i class="material-symbols-outlined"  style="font-size: 1.2rem;">
-                                        edit
-                                    </i>
+                                    <i class="material-symbols-outlined" style="font-size: 1.2rem;">edit</i>
                                 </button>
-                                <button type="submit" class="d-none" id="submitChangeUsr"></button>
+                                <button type="submit" class="btn d-none" id="submitChangeUsr">
+                                    <i class="material-symbols-outlined" style="font-size: 1.2rem;">send</i>
+                                </button>
                             </div>
+
                         </form>
                     </div>
                     <div>
@@ -63,13 +64,13 @@
                         <form action="{{ route('update.profile.desc') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="d-flex ">
-                                <textarea type="text" class="form-control" id="desc_input" name="profile_desc" value="{{ auth()->user()->profile_desc }}" style="max-height: 5rem; font-size: 0.8rem;" disabled></textarea>
+                                <textarea type="text" class="form-control" id="desc_input" name="profile_desc" style="max-height: 5rem; font-size: 0.8rem;" disabled>{{ auth()->user()->profile_desc }}</textarea>
                                 <button type="button" class="btn" id="edit-desc-btn">
-                                    <i class="material-symbols-outlined" style="font-size: 1.2rem;">
-                                        edit
-                                    </i>
+                                    <i class="material-symbols-outlined" style="font-size: 1.2rem;">edit</i>
                                 </button>
-                                 <button type="submit" class="d-none" id="submitChangeDesc"></button>
+                                <button type="submit" class="btn d-none" id="submitChangeDesc">
+                                    <i class="material-symbols-outlined" style="font-size: 1.2rem;">send</i>
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -86,9 +87,11 @@
                 <h6>Home</h6>
             </a>
         </li>
-
+        <?php
+        $user = Auth::user();
+        ?>
         <li class="sidebar-item" title="Chat">
-            <a href="{{ route('chatify') }}" class="sidebar-link d-flex align-items-center">
+            <a href="{{ route('user', $user->id) }}" class="sidebar-link d-flex align-items-center">
                 <i class="material-symbols-outlined">
                     chat
                 </i>
@@ -97,7 +100,7 @@
         </li>
 
         <li class="sidebar-item" title="Close Friend">
-            <a href="#" class="sidebar-link d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <a href="" class="sidebar-link d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
               <i class="material-symbols-outlined">
                 star
               </i>
@@ -138,6 +141,44 @@
             console.error('Failed to copy text: ', err);
         });
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var editButton = document.getElementById('edit-username-btn');
+        var submitButton = document.getElementById('submitChangeUsr');
+        var usernameInput = document.getElementById('username_input');
+
+        editButton.addEventListener('click', function() {
+            usernameInput.disabled = false; // Enable input field for editing
+            editButton.classList.add('d-none'); // Hide edit button
+            submitButton.classList.remove('d-none'); // Show submit button
+        });
+
+        // Optional: Handle the submit button click
+        submitButton.addEventListener('click', function() {
+            // Perform the submit action here
+            alert('Submit clicked!');
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var editButton = document.getElementById('edit-desc-btn');
+        var submitButton = document.getElementById('submitChangeDesc');
+        var usernameInput = document.getElementById('desc_input');
+
+        editButton.addEventListener('click', function() {
+            usernameInput.disabled = false; // Enable input field for editing
+            editButton.classList.add('d-none'); // Hide edit button
+            submitButton.classList.remove('d-none'); // Show submit button
+        });
+
+        // Optional: Handle the submit button click
+        submitButton.addEventListener('click', function() {
+            // Perform the submit action here
+            alert('Submit clicked!');
+        });
+    });
 </script>
+
+
 <script src="{{ asset('js/sidebar.js') }}"></script>
 <script src="{{ asset('js/profileUpdate.js') }}"></script>

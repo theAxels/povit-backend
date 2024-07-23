@@ -34,7 +34,7 @@
                 @endif
             </div>
             <div class="history-text" id="historyArrow">
-                <button onclick="scrollDown(this)" style="border: none; background: none; outline: none;">
+                <button onclick="scrollDown()" style="border: none; background: none; outline: none;">
                     <p class="mb-0">History</p>
                     <span class="material-symbols-outlined">
                         keyboard_double_arrow_down
@@ -91,6 +91,8 @@
                             <span class="visually-hidden">Next</span>
                         </button>
                     </div>
+
+                    <img id="resultImage" src="" alt="Result Image" class="result-image" style="display: none; max-width: 100%; height: auto;">
                 </div>
                 <input type="file" class="d-none" name="pict" id="pictInput" accept="image/*">
                 <div id="selectedFriends" class="align-items-center flex-wrap mt-3 justify-content-start gap-1" style="display: none; max-width: 500px;">
@@ -106,7 +108,7 @@
                     </div>
                     <div class="d-flex justify-content-center align-items-center w-100">
                         <button type="button" title="Create Post" id="submitButton" class="send-btn d-flex justify-content-center align-items-center">
-                            <span class="material-symbols-outlined" style="font-size: 280%; transform: rotate(-45deg);">send</span>
+                            <i class="fa-solid fa-paper-plane fa-2xl"></i>
                         </button>
                     </div>
                     <div id="cf" class="d-flex flex-column justify-content-center align-items-center w-100">
@@ -177,7 +179,7 @@
                     arrow_upward
                 </span>
             </button>
-            <button type="button" class="circle-btn-small" onClick="scrollToCamera()"></button>
+            <button type="button" class="circle-btn-small" onclick="scrollToCamera()"></button>
             <button class="scroll-button scroll-down" data-label="Next Post" onclick="scrollDown(this)">
                 <span class="material-symbols-outlined">
                     arrow_downward
@@ -190,6 +192,7 @@
 
 @section('extra-js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+<script src="https://kit.fontawesome.com/f273824998.js" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function() {
         @if (!$friends->isEmpty())
@@ -238,24 +241,35 @@
     }
 
     function take_snapshot() {
-        Webcam.snap(function(data_uri) {
-            var imageBlob = dataURItoBlob(data_uri);
-            var file = new File([imageBlob], 'webcam.jpg', { type: 'image/jpeg' });
-            var fileInput = document.getElementById('pictInput');
-            var dataTransfer = new DataTransfer();
-            dataTransfer.items.add(file);
-            fileInput.files = dataTransfer.files;
-            var now = new Date();
-            var timestamp = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}`;
-            var downloadLink = `<a href="${data_uri}" download="povit_${timestamp}.jpg" style="color: black;">
-                    <span class="material-symbols-outlined" style="font-size: 250%">download</span>
-                </a>`;
-            document.getElementById('downloadCaptured').innerHTML = downloadLink;
-            hideCamera();
-            document.getElementById('results').style.backgroundImage = `url(${data_uri})`;
-            document.getElementById('hasil').style.display = 'flex';
-        });
-    }
+    Webcam.snap(function(data_uri) {
+        var imageBlob = dataURItoBlob(data_uri);
+        var file = new File([imageBlob], 'webcam.jpg', { type: 'image/jpeg' });
+        var fileInput = document.getElementById('pictInput');
+        var dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        fileInput.files = dataTransfer.files;
+
+        var now = new Date();
+        var timestamp = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}`;
+        var downloadLink = `<a href="${data_uri}" download="povit_${timestamp}.jpg" style="color: black;">
+            <span class="material-symbols-outlined" style="font-size: 250%">download</span>
+        </a>`;
+        document.getElementById('downloadCaptured').innerHTML = downloadLink;
+
+        hideCamera();
+
+        // Set the src of the img element and show it
+        var resultImage = document.getElementById('resultImage');
+        resultImage.src = data_uri;
+        resultImage.classList.add('mirrored'); // Add mirrored class
+        resultImage.style.display = 'block';
+
+        // Show the form
+        document.getElementById('hasil').style.display = 'flex';
+    });
+}
+
+
 
     document.getElementById('fileInput').addEventListener('change', function(event) {
         const file = event.target.files[0];
@@ -335,71 +349,6 @@
         $(this).remove();
     });
 
-    //ini Photo Modal //
-    $('#photoModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var src = button.data('src');
-        var modal = $(this);            modal.find('#modalImage').attr('src', src);
-    });
-
-
-    // const content = document.querySelector('.content');
-    // const pageControllerPanel = document.querySelector('.page-control');
-    // const scrollUpButton = document.querySelector('.scroll-up');
-    // const scrollDownButton = document.querySelector('.scroll-down');
-
-    // content.addEventListener('scroll', function() {
-    //     if (content.scrollTop > 0) {
-    //         pageControllerPanel.style.display = 'flex';
-    //         hideCamera();
-    //     } else {
-    //         pageControllerPanel.style.display = 'none';
-    //         showCamera();
-    //     }
-
-    //     if(content.scrollTop + content.clientHeight >= content.scrollHeight){
-    //         scrollDownButton.style.display = 'none';
-    //         document.querySelector('.controller').style.height = '180px';
-    //     }else{
-    //         scrollDownButton.style.display = 'block';
-    //         document.querySelector('.controller').style.height = '300px';
-    //     }
-    // });
-
-    // function scrollToCamera() {
-    //     content.scrollTo({
-    //         top: 0,
-    //         behavior: 'smooth'
-    //     });
-    // }
-
-
-    // function scrollUp(button) {
-    //     disableButton(button);
-    //     content.scrollBy({
-    //         top: -window.innerHeight,
-    //         behavior: 'smooth'
-    //     });
-    //     setTimeout(() => enableButton(button), 1000);
-    // }
-
-    // function scrollDown(button) {
-    //     disableButton(button);
-    //     content.scrollBy({
-    //         top: window.innerHeight,
-    //         behavior: 'smooth'
-    //     });
-    //     setTimeout(() => enableButton(button), 1000);
-    // }
-
-    // function disableButton(button) {
-    //     button.disabled = true;
-    // }
-
-    // function enableButton(button) {
-    //     button.disabled = false;
-    // }
-
     document.addEventListener('DOMContentLoaded', function () {
         const submitButton = document.getElementById('submitButton');
         const form = document.getElementById('hasil');
@@ -417,6 +366,7 @@
 
             form.submit();
         });
+
         var captionInput = document.getElementById('caption');
         var maxLength = 23;
 
@@ -562,7 +512,7 @@
         scrollUpButton.addEventListener('click', function() {
             if (currentSection > 0) {
                 disableButton(scrollUpButton);
-                scrollToSection(currentSection - 1);
+                scrollUp();
                 setTimeout(() => enableButton(scrollUpButton), 1000);
             }
         });
@@ -570,7 +520,7 @@
         scrollDownButton.addEventListener('click', function() {
             if (currentSection < sections.length - 1) {
                 disableButton(scrollDownButton);
-                scrollToSection(currentSection + 1);
+                scrollDown();
                 setTimeout(() => enableButton(scrollDownButton), 1000);
             }
         });
@@ -586,6 +536,49 @@
         content.addEventListener('scroll', updateCurrentSection);
     });
 
+    function scrollDown() {
+        const sections = document.querySelectorAll('.camera');
+        const currentSectionIndex = getCurrentSectionIndex();
+        if (currentSectionIndex < sections.length - 1) {
+            sections[currentSectionIndex + 1].scrollIntoView({ behavior: 'smooth' });
+        }
+    }
 
+    function scrollUp() {
+        const sections = document.querySelectorAll('.camera');
+        const currentSectionIndex = getCurrentSectionIndex();
+        if (currentSectionIndex > 0) {
+            sections[currentSectionIndex - 1].scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    function getCurrentSectionIndex() {
+        const sections = document.querySelectorAll('.camera');
+        let currentSectionIndex = 0;
+        const content = document.querySelector('.content');
+        sections.forEach((section, index) => {
+            if (content.scrollTop >= section.offsetTop) {
+                currentSectionIndex = index;
+            }
+        });
+        return currentSectionIndex;
+    }
+
+    function scrollToCamera() {
+        const sections = document.querySelectorAll('.camera');
+        if (sections.length > 0) {
+            sections[0].scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    function showCamera() {
+        const camera = document.getElementById('kamera');
+        camera.style.display = 'flex';
+    }
+
+    function hideCamera() {
+        const camera = document.getElementById('kamera');
+        camera.style.display = 'none';
+    }
 </script>
 @endsection
