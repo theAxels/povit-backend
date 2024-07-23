@@ -195,7 +195,7 @@
 <script src="https://kit.fontawesome.com/f273824998.js" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function() {
-        @if (!$friends->isEmpty())
+        @if(!$friends->isEmpty())
             Webcam.set({
                 width: 500,
                 height: 375,
@@ -513,7 +513,14 @@
 
         content.addEventListener('scroll', function() {
             updateCurrentSection();
-            updateScrollState();
+            if (content.scrollTop > 0) {
+                pageControllerPanel.style.display = 'flex';
+                hideCamera();
+                content.style.overflow = 'auto';
+            } else {
+                pageControllerPanel.style.display = 'none';
+                showCamera();
+            }
 
             if (content.scrollTop + content.clientHeight >= content.scrollHeight) {
                 scrollDownButton.style.display = 'none';
@@ -561,10 +568,7 @@
         }
 
         function updateScrollState() {
-            if (currentSection === 0) {
-                pageControllerPanel.style.display = 'none';
-            } else {
-                pageControllerPanel.style.display = 'flex';
+            if (currentSection !== 0) {
                 content.style.overflow = 'auto';
             }
         }
