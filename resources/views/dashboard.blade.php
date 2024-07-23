@@ -136,11 +136,11 @@
                             @if ($post->is_closed_friend == 1)
                                 <div class="bg-success text-center p-1 rounded-circle d-flex justify-content-center align-items-center me-2" style="width: 25px; height: 25px;" title="Close Friend">
                                     <span class="material-symbols-outlined" style="font-size: 12px; color: white;">star</span>
-                                </div>                        
+                                </div>
                             @endif
                             <h4 class="d-inline-block mb-0">{{ $post->sender->name }}</h4>
                             <span class="d-block ms-2" style="font-size: 0.7rem">{{ $post->time }}</span>
-                        </div>                           
+                        </div>
                         <div class="center-box d-flex flex-column align-items-center"style="border: 2px solid #000000;">
                             <img src="{{ asset('user_post/' . $post->pict) }}" alt="" style="width: 100%; height: 100%; object-fit: cover;">
                             @if($post->caption != NULL)
@@ -155,15 +155,15 @@
                                 @foreach ($post->postTags as $tag)
                                     <div class="selected-user">{{ $tag->user->name }}</div>
                                 @endforeach
-                            </div>                 
-                        @endif  
+                            </div>
+                        @endif
                         @if ($post->location != NULL)
                             <div class="d-flex flex-row align-items-center justify-content-start w-100 mt-4 px-2" style="max-width: 500px;">
                                 <span class="material-symbols-outlined" style="font-size: 200%; margin-right: 8px;">
                                     location_on
                                 </span>
                                 <p class="mb-0" style="flex: 1; text-align: left; font-size: 0.9rem;">{{ $post->location }}</p>
-                            </div>                    
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -190,7 +190,6 @@
 
 @section('extra-js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
-<script src="https://kit.fontawesome.com/f273824998.js" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function() {
         @if (!$friends->isEmpty())
@@ -335,6 +334,14 @@
     $('.toast').on('hidden.bs.toast', function () {
         $(this).remove();
     });
+
+    //ini Photo Modal //
+    $('#photoModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var src = button.data('src');
+        var modal = $(this);            modal.find('#modalImage').attr('src', src);
+    });
+
 
     // const content = document.querySelector('.content');
     // const pageControllerPanel = document.querySelector('.page-control');
@@ -578,6 +585,7 @@
 
         content.addEventListener('scroll', updateCurrentSection);
     });
+
 
 </script>
 @endsection

@@ -70,9 +70,6 @@
                                         me</label>
                                 </div>
                             </div>
-                            <div class="col-6 d-flex text-right">
-                                <a href="#!" style="font-size: 16px; margin-left: 30%;">Forgot password?</a>
-                            </div>
                         </div>
 
                         <button type="submit" class="signupButton" style="height: 5vh">LOG IN</button>
@@ -97,7 +94,7 @@
                             </path>
                             <path fill="none" d="M0 0h48v48H0z"></path>
                         </svg>
-                        <span>Or Log in With Google</span>
+                        <span>Continue With Google</span>
                     </button>
                 </div>
             </div>
