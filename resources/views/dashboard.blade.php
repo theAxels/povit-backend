@@ -91,6 +91,8 @@
                             <span class="visually-hidden">Next</span>
                         </button>
                     </div>
+
+                    <img id="resultImage" src="" alt="Result Image" class="result-image" style="display: none; max-width: 100%; height: auto;">
                 </div>
                 <input type="file" class="d-none" name="pict" id="pictInput" accept="image/*">
                 <div id="selectedFriends" class="align-items-center flex-wrap mt-3 justify-content-start gap-1" style="display: none; max-width: 500px;">
@@ -190,6 +192,7 @@
 
 @section('extra-js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+<script src="https://kit.fontawesome.com/f273824998.js" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function() {
         @if (!$friends->isEmpty())
@@ -238,24 +241,35 @@
     }
 
     function take_snapshot() {
-        Webcam.snap(function(data_uri) {
-            var imageBlob = dataURItoBlob(data_uri);
-            var file = new File([imageBlob], 'webcam.jpg', { type: 'image/jpeg' });
-            var fileInput = document.getElementById('pictInput');
-            var dataTransfer = new DataTransfer();
-            dataTransfer.items.add(file);
-            fileInput.files = dataTransfer.files;
-            var now = new Date();
-            var timestamp = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}`;
-            var downloadLink = `<a href="${data_uri}" download="povit_${timestamp}.jpg" style="color: black;">
-                    <span class="material-symbols-outlined" style="font-size: 250%">download</span>
-                </a>`;
-            document.getElementById('downloadCaptured').innerHTML = downloadLink;
-            hideCamera();
-            document.getElementById('results').style.backgroundImage = `url(${data_uri})`;
-            document.getElementById('hasil').style.display = 'flex';
-        });
-    }
+    Webcam.snap(function(data_uri) {
+        var imageBlob = dataURItoBlob(data_uri);
+        var file = new File([imageBlob], 'webcam.jpg', { type: 'image/jpeg' });
+        var fileInput = document.getElementById('pictInput');
+        var dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        fileInput.files = dataTransfer.files;
+
+        var now = new Date();
+        var timestamp = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}`;
+        var downloadLink = `<a href="${data_uri}" download="povit_${timestamp}.jpg" style="color: black;">
+            <span class="material-symbols-outlined" style="font-size: 250%">download</span>
+        </a>`;
+        document.getElementById('downloadCaptured').innerHTML = downloadLink;
+
+        hideCamera();
+
+        // Set the src of the img element and show it
+        var resultImage = document.getElementById('resultImage');
+        resultImage.src = data_uri;
+        resultImage.classList.add('mirrored'); // Add mirrored class
+        resultImage.style.display = 'block';
+
+        // Show the form
+        document.getElementById('hasil').style.display = 'flex';
+    });
+}
+
+
 
     document.getElementById('fileInput').addEventListener('change', function(event) {
         const file = event.target.files[0];
@@ -334,14 +348,6 @@
     $('.toast').on('hidden.bs.toast', function () {
         $(this).remove();
     });
-
-    //ini Photo Modal //
-    $('#photoModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var src = button.data('src');
-        var modal = $(this);            modal.find('#modalImage').attr('src', src);
-    });
-
 
     // const content = document.querySelector('.content');
     // const pageControllerPanel = document.querySelector('.page-control');
@@ -585,7 +591,6 @@
 
         content.addEventListener('scroll', updateCurrentSection);
     });
-
 
 </script>
 @endsection
