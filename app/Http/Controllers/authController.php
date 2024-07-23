@@ -67,16 +67,25 @@ class AuthController extends Controller
         ]);
 
         $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
-            // dd("Berhasil Login");
+        $remember = $request->has('remember'); // Check if "Remember Me" is checked
+
+        if (Auth::attempt($credentials, $remember)) {
+            // Regenerate session to prevent fixation
             $request->session()->regenerate();
+
+            // Set the session lifetime based on "Remember Me" status
+            $lifetime = $remember ? 1440 : 1; // 1440 minutes = 1 day, 1 minute = 60 seconds
+            config(['session.lifetime' => $lifetime]);
+
             return redirect()->route('home');
         }
 
+        // If authentication fails
         return back()->withErrors([
-            'Failed to login. Please check your credentials and try again.'
+            'email' => 'Failed to login. Please check your credentials and try again.'
         ]);
     }
+
 
     public function logout(Request $request)
     {

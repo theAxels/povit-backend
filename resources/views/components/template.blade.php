@@ -26,7 +26,7 @@
 <body>
     @include('components.sidebar')
     <div class="row w-100" style="height: 100vh">
-        <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11;"></div>
+        <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1060;"></div>
         <div class="col-8 d-flex">
             @yield('dashboard')
         </div>

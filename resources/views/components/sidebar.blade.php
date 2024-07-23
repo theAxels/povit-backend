@@ -87,9 +87,11 @@
                 <h6>Home</h6>
             </a>
         </li>
-
+        <?php
+        $user = Auth::user();
+        ?>
         <li class="sidebar-item" title="Chat">
-            <a href="{{ route('chatify') }}" class="sidebar-link d-flex align-items-center">
+            <a href="{{ route('user', $user->id) }}" class="sidebar-link d-flex align-items-center">
                 <i class="material-symbols-outlined">
                     chat
                 </i>
@@ -98,7 +100,7 @@
         </li>
 
         <li class="sidebar-item" title="Close Friend">
-            <a href="#" class="sidebar-link d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <a href="" class="sidebar-link d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
               <i class="material-symbols-outlined">
                 star
               </i>
