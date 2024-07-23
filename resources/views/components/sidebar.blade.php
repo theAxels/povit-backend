@@ -16,7 +16,7 @@
         <li class="sidebar-item" title="Profile">
             <a href="#" class="sidebar-link flex-column d-flex justify-content-center" style="padding: .425rem 1.025rem;">
                 <div class="d-flex flex-row align-items-center">
-                    @if (auth()->user()->profile_pics != NULL) 
+                    @if (auth()->user()->profile_pics != NULL)
                         <img src="{{asset('user_profile/'.auth()->user()->profile_pics)}}" class="user-img" id="image_preview">
                     @else
                         <img src="{{asset('avatar.png')}}" alt="Default Profile" class="user-img" id="image_preview">
@@ -86,9 +86,11 @@
                 <h6>Home</h6>
             </a>
         </li>
-
+        <?php
+        $user = Auth::user();
+        ?>
         <li class="sidebar-item" title="Chat">
-            <a href="{{ route('chatify') }}" class="sidebar-link d-flex align-items-center">
+            <a href="{{ route('user', $user->id) }}" class="sidebar-link d-flex align-items-center">
                 <i class="material-symbols-outlined">
                     chat
                 </i>
@@ -97,7 +99,7 @@
         </li>
 
         <li class="sidebar-item" title="Close Friend">
-            <a href="#" class="sidebar-link d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <a href="" class="sidebar-link d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
               <i class="material-symbols-outlined">
                 star
               </i>

@@ -133,7 +133,7 @@
                                     @endif
                                     @if ($post->location != NULL)
                                         <div class="d-flex flex-row align-items-center justify-content-start w-100 mt-4 px-2" style="max-width: 500px;">
-                                            <span class="material-symbols-outlined" style="font-size: 200%; margin-right: 8px;">
+                                            <span class="material-symbols-outl  ined" style="font-size: 200%; margin-right: 8px;">
                                                 location_on
                                             </span>
                                             <p class="mb-0" style="flex: 1; text-align: left; font-size: 0.9rem;">{{ $post->location }}</p>

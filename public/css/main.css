@@ -63,7 +63,7 @@
 .scroll-button::after {
     content: attr(data-label);
     position: absolute;
-    bottom: 110%; 
+    bottom: 110%;
     left: 50%;
     transform: translateX(-50%);
     background-color: rgba(0, 0, 0, 0.75);
@@ -277,8 +277,8 @@ a {
 
 /* .carousel-control-prev-icon,
 .carousel-control-next-icon {
-    background-color: #000; 
-    background-size: 100%, 100%; 
+    background-color: #000;
+    background-size: 100%, 100%;
     border-radius: 50%;
 } */
 /* .carousel-inner {
@@ -301,7 +301,7 @@ a {
     border: none !important;
 }
 
-.caption-input::placeholder, 
+.caption-input::placeholder,
 .location-input::placeholder{
     color: #FFFFFF !important;
 }
@@ -336,11 +336,11 @@ a {
 }
 
 .carousel-control-prev {
-    left: -50px !important; 
+    left: -50px !important;
 }
 
 .carousel-control-next {
-    right: -50px !important; 
+    right: -50px !important;
 }
 
 .dropdown-search-results {
@@ -372,4 +372,18 @@ a {
 .selected-user .remove-user {
     cursor: pointer;
     margin-left: 0.5em;
+}
+
+/* Mirroring the webcam feed */
+#my_camera video {
+    transform: scaleX(-1);
+    /* Flip horizontally */
+}
+
+/* Mirroring the result image */
+#results {
+    transform: scaleX(-1);
+    /* Flip horizontally */
+    background-size: cover;
+    background-position: center;
 }

@@ -89,10 +89,10 @@
                                 added: true
                             },
                             success: function (response) {
-                                alert('Friend added successfully');
+                                showToast('success', 'Friend removed from close friends successfully');
                             },
                             error: function (error) {
-                                alert('Error adding friend');
+                                showToast('error', 'Error removing friend');
                             }
                         });
                     }
@@ -123,10 +123,10 @@
                                 added: false
                             },
                             success: function (response) {
-                                alert('Friend removed from close friends successfully');
+                                showToast('success', 'Friend removed from close friends successfully');
                             },
                             error: function (error) {
-                                alert('Error removing friend');
+                                showToast('error', 'Error removing friend');
                             }
                         });
                     }
@@ -161,24 +161,32 @@
 
     function updateSuggestedFriendsList(suggestedFriends) {
         var suggestedFriendsList = '';
-        suggestedFriends.forEach(function (friend) {
-            suggestedFriendsList += '<div class="row mt-4">';
+        if (suggestedFriends.length > 0) {
+            suggestedFriends.forEach(function (friend) {
+                suggestedFriendsList += '<div class="row mt-4">';
+                suggestedFriendsList += '    <div class="col d-flex align-items-center">';
+                suggestedFriendsList += '        <div class="circle">';
+                suggestedFriendsList += '            <img src="{{ asset('user_profile/') }}/' + friend.profile_pics + '" alt="Profile Image">';
+                suggestedFriendsList += '        </div>';
+                suggestedFriendsList += '        <div class="text d-flex align-items-center mt-0" style="margin-left: 5%;">';
+                suggestedFriendsList += '            <h6 class="m-0">' + friend.name + '</h6>';
+                suggestedFriendsList += '        </div>';
+                suggestedFriendsList += '        <div class="ms-auto d-flex align-items-center flex-grow-1 justify-content-end">';
+                suggestedFriendsList += '            <div class="form-check form-check-inline ms-auto">';
+                suggestedFriendsList += '                <input type="radio" class="form-check-input suggested-friend-radio" data-id="' + friend.id + '">';
+                suggestedFriendsList += '                <label for="option6"></label>';
+                suggestedFriendsList += '            </div>';
+                suggestedFriendsList += '        </div>';
+                suggestedFriendsList += '    </div>';
+                suggestedFriendsList += '</div>';
+            });
+        } else {
+            suggestedFriendsList = '<div class="row mt-4">';
             suggestedFriendsList += '    <div class="col d-flex align-items-center">';
-            suggestedFriendsList += '        <div class="circle">';
-            suggestedFriendsList += '            <img src="{{ asset('user_profile/') }}/' + friend.profile_pics + '" alt="Profile Image">';
-            suggestedFriendsList += '        </div>';
-            suggestedFriendsList += '        <div class="text d-flex align-items-center mt-0" style="margin-left: 5%;">';
-            suggestedFriendsList += '            <h6 class="m-0">' + friend.name + '</h6>';
-            suggestedFriendsList += '        </div>';
-            suggestedFriendsList += '        <div class="ms-auto d-flex align-items-center flex-grow-1 justify-content-end">';
-            suggestedFriendsList += '            <div class="form-check form-check-inline ms-auto">';
-            suggestedFriendsList += '                <input type="radio" class="form-check-input suggested-friend-radio" data-id="' + friend.id + '">';
-            suggestedFriendsList += '                <label for="option6"></label>';
-            suggestedFriendsList += '            </div>';
-            suggestedFriendsList += '        </div>';
+            suggestedFriendsList += '        <p>No friends available</p>';
             suggestedFriendsList += '    </div>';
             suggestedFriendsList += '</div>';
-        });
+        }
         $('#suggested-friends-list').html(suggestedFriendsList);
     }
 
@@ -197,3 +205,4 @@
         }
     });
 </script>
+
