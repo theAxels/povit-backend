@@ -196,17 +196,12 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        // Get the close friends count element
         const closeFriendsCount = document.getElementById('close-friends-count');
-        console.log(closeFriendsCount);
-        // Get the close friend section container
         const closeFriendSection = document.getElementById('close-friend-section');
-
-        // Check if close friends count is "0 People"
         if (closeFriendsCount.textContent.trim() === '0 People') {
-            closeFriendSection.style.display = 'none'; // Hide the close friend section
+            closeFriendSection.style.display = 'none';
         } else {
-            closeFriendSection.style.display = 'block'; // Show the close friend section
+            closeFriendSection.style.display = 'block';
         }
 
     });
