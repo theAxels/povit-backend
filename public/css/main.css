@@ -380,10 +380,15 @@ a {
     /* Flip horizontally */
 }
 
+
 /* Mirroring the result image */
-#results {
+.result-image {
     transform: scaleX(-1);
-    /* Flip horizontally */
-    background-size: cover;
-    background-position: center;
+}
+
+.mirrored {
+    transform: scaleX(-1);
+    z-index: -10;
+    /* -webkit-transform: scaleX(-1);
+    -ms-transform: scaleX(-1); */
 }

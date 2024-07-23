@@ -77,7 +77,8 @@ class MainController extends Controller
         ]);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         try {
             $user = Auth::user();
 
@@ -91,9 +92,38 @@ class MainController extends Controller
                 throw new \Exception('No file uploaded');
             }
 
-            $photo_file = $request->file('pict');
-            $imageName = date('YmdHis') . '_' . uniqid() . '.' . $photo_file->getClientOriginalExtension();
-            $photo_file->move(public_path('user_post'), $imageName);
+            $photoFile = $request->file('pict');
+            $imageName = date('YmdHis') . '_' . uniqid() . '.' . $photoFile->getClientOriginalExtension();
+
+            // Load image with GD
+            $imagePath = $photoFile->getRealPath();
+            $sourceImage = imagecreatefromstring(file_get_contents($imagePath));
+
+            if (!$sourceImage) {
+                throw new \Exception('Could not create image resource');
+            }
+
+            // Get dimensions
+            $width = imagesx($sourceImage);
+            $height = imagesy($sourceImage);
+
+            // Create mirrored image
+            $mirroredImage = imagecreatetruecolor($width, $height);
+
+            // Flip image horizontally
+            for ($x = 0; $x < $width; $x++) {
+                imagecopy($mirroredImage, $sourceImage, $width - $x - 1, 0, $x, 0, 1, $height);
+            }
+
+            // Save the flipped image to the local directory
+            $savePath = public_path('user_post/' . $imageName);
+            if (!imagejpeg($mirroredImage, $savePath)) {
+                throw new \Exception('Failed to save mirrored image');
+            }
+
+            // Free up memory
+            imagedestroy($sourceImage);
+            imagedestroy($mirroredImage);
 
             DB::beginTransaction();
             $post = Post::create([
@@ -121,6 +151,7 @@ class MainController extends Controller
             return redirect()->back()->with('error', 'Failed to create post: ' . $e->getMessage());
         }
     }
+
 
     public function searchUsers(Request $request){
         $query = $request->get('query');
