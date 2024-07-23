@@ -102,7 +102,7 @@ body {
 .messenger {
   display: inline-flex;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   font-family: sans-serif;
 }
 .messenger-listView {
@@ -370,12 +370,14 @@ body {
   right: 0;
   z-index: 0;
 }
+
 .messenger-infoView {
     display: block;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     width: 40%;
-    min-width: 200px;
-}
+    height: 100%;
+  }
 
 .messenger-infoView nav {
     display: flex;
@@ -1188,4 +1190,47 @@ div.loadingPlaceholder-date {
 .emoji-picker__emojis::-webkit-scrollbar-thumb {
   border-radius: 4px;
   background: transparent;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circle_img {
+
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    border: 5px solid #EFBDEE;
+
+}
+
+.circle_img img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.about-me-content {
+    max-height: 100px;
+    overflow: hidden;
+    position: relative;
+}
+
+.about-me-content.expanded {
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+#readMoreLink {
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 500;
 }

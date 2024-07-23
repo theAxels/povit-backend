@@ -34,6 +34,7 @@
                     <div class="friendSection">
                         <div class="scroll" id="suggested-friends-list">
                             <!-- Profile Image Section -->
+
                         </div>
                     </div>
                 </div>
@@ -142,7 +143,11 @@
             closeFriendsList += '<div class="row mt-4">';
             closeFriendsList += '    <div class="col d-flex align-items-center">';
             closeFriendsList += '        <div class="circle">';
-            closeFriendsList += '            <img src="{{ asset('user_profile/') }}/' + friend.profile_pics + '" alt="Profile Image">';
+            if (friend.profile_pics) {
+                closeFriendsList += '            <img src="{{ asset('user_profile/') }}/' + friend.profile_pics + '" alt="Profile Image">';
+            } else {
+                closeFriendsList += '            <img src="{{ asset('avatar.png') }}" alt="Default Profile">';
+            }
             closeFriendsList += '        </div>';
             closeFriendsList += '        <div class="text d-flex align-items-center mt-0" style="margin-left: 5%;">';
             closeFriendsList += '            <h6 class="m-0">' + friend.name + '</h6>';
@@ -159,28 +164,32 @@
         $('#close-friends-list').html(closeFriendsList);
     }
 
-    function updateSuggestedFriendsList(suggestedFriends) {
-        var suggestedFriendsList = '';
-        suggestedFriends.forEach(function (friend) {
-            suggestedFriendsList += '<div class="row mt-4">';
-            suggestedFriendsList += '    <div class="col d-flex align-items-center">';
-            suggestedFriendsList += '        <div class="circle">';
+function updateSuggestedFriendsList(suggestedFriends) {
+    var suggestedFriendsList = '';
+    suggestedFriends.forEach(function (friend) {
+        suggestedFriendsList += '<div class="row mt-4">';
+        suggestedFriendsList += '    <div class="col d-flex align-items-center">';
+        suggestedFriendsList += '        <div class="circle">';
+        if (friend.profile_pics) {
             suggestedFriendsList += '            <img src="{{ asset('user_profile/') }}/' + friend.profile_pics + '" alt="Profile Image">';
-            suggestedFriendsList += '        </div>';
-            suggestedFriendsList += '        <div class="text d-flex align-items-center mt-0" style="margin-left: 5%;">';
-            suggestedFriendsList += '            <h6 class="m-0">' + friend.name + '</h6>';
-            suggestedFriendsList += '        </div>';
-            suggestedFriendsList += '        <div class="ms-auto d-flex align-items-center flex-grow-1 justify-content-end">';
-            suggestedFriendsList += '            <div class="form-check form-check-inline ms-auto">';
-            suggestedFriendsList += '                <input type="radio" class="form-check-input suggested-friend-radio" data-id="' + friend.id + '">';
-            suggestedFriendsList += '                <label for="option6"></label>';
-            suggestedFriendsList += '            </div>';
-            suggestedFriendsList += '        </div>';
-            suggestedFriendsList += '    </div>';
-            suggestedFriendsList += '</div>';
-        });
-        $('#suggested-friends-list').html(suggestedFriendsList);
-    }
+        } else {
+            suggestedFriendsList += '            <img src="{{ asset('avatar.png') }}" alt="Default Profile">';
+        }
+        suggestedFriendsList += '        </div>';
+        suggestedFriendsList += '        <div class="text d-flex align-items-center mt-0" style="margin-left: 5%;">';
+        suggestedFriendsList += '            <h6 class="m-0">' + friend.name + '</h6>';
+        suggestedFriendsList += '        </div>';
+        suggestedFriendsList += '        <div class="ms-auto d-flex align-items-center flex-grow-1 justify-content-end">';
+        suggestedFriendsList += '            <div class="form-check form-check-inline ms-auto">';
+        suggestedFriendsList += '                <input type="radio" class="form-check-input suggested-friend-radio" data-id="' + friend.id + '">';
+        suggestedFriendsList += '                <label for="option6"></label>';
+        suggestedFriendsList += '            </div>';
+        suggestedFriendsList += '        </div>';
+        suggestedFriendsList += '    </div>';
+        suggestedFriendsList += '</div>';
+    });
+    $('#suggested-friends-list').html(suggestedFriendsList);
+}
 
     document.addEventListener('DOMContentLoaded', function() {
         // Get the close friends count element
@@ -195,5 +204,7 @@
         } else {
             closeFriendSection.style.display = 'block'; // Show the close friend section
         }
+
     });
 </script>
+
