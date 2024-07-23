@@ -50,12 +50,13 @@
                             <div class="d-flex">
                                 <input type="text" class="form-control" id="username_input" name="username" value="{{auth()->user()->name}}" style="max-height: 2rem;" disabled>
                                 <button type="button" class="btn" id="edit-username-btn">
-                                    <i class="material-symbols-outlined"  style="font-size: 1.2rem;">
-                                        edit
-                                    </i>
+                                    <i class="material-symbols-outlined" style="font-size: 1.2rem;">edit</i>
                                 </button>
-                                <button type="submit" class="d-none" id="submitChangeUsr"></button>
+                                <button type="submit" class="btn d-none" id="submitChangeUsr">
+                                    <i class="material-symbols-outlined" style="font-size: 1.2rem;">send</i>
+                                </button>
                             </div>
+
                         </form>
                     </div>
                     <div>
@@ -65,11 +66,11 @@
                             <div class="d-flex ">
                                 <textarea type="text" class="form-control" id="desc_input" name="profile_desc" style="max-height: 5rem; font-size: 0.8rem;" disabled>{{ auth()->user()->profile_desc }}</textarea>
                                 <button type="button" class="btn" id="edit-desc-btn">
-                                    <i class="material-symbols-outlined" style="font-size: 1.2rem;">
-                                        edit
-                                    </i>
+                                    <i class="material-symbols-outlined" style="font-size: 1.2rem;">edit</i>
                                 </button>
-                                 <button type="submit" class="d-none" id="submitChangeDesc"></button>
+                                <button type="submit" class="btn d-none" id="submitChangeDesc">
+                                    <i class="material-symbols-outlined" style="font-size: 1.2rem;">send</i>
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -138,6 +139,44 @@
             console.error('Failed to copy text: ', err);
         });
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var editButton = document.getElementById('edit-username-btn');
+        var submitButton = document.getElementById('submitChangeUsr');
+        var usernameInput = document.getElementById('username_input');
+
+        editButton.addEventListener('click', function() {
+            usernameInput.disabled = false; // Enable input field for editing
+            editButton.classList.add('d-none'); // Hide edit button
+            submitButton.classList.remove('d-none'); // Show submit button
+        });
+
+        // Optional: Handle the submit button click
+        submitButton.addEventListener('click', function() {
+            // Perform the submit action here
+            alert('Submit clicked!');
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var editButton = document.getElementById('edit-desc-btn');
+        var submitButton = document.getElementById('submitChangeDesc');
+        var usernameInput = document.getElementById('desc_input');
+
+        editButton.addEventListener('click', function() {
+            usernameInput.disabled = false; // Enable input field for editing
+            editButton.classList.add('d-none'); // Hide edit button
+            submitButton.classList.remove('d-none'); // Show submit button
+        });
+
+        // Optional: Handle the submit button click
+        submitButton.addEventListener('click', function() {
+            // Perform the submit action here
+            alert('Submit clicked!');
+        });
+    });
 </script>
+
+
 <script src="{{ asset('js/sidebar.js') }}"></script>
 <script src="{{ asset('js/profileUpdate.js') }}"></script>
