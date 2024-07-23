@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
         body {
@@ -43,11 +44,11 @@
 
                     <div class="d-flex align-items-center mb-2 pe-2">
                         <div class="search-container me-2">
+                            <input type="text" id="searchInput" class="searchInput empty" placeholder="Search Contact" onkeyup="searchFriends()" onfocus="toggleIcon()" onblur="toggleIcon()">
                             <i class="fa-solid fa-magnifying-glass fa-xs search-icon" id="searchIcon"></i>
-                            <input type="text" id="searchInput" placeholder="Search Contact" onkeyup="searchFriends()" onfocus="toggleIcon()" onblur="toggleIcon()">
-                        </div>
+                            <div id="searchsList" class="position-absolute" style="display: none; background: white; overflow-y: auto; z-index: 1000; top: 120%; left: 0; min-height: 300px; max-height: 60%; width: 100%; max-width: 350px; border: 1px solid #ddd; border-radius: 5px; padding: 0.5em; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"></div>
+                        </div>      
                     </div>
-                    <div id="searchsList" class="pe-2 position-absolute" style="display: none; background: white; overflow-y: auto; z-index: 1000; top: 26%; max-height: 60%; width: 25%; max-width: 350px; border: 1px solid #ddd; border-radius: 5px; padding: 0.5em;"></div>
                     <div class="w-100 h-100 d-flex flex-column" style="overflow-y: auto;">
                         <div class="friendsList h-100 pe-2">
                             @if($friends->isEmpty())
@@ -171,6 +172,15 @@
 
             $('.toast').on('swipeup', function () {
                 $(this).toast('hide');
+            });
+
+            $('#searchInputsearchInput').on('keyup', function() {
+                var input = $(this);
+                if(input.val().length === 0) {
+                    input.addClass('empty');
+                } else {
+                    input.removeClass('empty');
+                }
             });
         });
 

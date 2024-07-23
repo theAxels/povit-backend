@@ -70,7 +70,7 @@
 
 .search-container .search-icon {
     position: absolute;
-    left: 90px;
+    right: 10px;
     color: #000;
 }
 
@@ -80,17 +80,17 @@
     outline: none;
     width: 100%;
     font-size: 16px;
-    margin-right: 10px;
-    padding-left: 40px;
+    /* margin-right: 10px; */
+    /* padding-left: 40px; */
 }
 
 .search-container {
-    font-size: 24px;
+    font-size: 1.5rem;
     color: #000;
 }
 
 .search-container input::placeholder {
-    text-align: center;
+    text-align: start;
     font-weight: 600;
     color: black;
     opacity: 1;

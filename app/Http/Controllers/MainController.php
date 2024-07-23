@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Friend;
 use App\Models\Post;
 use App\Models\PostTag;
 use App\Models\User;
@@ -220,8 +219,7 @@ class MainController extends Controller
 
     public function gallery(){
         $user = Auth::user();
-        $posts = Post::where('user_id', $user->id)->get();
-        [$friends, $youMightKnow] = $this->getFriendData();
-        return view('history', compact('posts', 'friends', 'youMightKnow'));
+        $userPosts = $user->posts->sortByDesc('created_at');
+        return view('history', compact('posts'));
     }
 }
