@@ -50,7 +50,6 @@
                         </div>      
                     </div>
                     <div class="w-100 h-100 d-flex flex-column" style="overflow-y: auto;">
-                        {{-- <div id="searchsList" class="pe-2 position-relative" style="display: none; background: white; overflow-y: auto; z-index: 1000; top: 0; max-height: 60%; width: 25%; max-width: 350px; border: 1px solid #ddd; border-radius: 5px; padding: 0.5em;"></div> --}}
                         <div class="friendsList h-100 pe-2">
                             @if($friends->isEmpty())
                                 <div class="text-center w-100 h-100">

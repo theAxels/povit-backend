@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Friend;
 use App\Models\Post;
 use App\Models\PostTag;
 use App\Models\User;

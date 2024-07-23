@@ -34,7 +34,7 @@
                 @endif
             </div>
             <div class="history-text" id="historyArrow">
-                <button onclick="scrollDown(this)" style="border: none; background: none; outline: none;">
+                <button onclick="scrollDown()" style="border: none; background: none; outline: none;">
                     <p class="mb-0">History</p>
                     <span class="material-symbols-outlined">
                         keyboard_double_arrow_down
@@ -106,7 +106,7 @@
                     </div>
                     <div class="d-flex justify-content-center align-items-center w-100">
                         <button type="button" title="Create Post" id="submitButton" class="send-btn d-flex justify-content-center align-items-center">
-                            <span class="material-symbols-outlined" style="font-size: 280%; transform: rotate(-45deg);">send</span>
+                            <i class="fa-solid fa-paper-plane fa-2xl"></i>
                         </button>
                     </div>
                     <div id="cf" class="d-flex flex-column justify-content-center align-items-center w-100">
@@ -177,7 +177,7 @@
                     arrow_upward
                 </span>
             </button>
-            <button type="button" class="circle-btn-small" onClick="scrollToCamera()"></button>
+            <button type="button" class="circle-btn-small" onclick="scrollToCamera()"></button>
             <button class="scroll-button scroll-down" data-label="Next Post" onclick="scrollDown(this)">
                 <span class="material-symbols-outlined">
                     arrow_downward
@@ -417,6 +417,7 @@
 
             form.submit();
         });
+
         var captionInput = document.getElementById('caption');
         var maxLength = 23;
 
@@ -562,7 +563,7 @@
         scrollUpButton.addEventListener('click', function() {
             if (currentSection > 0) {
                 disableButton(scrollUpButton);
-                scrollToSection(currentSection - 1);
+                scrollUp();
                 setTimeout(() => enableButton(scrollUpButton), 1000);
             }
         });
@@ -570,7 +571,7 @@
         scrollDownButton.addEventListener('click', function() {
             if (currentSection < sections.length - 1) {
                 disableButton(scrollDownButton);
-                scrollToSection(currentSection + 1);
+                scrollDown();
                 setTimeout(() => enableButton(scrollDownButton), 1000);
             }
         });
@@ -586,6 +587,49 @@
         content.addEventListener('scroll', updateCurrentSection);
     });
 
+    function scrollDown() {
+        const sections = document.querySelectorAll('.camera');
+        const currentSectionIndex = getCurrentSectionIndex();
+        if (currentSectionIndex < sections.length - 1) {
+            sections[currentSectionIndex + 1].scrollIntoView({ behavior: 'smooth' });
+        }
+    }
 
+    function scrollUp() {
+        const sections = document.querySelectorAll('.camera');
+        const currentSectionIndex = getCurrentSectionIndex();
+        if (currentSectionIndex > 0) {
+            sections[currentSectionIndex - 1].scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    function getCurrentSectionIndex() {
+        const sections = document.querySelectorAll('.camera');
+        let currentSectionIndex = 0;
+        const content = document.querySelector('.content');
+        sections.forEach((section, index) => {
+            if (content.scrollTop >= section.offsetTop) {
+                currentSectionIndex = index;
+            }
+        });
+        return currentSectionIndex;
+    }
+
+    function scrollToCamera() {
+        const sections = document.querySelectorAll('.camera');
+        if (sections.length > 0) {
+            sections[0].scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    function showCamera() {
+        const camera = document.getElementById('kamera');
+        camera.style.display = 'flex';
+    }
+
+    function hideCamera() {
+        const camera = document.getElementById('kamera');
+        camera.style.display = 'none';
+    }
 </script>
 @endsection
