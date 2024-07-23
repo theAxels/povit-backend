@@ -143,7 +143,11 @@
             closeFriendsList += '<div class="row mt-4">';
             closeFriendsList += '    <div class="col d-flex align-items-center">';
             closeFriendsList += '        <div class="circle">';
-            closeFriendsList += '            <img src="{{ asset('user_profile/') }}/' + friend.profile_pics + '" alt="Profile Image">';
+            if (friend.profile_pics) {
+                closeFriendsList += '            <img src="{{ asset('user_profile/') }}/' + friend.profile_pics + '" alt="Profile Image">';
+            } else {
+                closeFriendsList += '            <img src="{{ asset('avatar.png') }}" alt="Default Profile">';
+            }
             closeFriendsList += '        </div>';
             closeFriendsList += '        <div class="text d-flex align-items-center mt-0" style="margin-left: 5%;">';
             closeFriendsList += '            <h6 class="m-0">' + friend.name + '</h6>';
