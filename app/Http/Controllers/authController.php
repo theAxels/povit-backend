@@ -31,6 +31,7 @@ class AuthController extends Controller
             'lastname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
+            'check box' => 'required|accepted',
 
         ]);
         // dd($request);
@@ -66,16 +67,25 @@ class AuthController extends Controller
         ]);
 
         $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
-            // dd("Berhasil Login");
+        $remember = $request->has('remember'); // Check if "Remember Me" is checked
+
+        if (Auth::attempt($credentials, $remember)) {
+            // Regenerate session to prevent fixation
             $request->session()->regenerate();
+
+            // Set the session lifetime based on "Remember Me" status
+            $lifetime = $remember ? 1440 : 1; // 1440 minutes = 1 day, 1 minute = 60 seconds
+            config(['session.lifetime' => $lifetime]);
+
             return redirect()->route('home');
         }
 
+        // If authentication fails
         return back()->withErrors([
-            'Failed to login. Please check your credentials and try again.'
+            'email' => 'Failed to login. Please check your credentials and try again.'
         ]);
     }
+
 
     public function logout(Request $request)
     {
@@ -127,8 +137,6 @@ class AuthController extends Controller
         $user = Auth::user();
         $user->name = $request->input('username');
         $user->save();
-
-        // return redirect()->back()->with('success', 'Username updated successfully');
         return redirect()->back();
     }
 
@@ -140,7 +148,6 @@ class AuthController extends Controller
         $user = Auth::user();
         $user->profile_desc = $request->input('profile_desc');
         $user->save();
-
         return redirect()->back();
     }
 

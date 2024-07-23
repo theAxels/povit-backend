@@ -20,13 +20,14 @@
         }
     </style>
     <link rel="stylesheet" href="css/friends.css">
+    <link rel="stylesheet" href="css/main.css">
     @yield('extra-css')
 </head>
 
 <body>
     @include('components.sidebar')
     <div class="row w-100" style="height: 100vh">
-        <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11;"></div>
+        <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1060;"></div>
         <div class="col-8 d-flex">
             @yield('dashboard')
         </div>
@@ -40,7 +41,7 @@
                         </div>
                         <h6>{{ $friends->count() }} friends</h6>
                     </div>
-            
+
                     <div class="d-flex align-items-center mb-2 pe-2">
                         <div class="search-container me-2">
                             <input type="text" id="searchInput" class="searchInput empty" placeholder="Search Contact" onkeyup="searchFriends()" onfocus="toggleIcon()" onblur="toggleIcon()">
@@ -69,8 +70,8 @@
                                         <h6>or share via </h6>
                                         <button class="share-button ms-2" onclick="shareToWhatsApp()">
                                             <i class="fa-brands fa-whatsapp fa-xl" style="color: #63E6BE;"></i>
-                                        </button>        
-                                    </div>                      
+                                        </button>
+                                    </div>
                                 </div>
                             @else
                                 @foreach ($friends as $friend)
@@ -78,7 +79,7 @@
                                         <div class="kiri d-flex flex-row align-items-center gap-3">
                                             <!-- Profile Image -->
                                             <div class="circle">
-                                                @if ($friend->profile_pics != NULL) 
+                                                @if ($friend->profile_pics != NULL)
                                                     <img src="{{ asset('user_profile/'.$friend->profile_pics) }}" alt="Profile Image">
                                                 @else
                                                     <img src="{{asset('avatar.png')}}" alt="Default Profile">
@@ -103,7 +104,7 @@
                                     </div>
                                 @endforeach
                             @endif
-                            
+
                         </div>
                         @if($youMightKnow->isNotEmpty())
                             <div class="youMightKnow h-100 pe-2">
@@ -113,7 +114,7 @@
                                         <div class="kiri d-flex flex-row align-items-center gap-3">
                                             <!-- Profile Image -->
                                             <div class="circle">
-                                                @if ($friend->profile_pics != NULL) 
+                                                @if ($friend->profile_pics != NULL)
                                                     <img src="{{ asset('user_profile/'.$friend->profile_pics) }}" alt="Profile Image">
                                                 @else
                                                     <img src="{{asset('avatar.png')}}" alt="Default Profile">
@@ -148,6 +149,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+    <script src="https://kit.fontawesome.com/f273824998.js" crossorigin="anonymous"></script>
 
     <script>
         $(document).ready(function(){
@@ -186,7 +188,7 @@
         function toggleIcon() {
             const input = document.getElementById('searchInput');
             const icon = document.getElementById('searchIcon');
-            
+
             if (input.value === '' && document.activeElement !== input) {
                 icon.style.display = 'block';
                 input.style.textAlign = 'center';
@@ -233,7 +235,7 @@
                 friends.forEach(friend => {
                     const friendDiv = document.createElement('div');
                     friendDiv.classList.add('d-flex', 'flex-row', 'justify-content-between', 'align-items-center', 'mt-2');
-                    
+
                     if(friend.type == 'new'){
                         friendDiv.innerHTML = `
                     <div class="kiri d-flex flex-row align-items-center gap-3">

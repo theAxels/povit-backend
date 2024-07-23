@@ -63,7 +63,7 @@
                         <form action="{{ route('update.profile.desc') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="d-flex ">
-                                <textarea type="text" class="form-control" id="desc_input" name="profile_desc" value="{{ auth()->user()->profile_desc }}" style="max-height: 5rem; font-size: 0.8rem;" disabled></textarea>
+                                <textarea type="text" class="form-control" id="desc_input" name="profile_desc" style="max-height: 5rem; font-size: 0.8rem;" disabled>{{ auth()->user()->profile_desc }}</textarea>
                                 <button type="button" class="btn" id="edit-desc-btn">
                                     <i class="material-symbols-outlined" style="font-size: 1.2rem;">
                                         edit
@@ -86,9 +86,11 @@
                 <h6>Home</h6>
             </a>
         </li>
-
+        <?php
+        $user = Auth::user();
+        ?>
         <li class="sidebar-item" title="Chat">
-            <a href="{{ route('chatify') }}" class="sidebar-link d-flex align-items-center">
+            <a href="{{ route('user', $user->id) }}" class="sidebar-link d-flex align-items-center">
                 <i class="material-symbols-outlined">
                     chat
                 </i>
@@ -97,7 +99,7 @@
         </li>
 
         <li class="sidebar-item" title="Close Friend">
-            <a href="#" class="sidebar-link d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <a href="" class="sidebar-link d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
               <i class="material-symbols-outlined">
                 star
               </i>
