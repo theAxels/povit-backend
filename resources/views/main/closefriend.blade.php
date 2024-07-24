@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     <div class="friendSection w-100 h-100">
-                        <div id="close-friends-list" class="w-100 h-100">
+                        <div id="close-friends-list" class="w-100 h-100 list">
                             <!-- Profile Image Section -->
                         </div>
                     </div>
@@ -29,7 +29,7 @@
                         <h6>Suggested</h6>
                     </div>
                     <div class="friendSection w-100 h-100">
-                        <div id="suggested-friends-list" class="w-100 h-100">
+                        <div id="suggested-friends-list" class="w-100 h-100 list">
                             <!-- Profile Image Section -->
                         </div>
                     </div>
