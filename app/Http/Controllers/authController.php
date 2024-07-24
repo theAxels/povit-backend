@@ -103,7 +103,6 @@ class AuthController extends Controller
     if ($request->hasFile('profile_pics')) {
         $user = Auth::user();
 
-        // Check if user already has a profile image
         if ($user->profile_pics && $user->profile_pics != 'default.png') {
             $existingImagePath = public_path('user_profile/' . $user->profile_pics);
             if (File::exists($existingImagePath)) {
@@ -116,7 +115,6 @@ class AuthController extends Controller
         $imageName = date('dmyHis') . uniqid() . '.' . $extension;
         $photo_file->move(public_path('user_profile'), $imageName);
 
-        // Update the user's profile image path in the database
         $user->profile_pics = $imageName;
         $user->save();
 
