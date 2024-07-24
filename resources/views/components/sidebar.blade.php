@@ -148,9 +148,9 @@
         var usernameInput = document.getElementById('username_input');
 
         editButton.addEventListener('click', function() {
-            usernameInput.disabled = false; 
-            editButton.classList.add('d-none'); 
-            submitButton.classList.remove('d-none'); 
+            usernameInput.disabled = false;
+            editButton.classList.add('d-none');
+            submitButton.classList.remove('d-none');
         });
     });
 

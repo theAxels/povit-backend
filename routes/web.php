@@ -35,8 +35,8 @@ Route::get('/login', [AuthController::class, 'loginview'])-> name('login_page')-
 Route::post('/login',[AuthController::class, 'login'])->name('login_store')->middleware(isNotLogin::class);
 
 
-// Route::resource('admin', AdminController::class)->middleware([isLogin::class, isAdmin::class]);
-Route::get('/admin',[AdminController::class, 'index']);
+Route::resource('admin', AdminController::class)->middleware([isLogin::class, isAdmin::class]);
+// Route::get('/admin',[AdminController::class, 'index']);
 
 
 #update profile
