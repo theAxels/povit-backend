@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -149,4 +150,27 @@ class AuthController extends Controller
         return redirect()->back();
     }
 
+    public function redirectToGoogle(){
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleGoogleCallback(){
+        $user = Socialite::driver('google')->user();
+        $existingUser = User::where('email', $user->email)->first();
+
+        if ($existingUser) {
+            Auth::login($existingUser, true);
+            return redirect()->route('home');
+        }
+
+        $newUser = User::create([
+            'name' => $user->name,
+            'email' => $user->email,
+            'google_id' => $user->id,
+            'password' => bcrypt('password'),
+        ]);
+
+        Auth::login($newUser, true);
+        return redirect()->route('home');
+    }
 }
