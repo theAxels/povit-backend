@@ -29,7 +29,7 @@
 
                         <td>
                             @if ($item->profile_pic)
-                            <img src="{{ asset('/profile_pic/' . $item->profile_pics) }}" alt="{{ $item->name }}" style="max-width: 50px">
+                            <img src="{{ asset('user_profile/' . $item->profile_pics) }}" alt="{{ $item->name }}" style="max-width: 50px">
                             @else
                             "No image"
                             @endif
@@ -38,13 +38,13 @@
                         <td>{{ $item->Roles }}</td>
                         <td>
 
-                            <a href="{{ route('admin.show', $id = $item->id) }}" class="btn btn-sm btn-secondary">View</a>
+                            {{-- <a href="{{ route('admin.show', $id = $item->id) }}" class="btn btn-sm btn-secondary">View</a>
                             <a href="{{ route('admin.edit', $id = $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
                             <form action="{{route('admin.destroy', $item->id)}}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this?')">Delete</button>
-                            </form>
+                            </form> --}}
 
                         </td>
                     </tr>
