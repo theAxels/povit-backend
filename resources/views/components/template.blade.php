@@ -272,7 +272,7 @@
                             </div>
                             <!-- Actions -->
                             <div class="d-flex align-items-center">
-                                <a href="/chatify/${friend.id}"><i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;" title="Chat"></i></a>
+                                <a href="/chat/${friend.id}"><i class="fa-regular fa-comment-dots" style="color: #4ECB71; font-size: 25px; margin-left: 5px;" title="Chat"></i></a>
                                 <form method="POST" action="/users/${friend.id}/unfollow">
                                     @csrf
                                     @method('DELETE')
