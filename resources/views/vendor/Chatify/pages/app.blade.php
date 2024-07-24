@@ -64,22 +64,34 @@
             <div class="profile" style="margin-top: 15%;" >
                 <div class="container">
                     <div class="circle_img">
-                        @if ($friend->profile_pics != NULL)
-                            <img src="{{ asset('user_profile/'.$friend->profile_pics) }}" alt="Profile Image">
+                        @if ($friend)
+                            @if ($friend->profile_pics != NULL)
+                                <img src="{{ asset('user_profile/'.$friend->profile_pics) }}" alt="Profile Image">
+                            @else
+                                <img src="{{asset('avatar.png')}}" alt="Default Profile">
+                            @endif
                         @else
                             <img src="{{asset('avatar.png')}}" alt="Default Profile">
                         @endif
                     </div>
                 </div>
-                <div class="d-flex user-name mt-3 text-center justify-content-center" style="font-size: 25px; color: #4f4b4b;">{{ $friend->name }}</div>
+                @if ($friend)
+                    <div class="d-flex user-name mt-3 text-center justify-content-center" style="font-size: 25px; color: #4f4b4b;">{{ $friend->name }}</div>
+                @else
+                    {{ config('chatify.name') }}
+                @endif
             </div>
             <div class="line" style="stroke: #D9D9D9; height: 15px; stroke-width: 3; margin-top: 2%;"></div>
             <div class="about-me" style="position: relative; left: 4%; top: 0; text-align: justify;">
                 <p style="font-size: 15px; margin-bottom: 2%; width: 100%; font-weight: 700;">About Me</p>
                 <div id="aboutMeContent" class="about-me-content">
                     <p style="font-size: 14px; margin: 0; width: 90%; font-weight: 500; margin-bottom: 12%;" id="aboutMeText">
-                        Hi there! I'm on POV.it, ready to share my stories with you!  Join me on a journey of discovery
-                        as I explore everything from everyday adventures to unexpected thrills.  My stories are relatable, inspiring, and full of laughter.
+                        @if ($friend)
+                            {{ $friend->profile_desc}}
+                        @else
+                            Hi there! I'm on POV.it, ready to share my stories with you!  Join me on a journey of discovery
+                            as I explore everything from everyday adventures to unexpected thrills.  My stories are relatable, inspiring, and full of laughter.
+                        @endif
                     </p>
                 </div>
                 <a href="javascript:void(0);" onclick="toggleReadMore()" id="readMoreLink">Read More</a>
