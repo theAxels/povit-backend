@@ -6,7 +6,7 @@ return [
     | Messenger display name
     |-------------------------------------
     */
-    'name' => env('CHATIFY_NAME', 'Povit Chat'),
+    'name' => env('CHATIFY_NAME', 'POV.it Chat'),
 
     /*
     |-------------------------------------
@@ -24,7 +24,7 @@ return [
     */
     'routes' => [
         'custom' => env('CHATIFY_CUSTOM_ROUTES', false),
-        'prefix' => env('CHATIFY_ROUTES_PREFIX', 'chatify'),
+        'prefix' => env('CHATIFY_ROUTES_PREFIX', 'chat'),
         'middleware' => env('CHATIFY_ROUTES_MIDDLEWARE', ['web','auth']),
         'namespace' => env('CHATIFY_ROUTES_NAMESPACE', 'Chatify\Http\Controllers'),
     ],

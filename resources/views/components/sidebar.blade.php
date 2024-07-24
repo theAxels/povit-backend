@@ -91,7 +91,7 @@
         $user = Auth::user();
         ?>
         <li class="sidebar-item" title="Chat">
-            <a href="{{ route('user', $user->id) }}" class="sidebar-link d-flex align-items-center">
+            <a href="{{ route('chat') }}" class="sidebar-link d-flex align-items-center">
                 <i class="material-symbols-outlined">
                     chat
                 </i>
