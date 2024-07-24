@@ -15,7 +15,7 @@
                             <h6 id="close-friends-count">Loading..</h6>
                         </div>
                         <div class="col-6 d-flex justify-content-end align-items-center">
-                            <button class="clear-button" style="color: #0D99FF; background: none; border: none;">Clear All</button>
+                            <button class="clear-button" style="color: #0D99FF; background: none; border: none;" name="clear-button">Clear All</button>
                         </div>
                     </div>
                     <div class="friendSection w-100 h-100">
@@ -128,6 +128,34 @@
                         });
                     }
                 });
+                // if the clear button is clicked then remove all the close friends and update the suggested friends list
+                $(document).on('click', '.clear-button', function () {
+                    // Move all close friends to suggested friends
+                    data.suggestedFriends = data.suggestedFriends.concat(data.closeFriends);
+                    data.closeFriends = [];
+
+                    // Update the DOM
+                    updateCloseFriendsList(data.closeFriends);
+                    updateSuggestedFriendsList(data.suggestedFriends);
+
+                    // Send an AJAX request to update the backend
+                    $.ajax({
+                        url: '{{ route("clearCloseFriends") }}',
+                        method: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function (response) {
+                            showToast('success', 'Close friends list cleared successfully');
+                        },
+                        error: function (error) {
+                            showToast('error', 'Error clearing close friends list');
+                        }
+                    });
+                });
+
+
+
             }
         });
     });
