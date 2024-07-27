@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('profile_desc')->nullable()->default('Hey there! I’m using POVit to share my unique perspective and connect with my friends.');
+            $table->string('profile_desc')->nullable()->after('password')->default('Hey there! I’m using POVit to share my unique perspective and connect with my friends.');
         });
     }
 
