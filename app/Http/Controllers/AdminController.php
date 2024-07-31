@@ -22,7 +22,8 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        //admin create user form
+        return view('admin.create');
     }
 
     /**
@@ -38,7 +39,7 @@ class AdminController extends Controller
      */
     public function show(string $id)
     {
-        
+
     }
 
     /**

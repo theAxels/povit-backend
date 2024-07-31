@@ -14,20 +14,13 @@ class CloseFriendController extends Controller
     {
         $user = Auth::user();
         $closeFriends = $user->closefriends;
+        // $suggestedFriends = $user->friends()->whereNotIn('friend_id', $closeFriends->pluck('id'))->get();
+        // Suggested friends should include all of the user's friends, without the close friends, and should not include the user itself as a suggested friend
+        $suggestedFriends = $user->friends()->whereNotIn('friend_id', $closeFriends->pluck('id'))->where('friend_id', '!=', $user->id)->get();
 
 
-        $suggestedFriends = $user->friends()->whereNotIn('friend_id', $closeFriends->pluck('id'))->get();
+        // $closeFriends = User::all()->merge($closeFriends);
 
-
-        // $suggestedFriends = Friend::where('user_id', $user->id)->whereNotIn('friend_id', $closeFriends->pluck('id'))->get();
-        // user that have friends which are not in closefriend and not the user itself
-        // $suggestedFriends = User::whereHas('friends', function ($query) use ($user, $closeFriends) {
-        //     $query->whereNotIn('friend_id', $closeFriends->pluck('id'))->where('friend_id', '!=', $user->id);
-        // })->get();
-
-
-
-        // dd($closeFriends);
 
         return response()->json([
             'closeFriends' => $closeFriends,

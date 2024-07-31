@@ -77,7 +77,7 @@
                     <div class="line-divider">
                         <div class="text">Or Log In With</div>
                     </div>
-                    <button class="signupGoogle">
+                    <a class="signupGoogle" href="{{route('auth.google')}}" style="text-decoration: none;">
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"
                             xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;">
                             <path fill="#EA4335"
@@ -95,7 +95,7 @@
                             <path fill="none" d="M0 0h48v48H0z"></path>
                         </svg>
                         <span>Continue With Google</span>
-                    </button>
+                    </a>
                 </div>
             </div>
 
@@ -115,6 +115,13 @@
 </body>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        var googleRedirectUrl = {{ route('auth.google') }};
+
+        document.querySelector('.signupGoogle').addEventListener('click', function () {
+            console.log(googleRedirectUrl);
+            window.location.href = googleRedirectUrl;
+        });
+
         var toastElList = [].slice.call(document.querySelectorAll('.toast'))
         var toastList = toastElList.map(function (toastEl) {
             return new bootstrap.Toast(toastEl)

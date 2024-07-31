@@ -75,28 +75,23 @@
     </style>
 </head>
 <body>
-    <?php
-        $user = Auth::user();
-        $friends = $user->friends;
-    ?>
 
 {{-- friend list --}}
 
 {{-- ----------------------Users/Groups lists side---------------------- --}}
 
-        {{-- <div class="messenger-listView {{ !!$id ? 'conversation-active' : '' }}">
+        <div class="messenger-listView {{ !!$id ? 'conversation-active' : '' }}" style="display:none">
             </div>
+            <div class="show messenger-tab users-tab app-scroll" data-view="users" style="display:none">
 
-            <div class="show messenger-tab users-tab app-scroll" data-view="users">
-
-                <div class="favorites-section">
-                    <p class="messenger-title"><span>Favorites</span></p>
-                    <div class="messenger-favorites app-scroll-hidden"></div>
+                <div class="favorites-section"style="display:none">
+                    <p class="messenger-title" style="display:none"><span>Favorites</span></p>
+                    <div class="messenger-favorites app-scroll-hidden" style="display:none"></div>
                 </div>
 
             </div>
 
-        </div> --}}
+        </div>
 
 </body>
 </html>

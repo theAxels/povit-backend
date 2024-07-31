@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('profile_desc')->nullable()->after('password')->default('Hey there! I’m using POVit to share my unique perspective and connect with my friends.');
+            $table->string('google_id')->nullable();
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('profile_desc');
+            $table->dropColumn('google_id');
         });
     }
 };

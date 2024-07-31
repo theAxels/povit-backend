@@ -34,9 +34,13 @@ Route::get('/login', [AuthController::class, 'loginview'])-> name('login_page')-
 
 Route::post('/login',[AuthController::class, 'login'])->name('login_store')->middleware(isNotLogin::class);
 
+Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->name('auth.google');
 
-// Route::resource('admin', AdminController::class)->middleware([isLogin::class, isAdmin::class]);
-Route::get('/admin',[AdminController::class, 'index']);
+Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+
+
+Route::resource('admin', AdminController::class)->middleware([isLogin::class, isAdmin::class]);
+// Route::get('/admin',[AdminController::class, 'index']);
 
 
 #update profile

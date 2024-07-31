@@ -91,7 +91,7 @@
         $user = Auth::user();
         ?>
         <li class="sidebar-item" title="Chat">
-            <a href="{{ route('user', $user->id) }}" class="sidebar-link d-flex align-items-center">
+            <a href="{{ route('chat') }}" class="sidebar-link d-flex align-items-center">
                 <i class="material-symbols-outlined">
                     chat
                 </i>
@@ -148,15 +148,9 @@
         var usernameInput = document.getElementById('username_input');
 
         editButton.addEventListener('click', function() {
-            usernameInput.disabled = false; // Enable input field for editing
-            editButton.classList.add('d-none'); // Hide edit button
-            submitButton.classList.remove('d-none'); // Show submit button
-        });
-
-        // Optional: Handle the submit button click
-        submitButton.addEventListener('click', function() {
-            // Perform the submit action here
-            alert('Submit clicked!');
+            usernameInput.disabled = false;
+            editButton.classList.add('d-none');
+            submitButton.classList.remove('d-none');
         });
     });
 
@@ -166,15 +160,9 @@
         var usernameInput = document.getElementById('desc_input');
 
         editButton.addEventListener('click', function() {
-            usernameInput.disabled = false; // Enable input field for editing
-            editButton.classList.add('d-none'); // Hide edit button
-            submitButton.classList.remove('d-none'); // Show submit button
-        });
-
-        // Optional: Handle the submit button click
-        submitButton.addEventListener('click', function() {
-            // Perform the submit action here
-            alert('Submit clicked!');
+            usernameInput.disabled = false;
+            editButton.classList.add('d-none');
+            submitButton.classList.remove('d-none');
         });
     });
 </script>

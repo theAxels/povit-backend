@@ -9,7 +9,7 @@
 @section('dashboard')
 <div class="content-container">
     <div class="content">
-        <div class="camera w-100 d-flex flex-column justify-content-center p-1 align-items-center" style="height: 100vh;">
+        <div class="camera w-100 d-flex flex-column justify-content-center p-1 align-items-center" style="height: 100vh;" id="kotakKamera">
             <div class="center-box" id="kamera">
                 <div id="my_camera"></div>
                 @if ($friends->isEmpty())
@@ -34,7 +34,7 @@
                 @endif
             </div>
             <div class="history-text" id="historyArrow">
-                <button onclick="scrollDown(this)" style="border: none; background: none; outline: none;">
+                <button onclick="scrollDown()" style="border: none; background: none; outline: none;">
                     <p class="mb-0">History</p>
                     <span class="material-symbols-outlined">
                         keyboard_double_arrow_down
@@ -108,7 +108,7 @@
                     </div>
                     <div class="d-flex justify-content-center align-items-center w-100">
                         <button type="button" title="Create Post" id="submitButton" class="send-btn d-flex justify-content-center align-items-center">
-                            <span class="material-symbols-outlined" style="font-size: 280%; transform: rotate(-45deg);">send</span>
+                            <i class="fa-solid fa-paper-plane fa-2xl"></i>
                         </button>
                     </div>
                     <div id="cf" class="d-flex flex-column justify-content-center align-items-center w-100">
@@ -179,7 +179,7 @@
                     arrow_upward
                 </span>
             </button>
-            <button type="button" class="circle-btn-small" onClick="scrollToCamera()"></button>
+            <button type="button" class="circle-btn-small" onclick="scrollToCamera()"></button>
             <button class="scroll-button scroll-down" data-label="Next Post" onclick="scrollDown(this)">
                 <span class="material-symbols-outlined">
                     arrow_downward
@@ -195,7 +195,7 @@
 <script src="https://kit.fontawesome.com/f273824998.js" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function() {
-        @if (!$friends->isEmpty())
+        @if(!$friends->isEmpty())
             Webcam.set({
                 width: 500,
                 height: 375,
@@ -215,23 +215,29 @@
     });
 
     function hideCamera() {
+        removeAllSelectedFriends();
+        document.getElementById('hasil').reset();
         Webcam.reset();
         document.getElementById('kamera').style.display = 'none';
         document.getElementById('historyArrow').style.display = 'none';
+        document.getElementById('kotakKamera').style.display = 'none';
+        document.querySelector('.content').style.overflow = 'hidden';
     }
 
     function showCamera() {
-        document.getElementById('kamera').style.display = 'block';
+        document.getElementById('kotakKamera').style.display = 'flex';
         document.getElementById('historyArrow').style.display = 'block';
+        document.getElementById('kamera').style.display = 'block';
         @if (!$friends->isEmpty())
             Webcam.attach('#my_camera');
         @endif
         document.getElementById('hasil').style.display = 'none';
+        document.querySelector('.content').style.overflow = 'auto';
     }
 
     function dataURItoBlob(dataURI) {
         var byteString = atob(dataURI.split(',')[1]);
-        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
         var ab = new ArrayBuffer(byteString.length);
         var ia = new Uint8Array(ab);
         for (var i = 0; i < byteString.length; i++) {
@@ -240,36 +246,54 @@
         return new Blob([ab], {type: mimeString});
     }
 
+    function mirrorImageAndCreateBlob(dataURI, callback) {
+        var img = new Image();
+        img.src = dataURI;
+        img.onload = function() {
+            var canvas = document.createElement('canvas');
+            var ctx = canvas.getContext('2d');
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            ctx.save();
+            ctx.translate(canvas.width, 0);
+            ctx.scale(-1, 1);
+            ctx.drawImage(img, 0, 0);
+            ctx.restore();
+
+            canvas.toBlob(function(blob) {
+                callback(blob);
+            }, 'image/jpeg');
+        };
+    }
+
     function take_snapshot() {
-    Webcam.snap(function(data_uri) {
-        var imageBlob = dataURItoBlob(data_uri);
-        var file = new File([imageBlob], 'webcam.jpg', { type: 'image/jpeg' });
-        var fileInput = document.getElementById('pictInput');
-        var dataTransfer = new DataTransfer();
-        dataTransfer.items.add(file);
-        fileInput.files = dataTransfer.files;
+        Webcam.snap(function(data_uri) {
+            mirrorImageAndCreateBlob(data_uri, function(mirroredBlob) {
+                hideCamera();
+                var file = new File([mirroredBlob], 'webcam_mirrored.jpg', { type: 'image/jpeg' });
+                var fileInput = document.getElementById('pictInput');
+                var dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                fileInput.files = dataTransfer.files;
 
-        var now = new Date();
-        var timestamp = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}`;
-        var downloadLink = `<a href="${data_uri}" download="povit_${timestamp}.jpg" style="color: black;">
-            <span class="material-symbols-outlined" style="font-size: 250%">download</span>
-        </a>`;
-        document.getElementById('downloadCaptured').innerHTML = downloadLink;
-
-        hideCamera();
-
-        // Set the src of the img element and show it
-        var resultImage = document.getElementById('resultImage');
-        resultImage.src = data_uri;
-        resultImage.classList.add('mirrored'); // Add mirrored class
-        resultImage.style.display = 'block';
-
-        // Show the form
-        document.getElementById('hasil').style.display = 'flex';
-    });
-}
-
-
+                var now = new Date();
+                var timestamp = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}`;
+                
+                var downloadLink = URL.createObjectURL(mirroredBlob);
+                var downloadHTML = `<a href="${downloadLink}" download="povit_${timestamp}_mirrored.jpg" style="color: black;">
+                    <span class="material-symbols-outlined" style="font-size: 250%">download</span>
+                </a>`;
+                document.getElementById('downloadCaptured').innerHTML = downloadHTML;
+                
+                var resultImage = document.getElementById('resultImage');
+                resultImage.src = data_uri;
+                resultImage.classList.add('mirrored');
+                resultImage.style.display = 'block';
+                document.getElementById('hasil').style.display = 'flex';
+            });
+        });
+    }
 
     document.getElementById('fileInput').addEventListener('change', function(event) {
         const file = event.target.files[0];
@@ -323,7 +347,7 @@
     function errorCallback(error) {
         switch(error.code) {
             case error.PERMISSION_DENIED:
-                showToast('danger', "User denied the request for Geolocation.");
+                showToast('danger', "User denied the request for Location.");
                 break;
             case error.POSITION_UNAVAILABLE:
                 showToast('danger', "Location information is unavailable.");
@@ -349,70 +373,13 @@
         $(this).remove();
     });
 
-    // const content = document.querySelector('.content');
-    // const pageControllerPanel = document.querySelector('.page-control');
-    // const scrollUpButton = document.querySelector('.scroll-up');
-    // const scrollDownButton = document.querySelector('.scroll-down');
-
-    // content.addEventListener('scroll', function() {
-    //     if (content.scrollTop > 0) {
-    //         pageControllerPanel.style.display = 'flex';
-    //         hideCamera();
-    //     } else {
-    //         pageControllerPanel.style.display = 'none';
-    //         showCamera();
-    //     }
-
-    //     if(content.scrollTop + content.clientHeight >= content.scrollHeight){
-    //         scrollDownButton.style.display = 'none';
-    //         document.querySelector('.controller').style.height = '180px';
-    //     }else{
-    //         scrollDownButton.style.display = 'block';
-    //         document.querySelector('.controller').style.height = '300px';
-    //     }
-    // });
-
-    // function scrollToCamera() {
-    //     content.scrollTo({
-    //         top: 0,
-    //         behavior: 'smooth'
-    //     });
-    // }
-
-
-    // function scrollUp(button) {
-    //     disableButton(button);
-    //     content.scrollBy({
-    //         top: -window.innerHeight,
-    //         behavior: 'smooth'
-    //     });
-    //     setTimeout(() => enableButton(button), 1000);
-    // }
-
-    // function scrollDown(button) {
-    //     disableButton(button);
-    //     content.scrollBy({
-    //         top: window.innerHeight,
-    //         behavior: 'smooth'
-    //     });
-    //     setTimeout(() => enableButton(button), 1000);
-    // }
-
-    // function disableButton(button) {
-    //     button.disabled = true;
-    // }
-
-    // function enableButton(button) {
-    //     button.disabled = false;
-    // }
-
     document.addEventListener('DOMContentLoaded', function () {
         const submitButton = document.getElementById('submitButton');
         const form = document.getElementById('hasil');
 
         submitButton.addEventListener('click', function() {
             form.querySelectorAll('input[name="tags[]"]').forEach(input => input.remove());
-
+            
             selectedFriendsList.forEach(friendId => {
                 const hiddenInput = document.createElement('input');
                 hiddenInput.type = 'hidden';
@@ -423,6 +390,7 @@
 
             form.submit();
         });
+
         var captionInput = document.getElementById('caption');
         var maxLength = 23;
 
@@ -449,6 +417,13 @@
         });
 
         let selectedFriendsList = [];
+
+        function removeAllSelectedFriends() {
+            selectedFriendsList = [];
+            const selectedFriends = document.getElementById('selectedFriends');
+            selectedFriends.innerHTML = '<h6>Tagged friends : </h6>'; 
+            document.getElementById('selectedFriends').style.display = 'none';
+        }
 
         friendSearch.addEventListener('input', function() {
             const query = friendSearch.value;
@@ -537,9 +512,11 @@
         }
 
         content.addEventListener('scroll', function() {
+            updateCurrentSection();
             if (content.scrollTop > 0) {
                 pageControllerPanel.style.display = 'flex';
                 hideCamera();
+                content.style.overflow = 'auto';
             } else {
                 pageControllerPanel.style.display = 'none';
                 showCamera();
@@ -558,6 +535,7 @@
             if (index >= 0 && index < sections.length) {
                 sections[index].scrollIntoView({ behavior: 'smooth' });
                 currentSection = index;
+                updateScrollState();
             }
         }
 
@@ -589,8 +567,48 @@
             button.disabled = false;
         }
 
-        content.addEventListener('scroll', updateCurrentSection);
-    });
+        function updateScrollState() {
+            if (currentSection !== 0) {
+                content.style.overflow = 'auto';
+            }
+        }
 
+        updateScrollState();
+
+        function getCurrentSectionIndex() {
+            let currentSectionIndex = 0;
+            sections.forEach((section, index) => {
+                if (content.scrollTop >= section.offsetTop) {
+                    currentSectionIndex = index;
+                }
+            });
+            return currentSectionIndex;
+        }
+
+        function scrollToCamera() {
+            if (sections.length > 0) {
+                sections[0].scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function scrollDown() {
+            const currentSectionIndex = getCurrentSectionIndex();
+            if (currentSectionIndex < sections.length - 1) {
+                sections[currentSectionIndex + 1].scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function scrollUp() {
+            const currentSectionIndex = getCurrentSectionIndex();
+            if (currentSectionIndex > 0) {
+                sections[currentSectionIndex - 1].scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        window.removeAllSelectedFriends = removeAllSelectedFriends;
+        window.scrollToCamera = scrollToCamera;
+        window.scrollDown = scrollDown;
+        window.scrollUp = scrollUp;
+    });
 </script>
 @endsection
