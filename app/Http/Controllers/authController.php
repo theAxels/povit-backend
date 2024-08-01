@@ -32,9 +32,9 @@ class AuthController extends Controller
             'lastname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
-            'check box' => 'required|accepted',
-
+            'terms' => 'required|accepted',
         ]);
+        
         // dd($request);
         // Create a new user
         $user = User::create([

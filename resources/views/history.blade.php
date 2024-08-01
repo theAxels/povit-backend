@@ -7,14 +7,18 @@
 @section('dashboard')
 <div class="content-container px-5 py-3">
     <h1 class="mb-4">Your Photos</h1>
-    <div class="row" style="max-height: 80vh; overflow-y:auto;">
-        @foreach($posts as $post)
+    <div class="row h-100" style="max-height: 80vh; overflow-y:auto;">
+        @forelse($posts as $post)
             <div class="col-md-4 mb-4">
                 <div class="photo-container">
                     <img src="{{ asset('user_post/' . $post->pict) }}" alt="Photo" data-toggle="modal" data-target="#photoModal{{ $post->id }}">
                 </div>
             </div>
-        @endforeach
+        @empty
+        <div class="d-flex justify-content-center align-items-center w-100 h-100">
+            <p class="capt">No posts available.</p>
+        </div>
+        @endforelse
     </div>
 </div>
 

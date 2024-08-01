@@ -115,7 +115,7 @@
 </body>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var googleRedirectUrl = {{ route('auth.google') }};
+        var googleRedirectUrl = "{{ route('auth.google') }}";
 
         document.querySelector('.signupGoogle').addEventListener('click', function () {
             console.log(googleRedirectUrl);
@@ -146,6 +146,8 @@
             }
         });
     });
+
+
 
 
 </script>

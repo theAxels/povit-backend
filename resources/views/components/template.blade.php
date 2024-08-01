@@ -44,7 +44,7 @@
 
                     <div class="d-flex align-items-center mb-2 pe-2">
                         <div class="search-container me-2">
-                            <input type="text" id="searchInput" class="searchInput empty" placeholder="Search Contact" onkeyup="searchFriends()" onfocus="toggleIcon()" onblur="toggleIcon()">
+                            <input type="text" id="searchInput" class="searchInput empty" placeholder="Find or Add Friends" onkeyup="searchFriends()" onfocus="toggleIcon()" onblur="toggleIcon()">
                             <i class="fa-solid fa-magnifying-glass fa-xs search-icon" id="searchIcon"></i>
                             <div id="searchsList" class="position-absolute" style="display: none; background: white; overflow-y: auto; z-index: 1000; top: 120%; left: 0; min-height: 300px; max-height: 60%; width: 100%; max-width: 350px; border: 1px solid #ddd; border-radius: 5px; padding: 0.5em; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"></div>
                         </div>      
@@ -130,7 +130,7 @@
                                                 <div class="kotak-kecil d-flex align-items-center justify-content-center">
                                                     <form method="POST" action="{{ route('follow', ['friendId' => $friend->id]) }}">
                                                         @csrf
-                                                        <button type="submit" style="border: none; background: none; outline: none">
+                                                        <button type="submit" style="border: none; background: none; outline: none" class="d-flex align-items-center justify-content-center">
                                                             <div class="text1 m-0">ADD</div>
                                                         </button>
                                                     </form>
@@ -146,6 +146,7 @@
             </div>
         </div>
     </div>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
@@ -251,7 +252,7 @@
                         <div class="kotak-kecil d-flex align-items-center justify-content-center">
                             <form method="POST" action="/users/${friend.id}/follow">
                                 @csrf
-                                <button type="submit" style="border: none; background: none; outline: none">
+                                <button type="submit" style="border: none; background: none; outline: none"  class="d-flex align-items-center justify-content-center">
                                     <div class="text1 m-0">ADD</div>
                                 </button>
                             </form>
