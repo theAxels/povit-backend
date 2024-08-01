@@ -6,7 +6,7 @@
             <div class="modal-header">
                 <span class="material-symbols-outlined">star</span>
                 <h1 class="modal-title fs-5" id="staticBackdropLabel" style="margin-left: 10px">Close Friends</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4 w-100 h-100 d-flex flex-column">
                 <!-- Loading Container -->
@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     <div class="suggested flex-grow-1">
-                        <div class="row mt-2">
+                        <div class="row my-2">
                             <h6>Suggested</h6>
                         </div>
                         <div class="friendSection w-100 h-100">

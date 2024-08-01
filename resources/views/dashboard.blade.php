@@ -91,7 +91,6 @@
                             <span class="visually-hidden">Next</span>
                         </button>
                     </div>
-
                     <img id="resultImage" src="" alt="Result Image" class="result-image" style="display: none; max-width: 100%; height: auto;">
                 </div>
                 <input type="file" class="d-none" name="pict" id="pictInput" accept="image/*">
@@ -120,11 +119,18 @@
                     </div>
                 </div>
             </form>
+            <div id="loading" style="display: none;">
+                <div class="d-flex justify-content-center align-items-center vh-100">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>            
         </div>
         @if ($posts->isEmpty())
             <div class="camera w-100 d-flex flex-column justify-content-center p-1 align-items-center" style="height: 100vh;">
                 <div class="h-100 w-100 d-flex flex-column justify-content-center align-items-center text-center p-5">
-                    <div class="p-2">
+                    <div class="p-5">
                         <h1 class="text-center">Try adding a friend first!</h1>
                         <h5>Once you have a friend, you can take a picture and send it to their home screen.</h5>
                     </div>
@@ -134,15 +140,26 @@
             @foreach ($posts as $post)
                 <div class="camera w-100 d-flex flex-column justify-content-center p-1 align-items-center" style="height: 100vh;">
                     <div class="h-100 w-100 d-flex flex-column justify-content-center align-items-center">
-                        <div class="d-flex flex-row justify-content-center align-items-end mb-4">
-                            @if ($post->is_closed_friend == 1)
-                                <div class="bg-success text-center p-1 rounded-circle d-flex justify-content-center align-items-center me-2" style="width: 25px; height: 25px;" title="Close Friend">
-                                    <span class="material-symbols-outlined" style="font-size: 12px; color: white;">star</span>
+                        <div class="d-flex flex-row justify-content-between align-items-center mb-4 w-100 px-4" style="max-width: 500px;">
+                            <div class="d-flex justify-content-center align-items-center {{ $post->is_closed_friend ? '' : 'w-100' }}">
+                                @if ($post->sender->profile_pics != NULL)
+                                    <img src="{{ asset('user_profile/'.$post->sender->profile_pics) }}" class="user-img" alt="Profile Image">
+                                @else
+                                    <img src="{{ asset('avatar.png') }}" class="user-img" alt="Default Profile">
+                                @endif
+                                <div class="d-flex align-items-end ms-2">
+                                    <h4 class="d-inline-block mb-0">{{ $post->sender->name }}</h4>
+                                    <span class="d-block ms-2" style="font-size: 0.7rem">{{ $post->time }}</span>
+                                </div>
+                            </div>
+                        
+                            @if ($post->is_closed_friend)
+                                <div class="bg-success text-center p-1 rounded d-flex justify-content-center align-items-center ms-5" style="width: auto; height: 25px;" title="Close Friend">
+                                    <span class="material-symbols-outlined" style="font-size: 12px; color: white; margin-right: 2px;">star</span>
+                                    <span style="font-size: 12px; color: white;">Close Friend</span>
                                 </div>
                             @endif
-                            <h4 class="d-inline-block mb-0">{{ $post->sender->name }}</h4>
-                            <span class="d-block ms-2" style="font-size: 0.7rem">{{ $post->time }}</span>
-                        </div>
+                        </div>                        
                         <div class="center-box d-flex flex-column align-items-center"style="border: 2px solid #000000;">
                             <img src="{{ asset('user_post/' . $post->pict) }}" alt="" style="width: 100%; height: 100%; object-fit: cover;">
                             @if($post->caption != NULL)
@@ -281,7 +298,7 @@
                 var timestamp = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}`;
                 
                 var downloadLink = URL.createObjectURL(mirroredBlob);
-                var downloadHTML = `<a href="${downloadLink}" download="povit_${timestamp}_mirrored.jpg" style="color: black;">
+                var downloadHTML = `<a href="${downloadLink}" download="povit_${timestamp}.jpg" style="color: black;">
                     <span class="material-symbols-outlined" style="font-size: 250%">download</span>
                 </a>`;
                 document.getElementById('downloadCaptured').innerHTML = downloadHTML;
@@ -311,6 +328,11 @@
             }
             reader.readAsDataURL(file);
         }
+    });
+
+    document.getElementById('submitButton').addEventListener('click', function() {
+        document.getElementById('hasil').style.display = 'none'; 
+        document.getElementById('loading').style.display = 'flex';
     });
 
     function getCurrentLocation() {

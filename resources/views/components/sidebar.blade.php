@@ -87,24 +87,20 @@
                 <h6>Home</h6>
             </a>
         </li>
-        <?php
-        $user = Auth::user();
-        ?>
+        @php
+            $noFriends = Auth::user()->friends()->count() === 0;
+        @endphp
+
         <li class="sidebar-item" title="Chat">
-            <a href="{{ route('chat') }}" class="sidebar-link d-flex align-items-center">
-                <i class="material-symbols-outlined">
-                    chat
-                </i>
+            <a href="{{ $noFriends ? '#' : route('chat') }}" class="sidebar-link d-flex align-items-center {{ $noFriends ? 'disabled-link' : '' }}" {{ $noFriends ? 'onclick=showNoFriendsModal()' : '' }}>
+                <i class="material-symbols-outlined">chat</i>
                 <h6>Chat</h6>
             </a>
         </li>
-
         <li class="sidebar-item" title="Close Friend">
-            <a href="" class="sidebar-link d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-              <i class="material-symbols-outlined">
-                star
-              </i>
-              <h6>Close Friend</h6>
+            <a href="#" class="sidebar-link d-flex align-items-center {{ $noFriends ? 'disabled-link' : '' }}" {{ $noFriends ? 'onclick=showNoFriendsModal()' : 'data-bs-toggle=modal data-bs-target=#staticBackdrop' }}>
+                <i class="material-symbols-outlined">star</i>
+                <h6>Close Friend</h6>
             </a>
         </li>
 
@@ -129,7 +125,27 @@
 <!-- Overlay -->
 <div id="overlay" class="overlay" style="display: none;"></div>
 @include('main.closefriend')
+<!-- No Friends Modal -->
+<div class="modal fade" id="noFriendsModal" tabindex="-1" aria-labelledby="noFriendsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="noFriendsModalLabel">Information</h5>
+            </div>
+            <div class="modal-body">
+                <p>You currently have no friends, so you cannot send messages or manage close friends. Please add friends to enable these features.</p>
+                <br>
+                <button type="button" style="background-color: #EFBDEE; border-radius: 50px; font-weight: 600; font-size: 1rem;" class="btn btn-lg w-100" onclick="window.location.href='{{ route('home') }}'">Go to Home</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+    function showNoFriendsModal() {
+        var noFriendsModal = new bootstrap.Modal(document.getElementById('noFriendsModal'));
+        noFriendsModal.show();
+    }
     function copyLinks() {
         var copyText = document.getElementById("links");
         navigator.clipboard.writeText(copyText.value)

@@ -78,10 +78,10 @@
 
                         <div class="form-group">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="tnc" name="check box">
-                                <label class="form-check-label" for="tnc">I agree to all <a class="tnc" href="">terms & conditions</a></label>
+                                <input class="form-check-input" type="checkbox" id="tnc" name="terms">
+                                <label class="form-check-label" for="tnc">I agree to all <a class="tnc" href="#">terms & conditions</a></label>
                             </div>
-                        </div>
+                        </div>                        
                         <button type="submit" class="signupButton" style="height: 5vh;">SIGN UP</button>
                     </form>
                     <div class="line-divider">
