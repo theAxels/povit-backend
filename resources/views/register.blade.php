@@ -79,7 +79,7 @@
                         <div class="form-group">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="tnc" name="terms">
-                                <label class="form-check-label" for="tnc">I agree to all <a class="tnc" href="#">terms & conditions</a></label>
+                                <label class="form-check-label" for="tnc">I agree to all <a class="tnc" href="/terms-and-conditions">terms & conditions</a></label>
                             </div>
                         </div>                        
                         <button type="submit" class="signupButton" style="height: 5vh;">SIGN UP</button>

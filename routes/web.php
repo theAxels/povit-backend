@@ -66,3 +66,6 @@ Route::get('/search-users', [MainController::class, 'searchUsers'])->name('searc
 Route::get('/search-friends', [MainController::class, 'searchFriends'])->name('search.friends');
 
 Route::get('/gallery', [MainController::class, 'gallery'])->name('gallery');
+
+Route::view('/terms-and-conditions', 'tnc')->name('terms-and-conditions');
+Route::view('/privacy', 'privacy')->name('privacy');
